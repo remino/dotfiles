@@ -1,0 +1,6 @@
+# vim: ft=zsh:ts=2:sw=2:noet
+# shellcheck disable=all
+
+path+=(
+	"$HOME/bin"
+)

@@ -1,0 +1,6 @@
+# Get mp4 format
+-f mp4
+
+# Download using axel
+--external-downloader axel --external-downloader-args "-n 15 -a -k"
+

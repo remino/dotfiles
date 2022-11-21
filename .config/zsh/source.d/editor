@@ -1,0 +1,20 @@
+# vim: ft=zsh:ts=2:sw=2:noet
+# shellcheck disable=all
+
+editor() {
+	[ $# -lt 1 ] && echo "$EDITOR" && return
+
+	case "$1" in
+		code|vscode) export EDITOR='code -w' ;;
+		*) export EDITOR='vim' ;;
+	esac
+
+	echo "$EDITOR"
+}
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  editor vim > /dev/null
+else
+  editor code > /dev/null
+fi

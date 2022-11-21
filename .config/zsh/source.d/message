@@ -1,0 +1,8 @@
+# vim: ft=zsh:ts=2:sw=2:noet
+# shellcheck disable=all
+
+(
+	hostname | ( _exists figlet && figlet || cat )
+	_exists fortune && fortune -s
+) | ( _exists lolcat && lolcat || command cat )
+

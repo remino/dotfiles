@@ -1,0 +1,27 @@
+# vim: ft=gitconfig:ts=2:sw=2:noet
+
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true
+	verbose = true
+[alias]
+	a = add
+	b = branch
+	c = commit
+	co = checkout
+	l = pull
+	lo = log --oneline --decorate
+	pl = pull
+	po = push origin
+	pot = push origin --tags
+	por = push origin --remote
+	r = remote
+	rebase-author = rebase --exec 'git commit --amend --reset-author --no-edit'
+	sh = show
+	st = status
+	tv = !git tag | sort -V
+[pull]
+	rebase = false
+[push]
+	autoSetupRemote = true

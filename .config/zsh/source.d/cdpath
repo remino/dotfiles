@@ -1,0 +1,11 @@
+# vim: ft=zsh:ts=2:sw=2:noet
+# shellcheck disable=all
+
+cat <<DIRS | while read -r dir
+	$HOME
+	$HOME/Library/Mobile Documents/com~apple~CloudDocs
+DIRS
+do
+	[ ! -d "$dir" ] && continue
+	cdpath+=($dir)
+done

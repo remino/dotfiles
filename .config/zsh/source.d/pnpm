@@ -1,0 +1,11 @@
+# vim: ft=zsh:ts=2:sw=2:noet
+# shellcheck disable=all
+
+[ -z "$PNPM_HOME" ] && PNPM_HOME="$HOME/Library/pnpm"
+
+if [ -d "$PNPM_HOME" ]
+then
+	export PNPM_HOME
+	export PATH="$PNPM_HOME:$PATH"
+	[ -d "$ZSH_CUSTOM/plugins/pnpm" ] && plugins+=(pnpm)
+fi
