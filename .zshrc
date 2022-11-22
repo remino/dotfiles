@@ -482,7 +482,7 @@ fi
 
 for include in "$HOME/.zshrc.local" "$HOME/.config/zsh/local"
 do
-	[ ! -f "$include" ] && break
+	[ ! -f "$include" ] && continue
 	source "$include"
 done
 
