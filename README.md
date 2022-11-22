@@ -19,6 +19,7 @@ A minimal collection of dotfiles to work with:
 
 - [asdf](https://asdf-vm.com)
 - [bat](https://github.com/sharkdp/bat)
+- [EditorConfig](https://editorconfig.org)
 - [exa](https://the.exa.website)
 - [getup](https://github.com/remino/getup)
 - [Git](https://git-scm.com)
