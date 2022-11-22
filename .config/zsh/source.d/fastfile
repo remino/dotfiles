@@ -1,9 +1,0 @@
-# vim: ft=zsh:ts=2:sw=2:noet
-# shellcheck disable=all
-
-fastfile_var_prefix='^'
-fastfile_dir="$HOME/.config/fastfile/"
-
-plugins+=(
-	fastfile
-)

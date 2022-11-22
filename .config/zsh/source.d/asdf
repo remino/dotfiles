@@ -1,8 +1,0 @@
-# vim: ft=zsh:ts=2:sw=2:noet
-# shellcheck disable=all
-
-if _exists asdf
-then
-	ASDF_CONFIG_FILE="$HOME/.config/asdf/config"
-	plugins+=(asdf)
-fi
