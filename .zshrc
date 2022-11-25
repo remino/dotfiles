@@ -267,10 +267,11 @@ editor() {
 }
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  editor vim > /dev/null
-else
+if [ -z "$SSH_CONNECTION" ] && _exists code
+then
   editor code > /dev/null
+else
+  editor vim > /dev/null
 fi
 
 # ########    ###     ######  ######## ######## #### ##       ########
