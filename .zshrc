@@ -168,6 +168,7 @@ plugins+=(
 	fancy-ctrl-z
 	macos
 	vi-mode
+	youtube-dl
 	zsh-interactive-cd
 )
 
