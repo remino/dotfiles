@@ -1,6 +1,9 @@
 # Get mp4 format
 -f mp4
 
+# Skip playlists if URL includes both video and playlist
+--no-playlist
+
 # Download using axel
 --external-downloader axel --external-downloader-args "-n 15 -a -k"
 
