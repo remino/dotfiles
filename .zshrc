@@ -164,6 +164,7 @@ plugins+=(
 	alias-finder
 	aliases
 	catimg
+	cp
 	dirhistory
 	fancy-ctrl-z
 	macos
