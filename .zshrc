@@ -48,6 +48,10 @@ _exists() {
 	command -v "$1" >/dev/null 2>&1
 }
 
+_plugin_exists() {
+	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH_CUSTOM/plugins/$1" ]
+}
+
 _which_exists() {
 	for cmd in "$@"
 	do
@@ -195,13 +199,14 @@ mysql mysql-alias
 op 1password
 sudo
 system
+youtube-dl
 
 fzf
 LIST
 do
 	[ -z "$cmd" ] && continue
 	[ -z "$add" ] && add="$cmd"
-	_exists $cmd || continue
+	_exists "$cmd" || _plugin_exists "$cmd" || continue
 
 	echo "$add" | tr ' ' '\n' | while read -r plugin
 	do
