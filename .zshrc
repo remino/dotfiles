@@ -157,7 +157,7 @@ mvln() {
 # ##        ##      ##
 # ##       ######## ##
 
-FZF_DEFAULT_OPTS="--ansi --cycle --exact --preview='head -\$LINES {}'"
+FZF_DEFAULT_OPTS="--ansi --cycle --exact"
 
 # ########  ##       ##     ##  ######   #### ##    ##  ######
 # ##     ## ##       ##     ## ##    ##   ##  ###   ## ##    ##
