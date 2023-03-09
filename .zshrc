@@ -132,17 +132,17 @@ alias reload=". \$HOME/.zshrc"
 alias zshrc='eval $EDITOR "$HOME/.zshrc"'
 
 if _exists tree
-do
+then
 	alias t=tree
 	alias tree='tree -CNhp'
-done
+fi
 
 if _exists vim
-do
+then
 	alias v=vim
 	alias vi=vim
 	alias vim='vim -p'
-done
+fi
 
 # ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
 # ##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
