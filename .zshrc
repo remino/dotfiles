@@ -129,8 +129,13 @@ plugins+=(
 alias e='edit'
 alias edit='eval $EDITOR'
 alias reload=". \$HOME/.zshrc"
-alias tree='tree -CNhp'
 alias zshrc='eval $EDITOR "$HOME/.zshrc"'
+
+if _exists tree
+do
+	alias t=tree
+	alias tree='tree -CNhp'
+done
 
 if _exists vim
 do
