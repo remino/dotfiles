@@ -624,5 +624,5 @@ then
 	alias ls=exa
 	alias ll='exa -l'
 	alias t=tree
-	alias tree='exa -T'
+	alias tree='ll -T'
 fi
