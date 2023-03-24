@@ -299,20 +299,14 @@ plugins+=(
 # ######## ########  ####    ##     #######  ##     ##
 
 editor() {
-	[ $# -lt 1 ] && echo "$EDITOR" && return
-
-	case "$1" in
-		code|vscode) export EDITOR='code -w' ;;
-		*) export EDITOR='vim' ;;
-	esac
-
+	[ $# -gt 0 ] && EDITOR="$1"
 	echo "$EDITOR"
 }
 
 # Preferred editor for local and remote sessions
 if [ -z "$SSH_CONNECTION" ] && _exists code
 then
-  editor code > /dev/null
+  editor codew > /dev/null
 else
   editor vim > /dev/null
 fi
