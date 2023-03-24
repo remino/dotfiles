@@ -131,6 +131,12 @@ alias edit='eval $EDITOR'
 alias reload=". \$HOME/.zshrc"
 alias zshrc='eval $EDITOR "$HOME/.zshrc"'
 
+if _exists code
+then
+	alias codea='code -a'
+	alias codew='code -w'
+fi
+
 if _exists tree
 then
 	alias t=tree
