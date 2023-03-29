@@ -155,6 +155,12 @@ set novisualbell
 set t_vb=
 set tm=500
 
+" Show line numbers
+set number
+
+" Set line length marker to 80 chars
+set colorcolumn=80
+
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=
@@ -195,6 +201,12 @@ set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
+
+" Set line number colour
+highlight LineNr ctermfg=grey
+
+" Set line length marker colour
+highlight ColorColumn ctermbg=gray
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
