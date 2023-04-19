@@ -517,6 +517,21 @@ then
 	[ -d "$ZSH_CUSTOM/plugins/pnpm" ] && plugins+=(pnpm)
 fi
 
+# ########  ########  ######## ######## ######## #### ######## ########
+# ##     ## ##     ## ##          ##       ##     ##  ##       ##     ##
+# ##     ## ##     ## ##          ##       ##     ##  ##       ##     ##
+# ########  ########  ######      ##       ##     ##  ######   ########
+# ##        ##   ##   ##          ##       ##     ##  ##       ##   ##
+# ##        ##    ##  ##          ##       ##     ##  ##       ##    ##
+# ##        ##     ## ########    ##       ##    #### ######## ##     ##
+
+if _exists prettier
+then
+	alias prettycss='prettier --stdin-filepath style.css'
+	alias prettyhtml='prettier --stdin-filepath index.html'
+	alias prettyjs='prettier --stdin-filepath script.js'
+fi
+
 # ##        #######   ######     ###    ##
 # ##       ##     ## ##    ##   ## ##   ##
 # ##       ##     ## ##        ##   ##  ##
