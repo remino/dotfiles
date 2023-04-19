@@ -1,3 +1,5 @@
 nodejs 18.11.0
 ruby 3.1.2
-python 3.10.8
+python 3.10.8 2.7.18
+deno 1.28.3
+php 8.1.16
