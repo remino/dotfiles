@@ -269,6 +269,13 @@ then
 	[ "$BATCMD" != "bat" ] && alias bat="\$BATCMD"
 	alias cat=bat
 	export MANPAGER="sh -c 'col -bx | \$BATCMD -l man -p'"
+
+	baturl() {
+		[ $# -lt 1 ] && echo "Usage: burl <url> [<bat_args>]" && return
+		url="$1"
+		shift
+		curl -Ls -D - "$url" | bat "$@"
+	}
 fi
 
 # ########  ########  ######## ##      ##
