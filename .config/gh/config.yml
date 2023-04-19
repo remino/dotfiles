@@ -13,6 +13,7 @@ aliases:
     co: pr checkout
     url: repo view --json url --jq '.url'
     newpriv: repo create --disable-issues --disable-wiki --private --push --source .
+    newtagrel: '!gh release create "` git tag | grep ^v | tail -1 `" --generate-notes'
 # The path to a unix socket through which send HTTP connections. If blank, HTTP traffic will be handled by net/http.DefaultTransport.
 http_unix_socket:
 # What web browser gh should use when opening URLs. If blank, will refer to environment.
