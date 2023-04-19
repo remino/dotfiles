@@ -555,9 +555,9 @@ done
 # ##     ## ########  ######   ######  ##     ##  ######   ########
 
 (
-	hostname | ( _exists figlet && figlet || cat )
+	hostname | ( ( _exists figlet && figlet ) || cat )
 	_exists fortune && fortune -s
-) | ( _exists lolcat && lolcat || command cat )
+) | ( ( _exists lolcat && lolcat ) || command cat )
 
 #  #######  ##     ##         ##     ## ##    ##         ########  ######  ##     ##
 # ##     ## ##     ##         ###   ###  ##  ##               ##  ##    ## ##     ##
