@@ -641,7 +641,7 @@ done
 
 if _exists exa
 then
-	alias exa='exa --git --group-directories-first'
+	alias exa='exa --color-scale --classify --git --group-directories-first --time-style=long-iso'
 	alias l='exa -la'
 	alias ls=exa
 	alias ll='exa -l'
