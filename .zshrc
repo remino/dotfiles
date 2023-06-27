@@ -215,7 +215,6 @@ mysql mysql-alias
 op 1password
 sudo
 system
-youtube-dl
 
 fzf
 LIST
@@ -670,4 +669,23 @@ _exists atuin && eval "$(atuin init zsh)"
 if _exists mc
 then
 	alias mc='mc --nosubshell -S gotar'
+fi
+
+# ##    ## ########         ########  ##       ########
+#  ##  ##     ##            ##     ## ##       ##     ##
+#   ####      ##            ##     ## ##       ##     ##
+#    ##       ##    ####### ##     ## ##       ########
+#    ##       ##            ##     ## ##       ##
+#    ##       ##            ##     ## ##       ##
+#    ##       ##            ########  ######## ##
+
+if _exists yt-dlp
+then
+	alias youtube-dl='yt-dlp'
+	alias ydl='yt-dlp'
+fi
+
+if _exists youtube-dl && ! _exists yt-dlp
+then
+	alias ydl='youtube-dl'
 fi
