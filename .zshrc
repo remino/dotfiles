@@ -292,11 +292,9 @@ then
 	alias bi='brew install'
 	alias bn='brew info'
 	alias bs='brew search'
-fi
 
-plugins+=(
-	brew
-)
+	plugins+=(brew)
+fi
 
 # ######## ########  #### ########  #######  ########
 # ##       ##     ##  ##     ##    ##     ## ##     ##
@@ -401,11 +399,9 @@ then
 	alias npmi='npm install'
 	alias npml='npm ls'
 	alias npmr='npm run'
-fi
 
-plugins+=(
-	npm
-)
+	plugins+=(npm)
+fi
 
 # ########   #######   #######  ########
 # ##     ## ##     ## ##     ##    ##
