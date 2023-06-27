@@ -216,6 +216,7 @@ mysql mysql-alias
 op 1password
 sudo
 system
+ufw
 
 fzf
 LIST
