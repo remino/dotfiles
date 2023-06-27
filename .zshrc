@@ -658,3 +658,16 @@ fi
 # ##     ##    ##     #######  #### ##    ##
 
 _exists atuin && eval "$(atuin init zsh)"
+
+# ##     ##  ######
+# ###   ### ##    ##
+# #### #### ##
+# ## ### ## ##
+# ##     ## ##
+# ##     ## ##    ##
+# ##     ##  ######
+
+if _exists mc
+then
+	alias mc='mc --nosubshell -S gotar'
+fi
