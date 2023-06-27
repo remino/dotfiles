@@ -210,6 +210,7 @@ fd
 gh
 git git git-aliases
 git-extras
+git-lfs
 gpg-agent
 mysql mysql-alias
 op 1password
