@@ -223,10 +223,11 @@ LIST
 do
 	[ -z "$cmd" ] && continue
 	[ -z "$add" ] && add="$cmd"
-	( _exists "$cmd" && _plugin_exists "$add" ) || continue
+	_exists "$cmd" || continue
 
 	echo "$add" | tr ' ' '\n' | while read -r plugin
 	do
+		_plugin_exists "$plugin" || continue
 		plugins+=($plugin)
 	done
 done
