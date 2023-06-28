@@ -197,27 +197,45 @@ plugins+=(
 	alias-finder
 	aliases
 	catimg
-	cp
+	clipcopy
+	command-not-found
+	common-aliases
+	copyfile
+	copypath
 	dirhistory
+	dirpersist
 	fancy-ctrl-z
+	jump
 	macos
+	urltools
 	vi-mode
 	zsh-interactive-cd
 )
 
 cat <<LIST | while read -r cmd add
-rsync cp
+aws
+base64 encode64
+bundle bundler
+chroma colorize
+code vscode
 date isodate
 fd
+gcloud
 gh
 git git git-aliases
 git-extras
 git-lfs
 gpg-agent
 mysql mysql-alias
+node
 op 1password
+pip
+rg ripgrep
+rsync cp rsync
+ruby
 sudo
 system
+thefuck
 ufw
 
 fzf
