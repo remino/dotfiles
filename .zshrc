@@ -49,7 +49,7 @@ _exists() {
 }
 
 _plugin_exists() {
-	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH_CUSTOM/plugins/$1" ]
+	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH/custom/plugins/$1" ]
 }
 
 _which_exists() {
