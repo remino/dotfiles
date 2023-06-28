@@ -126,8 +126,10 @@ plugins+=(
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias c='cat'
 alias e='edit'
 alias edit='eval $EDITOR'
+alias o='echo'
 alias reload=". \$HOME/.zshrc"
 alias zshrc='eval $EDITOR "$HOME/.zshrc"'
 
