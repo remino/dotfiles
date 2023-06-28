@@ -197,7 +197,6 @@ plugins+=(
 	alias-finder
 	aliases
 	catimg
-	clipcopy
 	command-not-found
 	common-aliases
 	copyfile
