@@ -2,6 +2,7 @@
 	path = "~/.config/git/config.d/main"
 	path = "~/.config/git/config.d/private/author"
 	path = "~/.config/git/config.d/private/conds"
+	path = "~/.config/git/config.d/private/extra"
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
