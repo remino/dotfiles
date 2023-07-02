@@ -236,6 +236,7 @@ sudo
 system
 thefuck
 ufw
+wp wp-cli
 
 fzf
 LIST
