@@ -142,6 +142,11 @@ then
 	alias codew='code -w'
 fi
 
+if _exists msgcat
+then
+	alias colortest='msgcat --color=test'
+fi
+
 if _exists tree
 then
 	alias t=tree
