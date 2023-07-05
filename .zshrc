@@ -574,6 +574,8 @@ done
 # ##     ## ##       ##    ## ##    ## ##     ## ##    ##  ##
 # ##     ## ########  ######   ######  ##     ##  ######   ########
 
+repeat $(( LINES / 2 )) echo
+
 (
 	hostname | ( ( _exists figlet && figlet ) || cat )
 	_exists fortune && fortune -s
