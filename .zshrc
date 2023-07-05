@@ -514,7 +514,8 @@ st
 ALIASES
 	do
 		[ -z "$cmd" ] && cmd="$alias"
-		alias y$alias="yadm $cmd"
+		# shellcheck disable=SC2139
+		alias "y$alias"="yadm $cmd"
 	done
 fi
 
