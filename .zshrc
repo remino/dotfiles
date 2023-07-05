@@ -287,21 +287,24 @@ fi
 # ##     ## ##     ##    ##
 # ########  ##     ##    ##
 
-export BATCMD="$( _which_exists batcat bat )"
+BATCMD="$( _which_exists batcat bat )"
 
 if [ -n "$BATCMD" ]
 then
 	[ "$BATCMD" != "bat" ] && alias bat="\$BATCMD"
 	alias cat=bat
+	alias less="\$BATCMD --tabs=2 --pager='command less -X --tabs=2'"
 	export MANPAGER="sh -c 'col -bx | \$BATCMD -l man -p'"
-
-	baturl() {
-		[ $# -lt 1 ] && echo "Usage: burl <url> [<bat_args>]" && return
-		url="$1"
-		shift
-		curl -Ls -D - "$url" | bat "$@"
-	}
+	export PAGER="\$BATCMD --tabs=2 --pager='command less -X --tabs=2'"
 fi
+
+baturl() {
+	[ -z "$BATCMD" ] && echo "bat required" >&2 && return 1
+	[ $# -lt 1 ] && echo "Usage: burl <url> [<bat_args>]" && return
+	url="$1"
+	shift
+	curl -Ls -D - "$url" | bat "$@"
+}
 
 # ########  ########  ######## ##      ##
 # ##     ## ##     ## ##       ##  ##  ##
