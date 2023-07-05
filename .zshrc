@@ -35,7 +35,7 @@ cat <<DIRS | while read -r dir
 DIRS
 do
 	[ ! -d "$dir" ] && continue
-	cdpath+=($dir)
+	cdpath+=("$dir")
 done
 
 # ######## ##     ## ####  ######  ########  ######
@@ -250,7 +250,7 @@ do
 	echo "$add" | tr ' ' '\n' | while read -r plugin
 	do
 		_plugin_exists "$plugin" || continue
-		plugins+=($plugin)
+		plugins+=("$plugin")
 	done
 done
 
