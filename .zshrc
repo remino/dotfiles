@@ -336,9 +336,9 @@ editor() {
 # Preferred editor for local and remote sessions
 if [ -z "$SSH_CONNECTION" ] && _exists code
 then
-  editor codew > /dev/null
+	editor codew > /dev/null
 else
-  editor vim > /dev/null
+	editor vim > /dev/null
 fi
 
 # ########    ###     ######  ######## ######## #### ##       ########
