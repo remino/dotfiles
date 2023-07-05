@@ -128,9 +128,11 @@ plugins+=(ssh-agent)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias c='cat'
+alias copa='clipcopy; clippaste'
 alias e='edit'
 alias edit='eval $EDITOR'
 alias o='echo'
+alias pbcp='copa'
 alias reload=". \$HOME/.zshrc"
 alias zshrc='eval $EDITOR "$HOME/.zshrc"'
 
