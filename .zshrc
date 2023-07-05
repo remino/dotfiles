@@ -108,9 +108,7 @@ share_ssh_agent
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
 zstyle :omz:plugins:ssh-agent quiet yes
 
-plugins+=(
-	ssh-agent
-)
+plugins+=(ssh-agent)
 
 #    ###    ##       ####    ###     ######  ########  ######
 #   ## ##   ##        ##    ## ##   ##    ## ##       ##    ##
@@ -352,9 +350,7 @@ fi
 fastfile_var_prefix='^'
 fastfile_dir="$HOME/.config/fastfile/"
 
-plugins+=(
-	fastfile
-)
+plugins+=(fastfile)
 
 #  ######   ######## ######## ##     ## ########
 # ##    ##  ##          ##    ##     ## ##     ##
@@ -400,9 +396,7 @@ getup() {
 #  ##     ##    ##       ##    ##  ##     ##
 # ####    ##    ######## ##     ## ##     ##
 
-plugins+=(
-	iterm2
-)
+plugins+=(iterm2)
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -478,9 +472,7 @@ then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
 fi
 
-plugins+=(
-	tmux
-)
+plugins+=(tmux)
 
 # ######## ########     ###     ######  ##     ##
 #    ##    ##     ##   ## ##   ##    ## ##     ##
