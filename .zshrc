@@ -74,6 +74,7 @@ _which_exists() {
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# shellcheck source=/dev/null
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ########     ###    ######## ##     ##
@@ -563,6 +564,7 @@ fi
 for include in "$HOME/.zshrc.local" "$HOME/.config/zsh/local"
 do
 	[ ! -f "$include" ] && continue
+	# shellcheck source=/dev/null
 	source "$include"
 done
 
