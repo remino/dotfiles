@@ -132,6 +132,7 @@ alias copa='clipcopy; clippaste'
 alias e='edit'
 alias edit='eval "$EDITOR"'
 alias o='echo'
+alias lns='ln -s'
 alias pbcp='copa'
 alias reload=". \$HOME/.zshrc"
 alias zshrc='eval "$EDITOR" "$HOME/.zshrc"'
