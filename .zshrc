@@ -22,6 +22,15 @@
 # For M1 Macs, init Homebrew first:
 [ -x "/opt/homebrew/bin/brew" ] && eval "$( /opt/homebrew/bin/brew shellenv )"
 
+if _exists brew
+then
+	alias bi='brew install'
+	alias bn='brew info'
+	alias bs='brew search'
+
+	plugins+=(brew)
+fi
+
 #  ######  ########  ########     ###    ######## ##     ##
 # ##    ## ##     ## ##     ##   ## ##      ##    ##     ##
 # ##       ##     ## ##     ##  ##   ##     ##    ##     ##
@@ -302,23 +311,6 @@ baturl() {
 	shift
 	curl -Ls -D - "$url" | bat "$@"
 }
-
-# ########  ########  ######## ##      ##
-# ##     ## ##     ## ##       ##  ##  ##
-# ##     ## ##     ## ##       ##  ##  ##
-# ########  ########  ######   ##  ##  ##
-# ##     ## ##   ##   ##       ##  ##  ##
-# ##     ## ##    ##  ##       ##  ##  ##
-# ########  ##     ## ########  ###  ###
-
-if _exists brew
-then
-	alias bi='brew install'
-	alias bn='brew info'
-	alias bs='brew search'
-
-	plugins+=(brew)
-fi
 
 # ######## ########  #### ########  #######  ########
 # ##       ##     ##  ##     ##    ##     ## ##     ##
