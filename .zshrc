@@ -261,16 +261,6 @@ do
 	done
 done
 
-omzreadme() {
-	for dir in "$ZSH" "$ZSH_CUSTOM"
-	do
-		readme_file="$dir/plugins/$1/README.md"
-		[ ! -f "$readme_file" ] && continue
-		_exists bat && bat "$readme_file" && return
-		cat "$readme_file"
-	done
-}
-
 #    ###     ######  ########  ########
 #   ## ##   ##    ## ##     ## ##
 #  ##   ##  ##       ##     ## ##
