@@ -244,6 +244,7 @@ git git git-aliases
 git-extras
 git-lfs
 gpg-agent
+mycli mycli-alias
 mysql mysql-alias
 node
 op 1password
