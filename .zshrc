@@ -1,4 +1,5 @@
 # shellcheck disable=SC2030,SC2031,SC2034
+# https://github.com/remino/dotfiles
 
 # ########  ######  ##     ## ########   ######
 #      ##  ##    ## ##     ## ##     ## ##    ##
