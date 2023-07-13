@@ -305,10 +305,10 @@ BATCMD="$( _which_exists batcat bat )"
 if [ -n "$BATCMD" ]
 then
 	[ "$BATCMD" != "bat" ] && alias bat="\$BATCMD"
-	alias less="$BATCMD --tabs=2 --pager='command less -X --tabs=2'"
 	alias cat=less
 	export MANPAGER="sh -c 'col -bx | $BATCMD -l man -p'"
-	export PAGER="$BATCMD --tabs=2 --pager='command less -X --tabs=2'"
+	export PAGER="$BATCMD --tabs=2 --pager='command less -FX --tabs=2'"
+	alias less="$PAGER"
 fi
 
 baturl() {
