@@ -10,6 +10,7 @@
 	b = branch
 	c = commit
 	co = checkout
+	dft = difftool
 	l = pull
 	lo = log --oneline --decorate
 	pl = pull
@@ -25,6 +26,14 @@
 	rebase = false
 [push]
 	autoSetupRemote = true
+[diff]
+	tool = difftastic
+[difftool]
+	prompt = false
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+	difftool = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
