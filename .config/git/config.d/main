@@ -26,6 +26,10 @@
 	rebase = false
 [push]
 	autoSetupRemote = true
+[core]
+	pager = diff-so-fancy | less -RFX --tabs=2
+[diff-so-fancy]
+	stripLeadingSymbols = false
 [diff]
 	tool = difftastic
 [difftool]
@@ -34,6 +38,8 @@
 	cmd = difft "$LOCAL" "$REMOTE"
 [pager]
 	difftool = true
+[interactive]
+	diffFilter = diff-so-fancy --patch
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
