@@ -151,7 +151,7 @@ alias o='echo'
 alias lns='ln -s'
 alias pbcp='copa'
 alias reload=". \$HOME/.zshrc"
-alias zshrc='eval "$EDITOR" "$HOME/.zshrc"'
+alias zshrc='edit "$HOME/.zshrc"'
 
 if _exists code
 then
