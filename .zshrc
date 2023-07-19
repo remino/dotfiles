@@ -148,13 +148,12 @@ alias copa='clipcopy; clippaste'
 alias e='edit'
 alias edit='eval "$EDITOR"'
 alias findreadme="find . -iname 'readme\.*' -maxdepth 1"
+alias o='echo'
 alias lns='ln -s'
 alias pbcp='copa'
 alias readme='cat $( findreadme )'
 alias reload=". \$HOME/.zshrc"
 alias zshrc='edit "$HOME/.zshrc"'
-alias '='='echo'
-alias '+'='printf'
 
 if _exists code
 then
