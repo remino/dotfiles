@@ -378,6 +378,9 @@ map <leader>pp :setlocal paste!<cr>
 " Toggle invisible characters on and off
 map <leader>i :set list!<cr>
 
+" Set command Reload to reload .vimrc
+command! Reload source ~/.vimrc
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
