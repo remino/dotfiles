@@ -10,6 +10,7 @@
 	b = branch
 	c = commit
 	co = checkout
+	dft = difftool
 	l = pull
 	lo = log --oneline --decorate
 	pl = pull
@@ -25,3 +26,24 @@
 	rebase = false
 [push]
 	autoSetupRemote = true
+[core]
+	pager = diff-so-fancy | less -RFX --tabs=2
+[diff-so-fancy]
+	stripLeadingSymbols = false
+[diff]
+	tool = difftastic
+[difftool]
+	prompt = false
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+	difftool = true
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[rerere]
+	enabled = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
