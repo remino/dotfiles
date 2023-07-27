@@ -56,6 +56,15 @@ call plug#begin()
 " Plug 'junegunn/vim-easy-align'
 Plug 'editorconfig/editorconfig-vim'
 
+" Load dash plugin only if on a Mac and Dash is installed
+if has('mac')
+  if executable('Dash')
+		Plug 'rizzatti/dash.vim'
+  endif
+endif
+
+" Run :PlugInstall to install plugins.
+
 " Initialize plugin system
 call plug#end()
 
