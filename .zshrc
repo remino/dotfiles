@@ -664,6 +664,7 @@ if _exists exa
 then
 	alias exa='exa --color-scale --classify --git --group-directories-first --icons --time-style=long-iso'
 	alias l='exa -la'
+	alias lg='exa -laG'
 	alias ls=exa
 	alias ll='exa -l'
 	alias t=tree
