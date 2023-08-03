@@ -196,6 +196,13 @@ mvln() {
 	mv -v "$@" && ln -sv "$@"
 }
 
+# Show control characters
+# (Does not work with Powerlevel10k.)
+TRAPINT() {
+  print -n "^C"
+  return $(( 128 + $1 ))
+}
+
 # ######## ######## ########
 # ##            ##  ##
 # ##           ##   ##
