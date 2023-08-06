@@ -317,7 +317,7 @@ then
 	[ "$BATCMD" != "bat" ] && alias bat="\$BATCMD"
 	alias cat=less
 	export MANPAGER="sh -c 'col -bx | $BATCMD -l man -p'"
-	export PAGER="$BATCMD --tabs=2 --pager='command less -FX --tabs=2'"
+	export PAGER="$BATCMD --tabs=2"
 	alias less="$PAGER"
 fi
 
