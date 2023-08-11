@@ -253,6 +253,7 @@ bundle bundler
 chroma colorize
 code vscode
 date isodate
+deno
 fd
 gcloud
 gh
