@@ -180,6 +180,11 @@ then
 	alias vim='vim -p'
 fi
 
+if ls --group-directories-first / > /dev/null 2>&1
+then
+	alias ls='ls --color=tty --group-directories-first'
+fi
+
 # ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
 # ##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
 # ##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##
