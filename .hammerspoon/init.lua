@@ -66,6 +66,12 @@ end)
 keyboardAlert = nil
 currentLayout = hs.keycodes.currentSourceID()
 
+keyboardLayoutTable = {
+	EN = {"com.apple.keylayout.Canadian", "0"},
+	FR = {"com.apple.keylayout.Canadian-CSA", "9"},
+	JA = {"com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese", "8"},
+}
+
 keyboardAlertStyle = {
 	strokeWidth = 2,
 	strokeColor = { white = 1, alpha = 0.25 },
@@ -79,16 +85,14 @@ keyboardAlertStyle = {
 	fadeOutDuration = 0.30,
 }
 
-function formatKeyboardLayoutAlert(layout)
-	if layout == "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese" then
-		return "⌨️ JA"
-	elseif layout == "com.apple.keylayout.Canadian-CSA" then
-		return "⌨️ FR"
-	elseif layout == "com.apple.keylayout.ABC" then
-		return "⌨️ EN"
-	else
-		return "⌨️"
+function formatKeyboardLayoutAlert(layoutName)
+	for key, layout in pairs(keyboardLayoutTable) do
+		if layout[1] == layoutName then
+			return "⌨️ " .. key
+		end
 	end
+
+	return "⌨️ " .. layoutName
 end
 
 function switchKeyboardLayout(sourceID)
@@ -114,14 +118,8 @@ hs.keycodes.inputSourceChanged(function()
 	end
 end)
 
-hs.hotkey.bind({"cmd", "shift", "ctrl"}, "8", function()
-	switchKeyboardLayout("com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese")
-end)
-
-hs.hotkey.bind({"cmd", "shift", "ctrl"}, "9", function()
-	switchKeyboardLayout("com.apple.keylayout.Canadian-CSA")
-end)
-
-hs.hotkey.bind({"cmd", "shift", "ctrl"}, "0", function()
-	switchKeyboardLayout("com.apple.keylayout.ABC")
-end)
+for key, layout in pairs(keyboardLayoutTable) do
+	hs.hotkey.bind({"cmd", "shift", "ctrl"}, layout[2], function()
+		switchKeyboardLayout(layout[1])
+	end)
+end
