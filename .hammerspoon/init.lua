@@ -11,6 +11,7 @@ includes = {
 	"spoons",
 	"clock",
 	"keyboard",
+	"mouse",
 	"local",
 }
 
