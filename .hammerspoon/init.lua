@@ -1,3 +1,13 @@
+--[[
+########  ######## ##        #######     ###    ########
+##     ## ##       ##       ##     ##   ## ##   ##     ##
+##     ## ##       ##       ##     ##  ##   ##  ##     ##
+########  ######   ##       ##     ## ##     ## ##     ##
+##   ##   ##       ##       ##     ## ######### ##     ##
+##    ##  ##       ##       ##     ## ##     ## ##     ##
+##     ## ######## ########  #######  ##     ## ########
+]]
+
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 
@@ -6,18 +16,68 @@ hs.hotkey.bind({"cmd", "shift", "ctrl"}, "R", function()
 	hs.alert.show("HammerSpoon Config Reloaded")
 end)
 
+--[[
+ ######  ########   #######   #######  ##    ##  ######
+##    ## ##     ## ##     ## ##     ## ###   ## ##    ##
+##       ##     ## ##     ## ##     ## ####  ## ##
+ ######  ########  ##     ## ##     ## ## ## ##  ######
+      ## ##        ##     ## ##     ## ##  ####       ##
+##    ## ##        ##     ## ##     ## ##   ### ##    ##
+ ######  ##         #######   #######  ##    ##  ######
+]]
+
+hs.loadSpoon("FnMate")
+spoon.FnMate:init()
+
+hs.loadSpoon("MouseFollowsFocus")
+spoon.MouseFollowsFocus:start()
+
+--[[
+ ######  ##        #######   ######  ##    ##
+##    ## ##       ##     ## ##    ## ##   ##
+##       ##       ##     ## ##       ##  ##
+##       ##       ##     ## ##       #####
+##       ##       ##     ## ##       ##  ##
+##    ## ##       ##     ## ##    ## ##   ##
+ ######  ########  #######   ######  ##    ##
+]]
+
 hs.loadSpoon("AClock")
 spoon.AClock["textColor"] = {hex="#000000", alpha=0.8}
-spoon.AClock["textFont"] = "Helvetica Neue Bold"
-spoon.AClock["format"] = "%Y-%m-%d %a %H:%M:%S"
+spoon.AClock["textFont"] = "Helvetica Neue"
+spoon.AClock["textSize"] = 120
+spoon.AClock["format"] = "%Y-%m-%d\n%A\n%H:%M:%S"
 spoon.AClock["height"] = 600
 spoon.AClock["width"] = 800
 hs.hotkey.bind({"cmd", "shift", "ctrl"}, "C", function()
 	spoon.AClock:toggleShow()
 end)
 
-currentLayout = nil
+--[[
+##    ## ######## ##    ## ########   #######     ###    ########  ########
+##   ##  ##        ##  ##  ##     ## ##     ##   ## ##   ##     ## ##     ##
+##  ##   ##         ####   ##     ## ##     ##  ##   ##  ##     ## ##     ##
+#####    ######      ##    ########  ##     ## ##     ## ########  ##     ##
+##  ##   ##          ##    ##     ## ##     ## ######### ##   ##   ##     ##
+##   ##  ##          ##    ##     ## ##     ## ##     ## ##    ##  ##     ##
+##    ## ########    ##    ########   #######  ##     ## ##     ## ########
+]]
+
 keyboardAlert = nil
+currentLayout = hs.keycodes.currentSourceID()
+
+keyboardAlertStyle = {
+	strokeWidth = 2,
+	strokeColor = { white = 1, alpha = 0.25 },
+	fillColor = { white = 0, alpha = 0.75 },
+	textColor = { white = 1, alpha = 1 },
+	textFont = "Helvetica Neue",
+	textSize = 36,
+	radius = 12,
+	atScreenEdge = 0,
+	fadeInDuration = 0,
+	fadeOutDuration = 0.30,
+}
 
 function formatKeyboardLayoutAlert(layout)
 	if layout == "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese" then
@@ -45,7 +105,12 @@ hs.keycodes.inputSourceChanged(function()
 			hs.alert.closeSpecific(keyboardAlert)
 		end
 
-		keyboardAlert = hs.alert.show(formatKeyboardLayoutAlert(currentLayout))
+		keyboardAlert = hs.alert.show(
+			formatKeyboardLayoutAlert(currentLayout),
+			keyboardAlertStyle,
+			hs.screen.mainScreen(),
+			1
+		)
 	end
 end)
 
