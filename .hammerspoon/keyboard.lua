@@ -58,3 +58,12 @@ for key, layout in pairs(keyboardLayoutTable) do
 		switchKeyboardLayout(layout[1])
 	end)
 end
+
+composeKeyWatch = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+	-- 102 = Japanese eisu (英数) key
+	if event:getKeyCode() == 102 and hs.keycodes.currentSourceID() == keyboardLayoutTable["EN"][1] then
+		hs.eventtap.keyStroke({}, "§", 0)
+	end
+end)
+
+composeKeyWatch:start()
