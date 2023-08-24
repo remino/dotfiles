@@ -680,8 +680,7 @@ done
 
 setopt AUTO_LIST
 setopt CHECK_JOBS
-setopt CORRECT_ALL
-setopt MENU_COMPLETE
+setopt CORRECT
 setopt PATH_DIRS
 
 # ######## ##     ##    ###
