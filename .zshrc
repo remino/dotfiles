@@ -265,7 +265,7 @@ chroma colorize
 code vscode
 date isodate
 deno
-fd
+fd fdfind
 gcloud
 gh
 git git git-aliases
