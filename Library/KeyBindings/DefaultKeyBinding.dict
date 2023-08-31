@@ -13,4 +13,22 @@
   ":" = {
     "(" = ("insertText:", "my face is sad");
   };
+  "e" = {
+    "'" = ("insertText:", "é");
+  };
+  "'" = {
+    "e" = ("insertText:", "é");
+  };
+  "e" = {
+    "`" = ("insertText:", "è");
+  };
+  "`" = {
+    "e" = ("insertText:", "è");
+  };
+  "e" = {
+    "^" = ("insertText:", "ê");
+  };
+  "^" = {
+    "e" = ("insertText:", "ê");
+  };
 };}
