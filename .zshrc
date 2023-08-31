@@ -173,7 +173,13 @@ then
 	alias tree='tree -CNhp'
 fi
 
-if _exists vim
+if _exists nvim
+then
+	alias v=nvim
+	alias vi=nvim
+	alias vim=nvim
+	alias neovim=nvim
+elif _exists vim
 then
 	alias v=vim
 	alias vi=vim
