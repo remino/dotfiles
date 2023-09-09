@@ -214,6 +214,18 @@ mvln() {
 	mv -v "$@" && ln -sv "$@"
 }
 
+k() {
+	if [ -f bun.lockb ]; then
+		command bun "$@"
+	elif [ -f yarn.lock ]; then
+		command yarn "$@"
+	elif [ -f package-lock.json ]; then
+		command npm "$@"
+	else
+		command pnpm "$@"
+	fi
+}
+
 # Show control characters
 # (Does not work with Powerlevel10k.)
 TRAPINT() {
