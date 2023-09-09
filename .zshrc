@@ -154,6 +154,7 @@ alias o='echo'
 alias pbcp='copa'
 alias readme='cat $( findreadme )'
 alias reload=". \$HOME/.zshrc"
+alias s='ssh'
 alias zshrc='edit "$HOME/.zshrc"'
 
 if _exists code
