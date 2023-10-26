@@ -33,6 +33,10 @@ _plugin_exists() {
 	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH/custom/plugins/$1" ]
 }
 
+_unalias() {
+	alias "$1" > /dev/null 2>&1 && unalias "$1"
+}
+
 _which_exists() {
 	for cmd in "$@"
 	do
@@ -672,6 +676,7 @@ mvln() {
 	mv -v "$@" && ln -sv "$@"
 }
 
+_unalias k
 k() {
 	if [ -f bun.lockb ]; then
 		command bun "$@"
