@@ -2,7 +2,7 @@ arrowParens: 'avoid'
 bracketSameLine: true
 bracketSpacing: true
 jsxSingleQuote: false
-printWidth: 100
+printWidth: 80
 proseWrap: 'always'
 quoteProps: 'as-needed'
 semi: false
