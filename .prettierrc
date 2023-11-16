@@ -10,3 +10,11 @@ singleQuote: true
 tabWidth: 2
 trailingComma: 'es5'
 useTabs: true
+
+overrides:
+  - files: '*.md'
+    options:
+      parser: 'markdown'
+      proseWrap: 'always'
+      useTabs: false
+
