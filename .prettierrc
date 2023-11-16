@@ -17,4 +17,12 @@ overrides:
       parser: 'markdown'
       proseWrap: 'always'
       useTabs: false
+  - files: '*.yml'
+    options:
+      parser: 'yaml'
+      useTabs: false
+  - files: '*.yaml'
+    options:
+      parser: 'yaml'
+      useTabs: false
 
