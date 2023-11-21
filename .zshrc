@@ -33,6 +33,10 @@ _plugin_exists() {
 	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH/custom/plugins/$1" ]
 }
 
+_unalias() {
+	alias "$1" > /dev/null 2>&1 && unalias "$1"
+}
+
 _which_exists() {
 	for cmd in "$@"
 	do
@@ -198,47 +202,6 @@ if ls --group-directories-first / > /dev/null 2>&1
 then
 	alias ls='ls --color=tty --group-directories-first'
 fi
-
-# ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
-# ##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
-# ##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##
-# ######   ##     ## ## ## ## ##          ##     ##  ##     ## ## ## ##  ######
-# ##       ##     ## ##  #### ##          ##     ##  ##     ## ##  ####       ##
-# ##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
-# ##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
-
-mcd() {
-	[ $# -lt 1 ] && "Usage: mcd <dir>"
-	mkdir -p "$1"
-	cd "$1"
-}
-
-mvhere() {
-	mv -v "$@" .
-}
-
-mvln() {
-	mv -v "$@" && ln -sv "$@"
-}
-
-k() {
-	if [ -f bun.lockb ]; then
-		command bun "$@"
-	elif [ -f yarn.lock ]; then
-		command yarn "$@"
-	elif [ -f package-lock.json ]; then
-		command npm "$@"
-	else
-		command pnpm "$@"
-	fi
-}
-
-# Show control characters
-# (Does not work with Powerlevel10k.)
-TRAPINT() {
-  print -n "^C"
-  return $(( 128 + $1 ))
-}
 
 # ######## ######## ########
 # ##            ##  ##
@@ -695,6 +658,48 @@ do
 	source "$ZSH/oh-my-zsh.sh"
 	break
 done
+
+# ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
+# ##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
+# ##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##
+# ######   ##     ## ## ## ## ##          ##     ##  ##     ## ## ## ##  ######
+# ##       ##     ## ##  #### ##          ##     ##  ##     ## ##  ####       ##
+# ##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
+# ##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
+
+mcd() {
+	[ $# -lt 1 ] && "Usage: mcd <dir>"
+	mkdir -p "$1"
+	cd "$1"
+}
+
+mvhere() {
+	mv -v "$@" .
+}
+
+mvln() {
+	mv -v "$@" && ln -sv "$@"
+}
+
+_unalias k
+k() {
+	if [ -f bun.lockb ]; then
+		command bun "$@"
+	elif [ -f yarn.lock ]; then
+		command yarn "$@"
+	elif [ -f package-lock.json ]; then
+		command npm "$@"
+	else
+		command pnpm "$@"
+	fi
+}
+
+# Show control characters
+# (Does not work with Powerlevel10k.)
+TRAPINT() {
+  print -n "^C"
+  return $(( 128 + $1 ))
+}
 
 #  #######  ########  ######## ####  #######  ##    ##  ######
 # ##     ## ##     ##    ##     ##  ##     ## ###   ## ##    ##

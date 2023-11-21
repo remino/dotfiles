@@ -2,7 +2,7 @@ arrowParens: 'avoid'
 bracketSameLine: true
 bracketSpacing: true
 jsxSingleQuote: false
-printWidth: 100
+printWidth: 80
 proseWrap: 'always'
 quoteProps: 'as-needed'
 semi: false
@@ -10,3 +10,19 @@ singleQuote: true
 tabWidth: 2
 trailingComma: 'es5'
 useTabs: true
+
+overrides:
+  - files: '*.md'
+    options:
+      parser: 'markdown'
+      proseWrap: 'always'
+      useTabs: false
+  - files: '*.yml'
+    options:
+      parser: 'yaml'
+      useTabs: false
+  - files: '*.yaml'
+    options:
+      parser: 'yaml'
+      useTabs: false
+
