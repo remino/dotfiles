@@ -165,6 +165,11 @@ then
 	alias codew='code -w'
 fi
 
+if _exists git
+then
+	alias gci='git commit -m "Initial commit"'
+fi
+
 if _exists msgcat
 then
 	alias colortest='msgcat --color=test'
