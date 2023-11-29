@@ -13,6 +13,11 @@ windowAlertStyle = {
 
 function moveMouseToFocusedWindow()
 	local win = hs.window.focusedWindow()
+
+	if not win then
+		return
+	end
+
 	local title = win:application():title()
 	local frame = win:frame()
 	local screen = win:screen()

@@ -9,6 +9,7 @@ end
 includes = {
 	"reload",
 	"spoons",
+	"os",
 	"clock",
 	"keyboard",
 	"mouse",
