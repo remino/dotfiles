@@ -130,7 +130,7 @@
                         ]
                     },
                     {
-                        "description": "Fn + num to focus Dock app",
+                        "description": "Fn + num to focus Dock app (uses Hammerspoon)",
                         "manipulators": [
                             {
                                 "type": "basic",
@@ -142,7 +142,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 1 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=1'"
                                     }
                                 ]
                             },
@@ -156,7 +156,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 2 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=2'"
                                     }
                                 ]
                             },
@@ -170,7 +170,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 3 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=3'"
                                     }
                                 ]
                             },
@@ -184,7 +184,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 4 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=4'"
                                     }
                                 ]
                             },
@@ -198,7 +198,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 5 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=5'"
                                     }
                                 ]
                             },
@@ -212,7 +212,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 6 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=6'"
                                     }
                                 ]
                             },
@@ -226,7 +226,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 7 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=7'"
                                     }
                                 ]
                             },
@@ -240,7 +240,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 8 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=8'"
                                     }
                                 ]
                             },
@@ -254,7 +254,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 9 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=9'"
                                     }
                                 ]
                             },
@@ -268,7 +268,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"System Events\" to click UI element 10 of list 1 of process \"Dock\"'"
+                                        "shell_command": "open 'hammerspoon://focusDockApp?n=10'"
                                     }
                                 ]
                             }

@@ -12,6 +12,8 @@ includes = {
 	"clock",
 	"keyboard",
 	"mouse",
+	"dock",
+	"urlevent",
 	"local",
 }
 

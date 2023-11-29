@@ -1,3 +1,10 @@
+function moveMouseToFocusedWindow()
+	local win = hs.window.focusedWindow()
+	local frame = win:frame()
+	local center = hs.geometry.rectMidPoint(frame)
+	hs.mouse.setAbsolutePosition(center)
+end
+
 hs.hotkey.bind({"cmd", "ctrl", "shift"}, "m", function()
 	local win = hs.window.focusedWindow()
 	local screen = win:screen()
