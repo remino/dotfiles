@@ -14,7 +14,7 @@ keyboardAlertStyle = {
 	textColor = { white = 1, alpha = 1 },
 	textFont = "Helvetica Neue",
 	textSize = 36,
-	radius = 12,
+	radius = 36,
 	atScreenEdge = 0,
 	fadeInDuration = 0,
 	fadeOutDuration = 0.30,
@@ -23,11 +23,11 @@ keyboardAlertStyle = {
 function formatKeyboardLayoutAlert(layoutName)
 	for key, layout in pairs(keyboardLayoutTable) do
 		if layout[1] == layoutName then
-			return "⌨️ " .. key
+			return " ⌨️ " .. key:lower() .. " "
 		end
 	end
 
-	return "⌨️ " .. layoutName
+	return " ⌨️ " .. layoutName .. " "
 end
 
 function switchKeyboardLayout(sourceID)
