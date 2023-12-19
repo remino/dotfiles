@@ -714,21 +714,21 @@ setopt CHECK_JOBS
 setopt CORRECT
 setopt PATH_DIRS
 
-# ######## ##     ##    ###
-# ##        ##   ##    ## ##
-# ##         ## ##    ##   ##
-# ######      ###    ##     ##
-# ##         ## ##   #########
-# ##        ##   ##  ##     ##
-# ######## ##     ## ##     ##
+# ######## ########    ###
+# ##            ##    ## ##
+# ##           ##    ##   ##
+# ######      ##    ##     ##
+# ##         ##     #########
+# ##        ##      ##     ##
+# ######## ######## ##     ##
 
-if _exists exa
+if _exists eza
 then
-	alias exa='exa --color-scale --classify --git --group-directories-first --icons --time-style=long-iso'
-	alias l='exa -la'
-	alias lg='exa -laG'
-	alias ls=exa
-	alias ll='exa -l'
+	alias eza='eza --color-scale --classify --git --group-directories-first --icons --time-style=long-iso'
+	alias l='eza -la'
+	alias lg='eza -laG'
+	alias ls=eza
+	alias ll='eza -l'
 	alias t=tree
 	alias tree='ll -T'
 fi
