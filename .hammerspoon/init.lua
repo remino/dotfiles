@@ -11,6 +11,7 @@ includes = {
 	"spoons",
 	"os",
 	"clock",
+	"screen",
 	"keyboard",
 	"mouse",
 	"dock",
