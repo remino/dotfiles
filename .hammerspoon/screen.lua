@@ -28,8 +28,6 @@ local function rotateScreen()
 
 	local ok, _, _, rc = hs.execute(command)
 
-	hs.timer.usleep(2000 * 1000)
-
 	screen = hs.screen(id)
 
 	local frame = screen:frame()
