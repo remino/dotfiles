@@ -582,10 +582,16 @@ done
 
 repeat $(( LINES / 2 )) echo
 
-(
-	hostname | ( ( _exists figlet && figlet ) || cat )
+if _exists neofetch
+then
+	neofetch
 	_exists fortune && fortune -s
-) | ( ( _exists lolcat && lolcat ) || command cat )
+else
+	(
+		hostname | ( ( _exists figlet && figlet ) || cat )
+		_exists fortune && fortune -s
+	) | ( ( _exists lolcat && lolcat ) || command cat )
+fi
 
 #  ######  ##    ##    ###    ########
 # ##    ## ###   ##   ## ##   ##     ##
