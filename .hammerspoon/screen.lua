@@ -1,5 +1,5 @@
 local function requireDisplayplacer()
-	local ok, _, _, rc = hs.execute("displayplacer --version", true)
+	local _, ok, _, rc = hs.execute("displayplacer --version", true)
 
 	if ok and rc == 0 then
 		return true
@@ -24,9 +24,14 @@ local function rotateScreen()
 		newRotation = 90
 	end
 
-	local command = 'displayplacer "id:' .. id .. ' degree:' .. newRotation .. '"'
+	local command = '/opt/homebrew/bin/displayplacer "id:' .. id .. ' degree:' .. newRotation .. '"'
 
-	local ok, _, _, rc = hs.execute(command)
+	local _, ok, _, rc = hs.execute(command)
+
+	if not ok then
+		hs.alert.show('Screen rotate failed: ' .. rc)
+		return
+	end
 
 	screen = hs.screen(id)
 
