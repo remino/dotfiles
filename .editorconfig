@@ -6,10 +6,7 @@ insert_final_newline = true
 indent_style = tab
 indent_size = 2
 
-[*.md]
-trim_trailing_whitespace = false
-
-[*.sh]
+# shfmt
 binary_next_line = true
 function_next_line = false
 keep_padding = false
@@ -17,6 +14,9 @@ never_split = true
 shell_variant = posix
 space_redirects = true
 switch_case_indent = true
+
+[*.md]
+trim_trailing_whitespace = false
 
 [*.{yaml,yml}]
 indent_style = space
