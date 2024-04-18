@@ -9,5 +9,14 @@ indent_size = 2
 [*.md]
 trim_trailing_whitespace = false
 
+[*.sh]
+binary_next_line = true
+function_next_line = false
+keep_padding = false
+never_split = true
+shell_variant = posix
+space_redirects = true
+switch_case_indent = true
+
 [*.{yaml,yml}]
 indent_style = space
