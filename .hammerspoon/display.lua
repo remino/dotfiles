@@ -8,7 +8,7 @@ local function requireDisplayplacer()
 	return false
 end
 
-local function rotateScreen()
+local function rotateDisplay()
 	local screen = hs.mouse.getCurrentScreen()
 	local currentRotation = screen:rotate()
 
@@ -33,7 +33,7 @@ local function rotateScreen()
 	local frame = screen:frame()
 	hs.mouse.setRelativePosition({x = frame.x + frame.w / 2, y = frame.y + frame.h / 2}, screen)
 
-	hs.alert.show("Screen rotated", {}, screen)
+	hs.alert.show("Display rotated", {}, screen)
 end
 
-hs.hotkey.bind({"cmd", "shift", "ctrl"}, "D", rotateScreen)
+hs.hotkey.bind({"cmd", "shift", "ctrl"}, "D", rotateDisplay)
