@@ -26,12 +26,7 @@ local function rotateScreen()
 
 	local command = '/opt/homebrew/bin/displayplacer "id:' .. id .. ' degree:' .. newRotation .. '"'
 
-	local _, ok, _, rc = hs.execute(command)
-
-	if not ok then
-		hs.alert.show('Screen rotate failed: ' .. rc)
-		return
-	end
+	local _, _, _, rc = hs.execute(command)
 
 	screen = hs.screen(id)
 
