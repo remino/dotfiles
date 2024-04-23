@@ -54,7 +54,12 @@ local plugins = {
 			vim.g.copilot_no_tab_map = true;
 			vim.g.copilot_assume_mapped = true;
 		end,
-	}
+	},
+
+	{
+		url = "https://github.com/slim-template/vim-slim.git",
+		lazy = false,
+	},
 
   -- To make a plugin not be loaded
   -- {
