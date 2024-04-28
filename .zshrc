@@ -589,8 +589,6 @@ done
 # ##     ## ##       ##    ## ##    ## ##     ## ##    ##  ##
 # ##     ## ########  ######   ######  ##     ##  ######   ########
 
-repeat $(( LINES / 2 )) echo
-
 if _exists neofetch
 then
 	neofetch
