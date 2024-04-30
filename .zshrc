@@ -597,6 +597,8 @@ done
 
 repeat $(( LINES / 2 )) echo
 
+type _private_msg > /dev/null 2>&1 && _private_msg
+
 (
 	(
 		( _exists pfetch && pfetch ) \
