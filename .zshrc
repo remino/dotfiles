@@ -595,16 +595,20 @@ done
 # ##     ## ##       ##    ## ##    ## ##     ## ##    ##  ##
 # ##     ## ########  ######   ######  ##     ##  ######   ########
 
-if _exists neofetch
-then
-	neofetch
-	_exists fortune && fortune -s
-else
+(
 	(
-		hostname | ( ( _exists figlet && figlet ) || cat )
-		_exists fortune && fortune -s
-	) | ( ( _exists lolcat && lolcat ) || command cat )
-fi
+		( _exists pfetch && pfetch ) \
+			|| ( _exists neofetch && neofetch ) \
+			|| (
+				hostname \
+					| ( ( _exists figlet && figlet ) || cat ) \
+					| ( ( _exists lolcat && lolcat ) || command cat ) \
+				;
+			) \
+		;
+	)
+	_exists fortune && fortune -s
+)
 
 #  ######  ##    ##    ###    ########
 # ##    ## ###   ##   ## ##   ##     ##
