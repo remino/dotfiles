@@ -147,6 +147,8 @@ plugins+=(ssh-agent)
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+[ -z "$EXT_IP_URL" ] && EXT_IP_URL="https://icanhazip.com"
+
 alias c='cat'
 alias copa='clipcopy; clippaste'
 alias e='edit'
@@ -163,6 +165,9 @@ alias mbd='mansite -b deploy'
 alias mbdp='mansite -b deploy && git push origin'
 alias mdp='mansite deploy && git push origin'
 alias mm='middleman'
+alias extip4='curl -L "$EXT_IP_URL" | xargs echo'
+alias extip6='curl -6L "$EXT_IP_URL" | xargs echo'
+alias extip='extip4'
 alias o='echo'
 alias pbcp='copa'
 alias pp='ps -auxwwf'
