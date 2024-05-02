@@ -597,22 +597,25 @@ done
 
 repeat $(( LINES / 2 )) echo
 
-type _private_msg > /dev/null 2>&1 && _private_msg
+if type _private_msg > /dev/null 2>&1
+then
+	_private_msg
+else
+	for msgsrc in fastfetch neofetch pfetch
+	do
+		_exists "$msgsrc" && break
+	done
 
-(
-	(
-		( _exists pfetch && pfetch ) \
-			|| ( _exists neofetch && neofetch ) \
-			|| (
-				hostname \
-					| ( ( _exists figlet && figlet ) || cat ) \
-					| ( ( _exists lolcat && lolcat ) || command cat ) \
-				;
-			) \
-		;
-	)
-	_exists fortune && fortune -s
-)
+	if [ -n "$msgsrc" ]
+	then
+		"$msgsrc"
+	else
+		printf "%s@%s %s %s\n" "$USER" "$( hostname )" "$( extip )"
+		uptime
+		echo
+		_exists fortune && fortune
+	fi
+fi
 
 #  ######  ##    ##    ###    ########
 # ##    ## ###   ##   ## ##   ##     ##
