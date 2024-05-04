@@ -575,6 +575,61 @@ then
 	alias prettyjs='prettier --stdin-filepath script.js'
 fi
 
+# ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
+# ##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
+# ##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##
+# ######   ##     ## ## ## ## ##          ##     ##  ##     ## ## ## ##  ######
+# ##       ##     ## ##  #### ##          ##     ##  ##     ## ##  ####       ##
+# ##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
+# ##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
+
+mcd() {
+	[ $# -lt 1 ] && "Usage: mcd <dir>"
+	mkdir -p "$1"
+	cd "$1"
+}
+
+minifetch() {
+	printf "%s@%s %s %s\n" "$USER" "$( hostname )" "$( extip )"
+	uptime
+	echo
+	_exists fortune && fortune
+}
+
+unifetch() {
+	for msgsrc in fastfetch neofetch pfetch minifetch
+	do
+		_exists "$msgsrc" && break
+	done
+
+	if [ "$msgsrc" != "minifetch" ]
+	then
+		"$msgsrc"
+	else
+		minifetch
+	fi
+}
+
+_unalias k
+k() {
+	if [ -f bun.lockb ]; then
+		command bun "$@"
+	elif [ -f yarn.lock ]; then
+		command yarn "$@"
+	elif [ -f package-lock.json ]; then
+		command npm "$@"
+	else
+		command pnpm "$@"
+	fi
+}
+
+# Show control characters
+# (Does not work with Powerlevel10k.)
+TRAPINT() {
+  print -n "^C"
+  return $(( 128 + $1 ))
+}
+
 # ##        #######   ######     ###    ##
 # ##       ##     ## ##    ##   ## ##   ##
 # ##       ##     ## ##        ##   ##  ##
@@ -604,20 +659,7 @@ if type _private_msg > /dev/null 2>&1
 then
 	_private_msg
 else
-	for msgsrc in fastfetch neofetch pfetch simple
-	do
-		_exists "$msgsrc" && break
-	done
-
-	if [ "$msgsrc" != "simple" ]
-	then
-		"$msgsrc"
-	else
-		printf "%s@%s %s %s\n" "$USER" "$( hostname )" "$( extip )"
-		uptime
-		echo
-		_exists fortune && fortune
-	fi
+	unifetch
 fi
 
 #  ######  ##    ##    ###    ########
@@ -705,48 +747,6 @@ do
 	source "$ZSH/oh-my-zsh.sh"
 	break
 done
-
-# ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
-# ##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
-# ##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##
-# ######   ##     ## ## ## ## ##          ##     ##  ##     ## ## ## ##  ######
-# ##       ##     ## ##  #### ##          ##     ##  ##     ## ##  ####       ##
-# ##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
-# ##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
-
-mcd() {
-	[ $# -lt 1 ] && "Usage: mcd <dir>"
-	mkdir -p "$1"
-	cd "$1"
-}
-
-mvhere() {
-	mv -v "$@" .
-}
-
-mvln() {
-	mv -v "$@" && ln -sv "$@"
-}
-
-_unalias k
-k() {
-	if [ -f bun.lockb ]; then
-		command bun "$@"
-	elif [ -f yarn.lock ]; then
-		command yarn "$@"
-	elif [ -f package-lock.json ]; then
-		command npm "$@"
-	else
-		command pnpm "$@"
-	fi
-}
-
-# Show control characters
-# (Does not work with Powerlevel10k.)
-TRAPINT() {
-  print -n "^C"
-  return $(( 128 + $1 ))
-}
 
 #  #######  ########  ######## ####  #######  ##    ##  ######
 # ##     ## ##     ##    ##     ##  ##     ## ###   ## ##    ##
