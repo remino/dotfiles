@@ -604,12 +604,12 @@ if type _private_msg > /dev/null 2>&1
 then
 	_private_msg
 else
-	for msgsrc in fastfetch neofetch pfetch
+	for msgsrc in fastfetch neofetch pfetch simple
 	do
 		_exists "$msgsrc" && break
 	done
 
-	if [ -n "$msgsrc" ]
+	if [ "$msgsrc" != "simple" ]
 	then
 		"$msgsrc"
 	else
