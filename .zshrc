@@ -109,6 +109,17 @@ path+=(
 	"$HOME/bin"
 )
 
+if [ -z "$ZSH" ]
+then
+	for ZSH in "$HOME/.oh-my-zsh" "/opt/oh-my-zsh"
+	do
+		[ ! -d "$ZSH" ] && continue
+		export ZSH
+		[ ! -f "$ZSH/oh-my-zsh.sh" ] && unset ZSH && continue
+		break
+	done
+fi
+
 #  ######   ######  ##     ##            ###     ######   ######## ##    ## ########
 # ##    ## ##    ## ##     ##           ## ##   ##    ##  ##       ###   ##    ##
 # ##       ##       ##     ##          ##   ##  ##        ##       ####  ##    ##
@@ -740,13 +751,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Path to your oh-my-zsh installation.
-for omzpath in "$HOME/.oh-my-zsh" "/opt/oh-my-zsh"
-do
-	[ ! -d "$omzpath" ] && continue
-	export ZSH="$omzpath"
-	source "$ZSH/oh-my-zsh.sh"
-	break
-done
+[ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
 
 #  #######  ########  ######## ####  #######  ##    ##  ######
 # ##     ## ##     ##    ##     ##  ##     ## ###   ## ##    ##
