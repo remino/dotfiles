@@ -8,7 +8,7 @@ end
 
 includes = {
 	"lib",
-	"reload",
+	"hammerspoon",
 	"spoons",
 	"os",
 	"clock",
