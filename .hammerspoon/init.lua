@@ -7,6 +7,7 @@ function include_if_exists(filename)
 end
 
 includes = {
+	"lib",
 	"reload",
 	"spoons",
 	"os",
