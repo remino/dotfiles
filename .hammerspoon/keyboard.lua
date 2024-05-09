@@ -17,6 +17,31 @@ function formatKeyboardLayoutAlert(layoutName)
 	return " ⌨️ " .. layoutName .. " "
 end
 
+local function toggleFunctionKeys()
+	-- get system preference via CLI
+	local functionKeysEnabled = hs.execute("defaults read -g com.apple.keyboard.fnState")
+
+	if tonumber(functionKeysEnabled) == 1 then
+		local _, ok, _, rc = hs.execute("defaults write -g com.apple.keyboard.fnState -bool false")
+
+		if not ok then
+			hs.alert.show("Failed to set function keys", 0.5)
+			return
+		end
+
+		hs.alert.show("Function keys as media keys", 0.5)
+	else
+		local _, ok, _, rc = hs.execute("defaults write -g com.apple.keyboard.fnState -bool true")
+
+		if not ok then
+			hs.alert.show("Failed to set function keys", 0.5)
+			return
+		end
+
+		hs.alert.show("Function keys as F keys", 0.5)
+	end
+end
+
 function switchKeyboardLayout(sourceID)
 	hs.keycodes.currentSourceID(sourceID)
 end
@@ -60,6 +85,10 @@ for key, layout in pairs(keyboardLayoutTable) do
 		switchKeyboardLayout(layout[1])
 	end)
 end
+
+hs.hotkey.bind({"cmd", "shift", "ctrl"}, 'F', function()
+	toggleFunctionKeys()
+end)
 
 composeKeyWatch = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
 	-- 102 = Japanese eisu (英数) key
