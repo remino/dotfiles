@@ -36,4 +36,4 @@ local function rotateDisplay()
 	hs.alert.show("Display rotated", {}, screen)
 end
 
-hs.hotkey.bind({"cmd", "shift", "ctrl"}, "R", rotateDisplay)
+menu.registerCommand("display:rotate", "Display: Rotate", rotateDisplay)

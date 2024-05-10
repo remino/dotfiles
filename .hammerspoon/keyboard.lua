@@ -17,28 +17,36 @@ function formatKeyboardLayoutAlert(layoutName)
 	return " ⌨️ " .. layoutName .. " "
 end
 
+local function setFunctioKeysAsMediaKeys()
+	local _, ok, _, rc = hs.execute("defaults write -g com.apple.keyboard.fnState -bool false")
+
+	if not ok then
+		hs.alert.show("Failed to set function keys", 0.5)
+		return
+	end
+
+	hs.alert.show("Function keys as media keys", 0.5)
+end
+
+local function setFunctionKeysAsFKeys()
+	local _, ok, _, rc = hs.execute("defaults write -g com.apple.keyboard.fnState -bool true")
+
+	if not ok then
+		hs.alert.show("Failed to set function keys", 0.5)
+		return
+	end
+
+	hs.alert.show("Function keys as F keys", 0.5)
+end
+
 local function toggleFunctionKeys()
 	-- get system preference via CLI
 	local functionKeysEnabled = hs.execute("defaults read -g com.apple.keyboard.fnState")
 
 	if tonumber(functionKeysEnabled) == 1 then
-		local _, ok, _, rc = hs.execute("defaults write -g com.apple.keyboard.fnState -bool false")
-
-		if not ok then
-			hs.alert.show("Failed to set function keys", 0.5)
-			return
-		end
-
-		hs.alert.show("Function keys as media keys", 0.5)
+		setFunctioKeysAsMediaKeys()
 	else
-		local _, ok, _, rc = hs.execute("defaults write -g com.apple.keyboard.fnState -bool true")
-
-		if not ok then
-			hs.alert.show("Failed to set function keys", 0.5)
-			return
-		end
-
-		hs.alert.show("Function keys as F keys", 0.5)
+		setFunctionKeysAsFKeys()
 	end
 end
 
@@ -86,15 +94,30 @@ for key, layout in pairs(keyboardLayoutTable) do
 	end)
 end
 
-hs.hotkey.bind({"cmd", "shift", "ctrl"}, 'F', function()
-	toggleFunctionKeys()
-end)
-
-composeKeyWatch = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+local composeKeyWatch = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
 	-- 102 = Japanese eisu (英数) key
 	if event:getKeyCode() == 102 and hs.keycodes.currentSourceID() == keyboardLayoutTable["EN"][1] then
 		hs.eventtap.keyStroke({}, "§", 0)
 	end
 end)
 
+local commands = {
+	{
+		text = "Function Keys: Toggle",
+		id = "keyboard:fnKeys:toggle",
+		callback = toggleFunctionKeys
+	},
+	{
+		text = "Function Keys: As Media Keys",
+		id = "keyboard:fnKeys:media",
+		callback = setFunctioKeysAsMediaKeys
+	},
+	{
+		text = "Function Keys: As F Keys",
+		id = "keyboard:fnKeys:fKeys",
+		callback = setFunctionKeysAsFKeys
+	}
+}
+
 composeKeyWatch:start()
+menu.registerCommands(commands)

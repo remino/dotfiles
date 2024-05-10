@@ -1,4 +1,4 @@
-windowAlertStyle = {
+local windowAlertStyle = {
 	strokeWidth = 2,
 	strokeColor = { white = 1, alpha = 0.25 },
 	fillColor = { white = 0, alpha = 0.75 },
@@ -11,7 +11,7 @@ windowAlertStyle = {
 	fadeOutDuration = 0.30,
 }
 
-function moveMouseToFocusedWindow()
+local function moveMouseToFocusedWindow()
 	local win = hs.window.focusedWindow()
 
 	if not win then
@@ -26,9 +26,51 @@ function moveMouseToFocusedWindow()
 	hs.alert.show(" " .. title .. " ", windowAlertStyle, screen, 1)
 end
 
-hs.hotkey.bind({"cmd", "ctrl", "shift"}, "m", function()
-	local win = hs.window.focusedWindow()
-	local screen = win:screen()
+local function getNextScreen(screen)
+	local screens = hs.screen.allScreens()
+	local index = hs.fnutils.indexOf(screens, screen)
+	local nextIndex = index % #screens + 1
+	return screens[nextIndex]
+end
+
+local function centerMouse(screen)
+	print("centerMouseOnScreen")
+
+	local moveToNextScreen = false
+	local oldPos = hs.mouse.absolutePosition()
+
+	if not screen then
+		screen = hs.screen.mainScreen()
+		moveToNextScreen = true
+	end
+
+	local screen = screen or hs.screen.mainScreen()
 	local center = hs.geometry.rectMidPoint(screen:fullFrame())
-	hs.mouse.setAbsolutePosition(center)
-end)
+	local newPos = hs.mouse.absolutePosition(center)
+
+	if moveToNextScreen and oldPos.x == newPos.x and oldPos.y == newPos.y then
+		centerMouse(getNextScreen(screen))
+	end
+end
+
+local function centerMouseOnPrimaryScreen()
+	print("centerMouseOnPrimaryScreen")
+	centerMouse(hs.screen.primaryScreen())
+end
+
+local commands = {
+	{
+		text = "Mouse: Center on Current Screen",
+		id = "mouse:center",
+		callback = function() centerMouse() end
+	},
+	{
+		text = "Mouse: Center on Primary Screen",
+		id = "mouse:center-on-primary-screen",
+		callback = centerMouseOnPrimaryScreen
+	}
+}
+
+hs.hotkey.bind({"cmd", "ctrl", "shift"}, "m", centerMouse)
+hs.hotkey.bind({"cmd", "ctrl", "option", "shift"}, "m", centerMouseOnPrimaryScreen)
+menu.registerCommands(commands)

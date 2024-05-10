@@ -1,17 +1,6 @@
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 
-local choices = {
-	{
-		text = "Reload Hammerspoon Config",
-		id = "reload"
-	},
-	{
-		text = "Show Hammerspoon Console",
-		id = "console"
-	}
-}
-
 local function reloadConfig()
 	print("hammerspoon: Config reloaded.")
 	hs.reload()
@@ -28,19 +17,18 @@ local function toggleConsole()
 	end
 end
 
-local function runCommand(data)
-	if not data then
-		return
-	end
-
-	local id = data.id
-
-	if id == "reload" then
-		reloadConfig()
-	elseif id == "console" then
-		toggleConsole()
-	end
-end
+local choices = {
+	{
+		text = "Hammerspoon: Toggle Console",
+		id = "hs:console",
+		callback = toggleConsole
+	},
+	{
+		text = "Hammerspoon: Reload Config",
+		id = "hs:reload",
+		callback = reloadConfig
+	}
+}
 
 local function setConsoleDarkMode()
 	hs.console.darkMode(true)
@@ -59,6 +47,5 @@ local function showMenu()
 	chooser:show()
 end
 
-hs.hotkey.bind({"cmd", "shift", "ctrl"}, "H", showMenu)
-
 setConsoleDarkMode()
+menu.registerCommands(choices)
