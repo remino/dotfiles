@@ -8,6 +8,7 @@ end
 
 includes = {
 	"lib",
+	"menu",
 	"hammerspoon",
 	"spoons",
 	"os",
