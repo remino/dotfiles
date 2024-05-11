@@ -187,6 +187,8 @@ alias ppt='pstree -pn'
 alias readme='cat $( findreadme )'
 alias reload=". \$HOME/.zshrc"
 alias s='ssh'
+alias ssu='ssuu -'
+alias ssuu='sudo su'
 alias zshrc='edit "$HOME/.zshrc"'
 
 if _exists code
