@@ -596,6 +596,13 @@ fi
 # ##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
 # ##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
 
+fancyhostname() {
+	hostname \
+		| ( ( _exists figlet && figlet -f standard ) || command cat ) \
+		| ( ( _exists lolcat && lolcat ) || command cat ) \
+		;
+}
+
 mcd() {
 	[ $# -lt 1 ] && "Usage: mcd <dir>"
 	mkdir -p "$1"
@@ -603,10 +610,11 @@ mcd() {
 }
 
 minifetch() {
+	fancyhostname
 	printf "%s@%s %s %s\n" "$USER" "$( hostname )" "$( extip )"
 	uptime
 	echo
-	_exists fortune && fortune
+	_exists fortune && fortune -s
 }
 
 unifetch() {
