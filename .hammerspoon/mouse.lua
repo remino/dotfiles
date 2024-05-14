@@ -26,6 +26,14 @@ local function moveMouseToFocusedWindow()
 	hs.alert.show(" " .. title .. " ", windowAlertStyle, screen, 1)
 end
 
+local function getCurrentScreen()
+	local pos = hs.mouse.absolutePosition()
+	local screen = hs.fnutils.find(hs.screen.allScreens(), function(s)
+		return hs.geometry.rect(pos.x, pos.y, 1, 1):inside(s:fullFrame())
+	end)
+	return screen
+end
+
 local function getNextScreen(screen)
 	local screens = hs.screen.allScreens()
 	local index = hs.fnutils.indexOf(screens, screen)
@@ -40,7 +48,7 @@ local function centerMouse(screen)
 	local oldPos = hs.mouse.absolutePosition()
 
 	if not screen then
-		screen = hs.screen.mainScreen()
+		screen = getCurrentScreen()
 		moveToNextScreen = true
 	end
 
