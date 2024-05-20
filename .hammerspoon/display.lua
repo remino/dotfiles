@@ -1,3 +1,5 @@
+local angles = { 0, 90, 180, 270 }
+
 local function requireDisplayplacer()
 	local _, ok, _, rc = hs.execute("displayplacer --version", true)
 
@@ -8,9 +10,8 @@ local function requireDisplayplacer()
 	return false
 end
 
-local function rotateDisplay()
+local function rotateDisplay(newAngle)
 	local screen = hs.mouse.getCurrentScreen()
-	local currentRotation = screen:rotate()
 
 	if not requireDisplayplacer() then
 		hs.alert.show("displayplacer not found", {}, screen)
@@ -18,13 +19,16 @@ local function rotateDisplay()
 	end
 
 	local id = screen:id()
-	local newRotation = 0
 
-	if currentRotation == 0 then
-		newRotation = 90
+	if newAngle == nil then
+		if screen:rotate() == 0 then
+			newAngle = 90
+		else
+			newAngle = 0
+		end
 	end
 
-	local command = '/opt/homebrew/bin/displayplacer "id:' .. id .. ' degree:' .. newRotation .. '"'
+	local command = '/opt/homebrew/bin/displayplacer "id:' .. id .. ' degree:' .. newAngle .. '"'
 
 	local _, _, _, rc = hs.execute(command)
 
@@ -37,3 +41,11 @@ local function rotateDisplay()
 end
 
 menu.registerCommand("display:rotate", "Display: Rotate", rotateDisplay)
+
+hs.fnutils.each(angles, function(angle)
+	menu.registerCommand(
+		string.format("display:rotate:%d", angle),
+		string.format("Display: Rotate %dº", angle),
+		function() rotateDisplay(angle) end
+	)
+end)
