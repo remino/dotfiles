@@ -207,6 +207,11 @@ then
 	alias colortest='msgcat --color=test'
 fi
 
+if _exists ssh
+then
+	alias sshp="ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no"
+fi
+
 if _exists tree
 then
 	alias t=tree
