@@ -8,6 +8,7 @@
 #   ##           ## ##     ## ##   ##   ##
 #  ##      ##    ## ##     ## ##    ##  ##    ##
 # ########  ######  ##     ## ##     ##  ######
+# .zshrc: Used for any interactive shells (including login).
 
 ################################################################################
 
@@ -18,16 +19,6 @@
 # ##         ## ##    ##        ##    ##          ##
 # ##        ##   ##   ##  ##    ##    ##    ##    ##
 # ######## ##     ## ####  ######     ##     ######
-
-_exists() {
-	{
-		command -v "$1" || ( _asdf_exists "$1" )
-	} > /dev/null 2>&1
-}
-
-_asdf_exists() {
-	command -v asdf && asdf which "$1" > /dev/null 2>&1
-}
 
 _plugin_exists() {
 	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH/custom/plugins/$1" ]
@@ -104,10 +95,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # ##        #########    ##    ##     ##
 # ##        ##     ##    ##    ##     ##
 # ##        ##     ##    ##    ##     ##
-
-path+=(
-	"$HOME/bin"
-)
 
 if [ -z "$ZSH" ]
 then
@@ -691,11 +678,7 @@ fi
 # ##    ## ##   ### ##     ## ##
 #  ######  ##    ## ##     ## ##
 
-if _exists snap
-then
-	[ -z "$( echo "$path" | grep '/snap/bin' 2>/dev/null )" ] && path+=('/snap/bin')
-	plugins+=(snap)
-fi
+_exists snap && plugins+=(snap)
 
 #  #######  ##     ##         ##     ## ##    ##         ########  ######  ##     ##
 # ##     ## ##     ##         ###   ###  ##  ##               ##  ##    ## ##     ##
