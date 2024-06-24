@@ -631,6 +631,18 @@ k() {
 	fi
 }
 
+if _exists figlet
+then
+	figpre() {
+		for font in "$(figlet -I2)"/*.flf
+		do
+			echo
+			echo "=== $( basename "$font" .flf )"
+			figlet -f "$font" "${@:-figlet}"
+		done
+	}
+fi
+
 # Show control characters
 # (Does not work with Powerlevel10k.)
 TRAPINT() {
