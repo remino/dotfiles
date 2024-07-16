@@ -21,7 +21,8 @@
 # ######## ##     ## ####  ######     ##     ######
 
 _plugin_exists() {
-	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH_CUSTOM/plugins/$1" ]
+	# Can't use $ZSH_CUSTOM here as we check path before sourcing oh-my-zsh
+	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH/custom/plugins/$1" ]
 }
 
 _add_plugin_if_exists() {
