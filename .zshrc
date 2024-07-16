@@ -511,9 +511,8 @@ fi
 if _exists tmux
 then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
+	_add_plugin_if_exists tmux
 fi
-
-_add_plugin_if_exists tmux
 
 # ######## ########     ###     ######  ##     ##
 #    ##    ##     ##   ## ##   ##    ## ##     ##
