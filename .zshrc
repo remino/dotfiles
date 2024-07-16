@@ -299,6 +299,7 @@ ruby
 sudo
 system
 thefuck
+tmuxinator
 ufw
 wp wp-cli
 
