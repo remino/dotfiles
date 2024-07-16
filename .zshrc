@@ -365,7 +365,7 @@ baturl() {
 # ######## ########  ####    ##     #######  ##     ##
 
 editor() {
-	[ $# -gt 0 ] && EDITOR="$1"
+	[ $# -gt 0 ] && export EDITOR="$1"
 	echo "$EDITOR"
 }
 
