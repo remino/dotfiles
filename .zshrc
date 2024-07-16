@@ -21,7 +21,12 @@
 # ######## ##     ## ####  ######     ##     ######
 
 _plugin_exists() {
-	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH/custom/plugins/$1" ]
+	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH_CUSTOM/plugins/$1" ]
+}
+
+_add_plugin_if_exists() {
+	_plugin_exists "$1" || return
+	plugins+=("$1")
 }
 
 _unalias() {
@@ -54,7 +59,7 @@ then
 	alias bn='brew info'
 	alias bs='brew search'
 
-	plugins+=(brew)
+	_add_plugin_if_exists brew
 fi
 
 #  ######  ########  ########     ###    ######## ##     ##
@@ -126,7 +131,7 @@ share_ssh_agent
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
 zstyle :omz:plugins:ssh-agent quiet yes
 
-plugins+=(ssh-agent)
+_add_plugin_if_exists ssh-agent
 
 #    ###    ##       ####    ###     ######  ########  ######
 #   ## ##   ##        ##    ## ##   ##    ## ##       ##    ##
@@ -246,25 +251,26 @@ FZF_DEFAULT_OPTS="--ansi --cycle --exact"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins+=(
-	autoupdate
-
-	alias-finder
-	aliases
-	catimg
-	command-not-found
-	common-aliases
-	copyfile
-	copypath
-	dirhistory
-	dirpersist
-	fancy-ctrl-z
-	jump
-	macos
-	urltools
-	vi-mode
-	zsh-interactive-cd
-)
+for plugin in \
+	autoupdate \
+	alias-finder \
+	aliases \
+	catimg \
+	command-not-found \
+	common-aliases \
+	copyfile \
+	copypath \
+	dirhistory \
+	dirpersist \
+	fancy-ctrl-z \
+	jump \
+	macos \
+	urltools \
+	vi-mode \
+	zsh-interactive-cd \
+do
+	_add_plugin_if_exists "$plugin"
+done
 
 cat <<LIST | while read -r cmd add
 aws
@@ -304,8 +310,7 @@ do
 
 	echo "$add" | tr ' ' '\n' | while read -r plugin
 	do
-		_plugin_exists "$plugin" || continue
-		plugins+=("$plugin")
+		_add_plugin_if_exists "$plugin"
 	done
 done
 
@@ -320,7 +325,7 @@ done
 if _exists asdf
 then
 	ASDF_CONFIG_FILE="$HOME/.config/asdf/config"
-	plugins+=(asdf)
+	_add_plugin_if_exists asdf
 fi
 
 # ########     ###    ########
@@ -384,7 +389,7 @@ fi
 fastfile_var_prefix='^'
 fastfile_dir="$HOME/.config/fastfile/"
 
-plugins+=(fastfile)
+_add_plugin_if_exists fastfile
 
 #  ######   ######## ######## ##     ## ########
 # ##    ##  ##          ##    ##     ## ##     ##
@@ -430,7 +435,7 @@ getup() {
 #  ##     ##    ##       ##    ##  ##     ##
 # ####    ##    ######## ##     ## ##     ##
 
-plugins+=(iterm2)
+_add_plugin_if_exists iterm2
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -452,7 +457,7 @@ then
 	alias npml='npm ls'
 	alias npmr='npm run'
 
-	plugins+=(npm)
+	_add_plugin_if_exists npm
 fi
 
 # ########   #######   #######  ########
@@ -506,7 +511,7 @@ then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
 fi
 
-plugins+=(tmux)
+_add_plugin_if_exists tmux
 
 # ######## ########     ###     ######  ##     ##
 #    ##    ##     ##   ## ##   ##    ## ##     ##
@@ -562,7 +567,7 @@ if [ -d "$PNPM_HOME" ]
 then
 	export PNPM_HOME
 	export PATH="$PNPM_HOME:$PATH"
-	[ -d "$ZSH_CUSTOM/plugins/pnpm" ] && plugins+=(pnpm)
+	_add_plugin_if_exists pnpm
 fi
 
 # ########  ########  ######## ######## ######## #### ######## ########
@@ -695,7 +700,7 @@ fi
 # ##    ## ##   ### ##     ## ##
 #  ######  ##    ## ##     ## ##
 
-_exists snap && plugins+=(snap)
+_exists snap && _add_plugin_if_exists snap
 
 #  #######  ##     ##         ##     ## ##    ##         ########  ######  ##     ##
 # ##     ## ##     ##         ###   ###  ##  ##               ##  ##    ## ##     ##
