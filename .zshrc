@@ -842,10 +842,9 @@ fi
 # ##       ##     ##
 # ##       ########
 
-if _exists fdfind && ! command -v fd > /dev/null 2>&1
+if _exists fdfind && ! type -p fd > /dev/null 2>&1
 then
-	# is fd an alias? If so, rename it fD
-	if alias fd > /dev/null 2>&1
+	if alias fd > /dev/null 2>&1 && ! _exists fD
 	then
 		_old_cmd="$( alias fd | sed -E 's/^.*?=\s*//;s/\s*$//' )"
 		alias fD="$_old_cmd"
