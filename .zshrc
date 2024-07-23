@@ -190,6 +190,11 @@ then
 	alias codew='code -w'
 fi
 
+if _exists fdfind && ! _exists fd
+then
+	alias fd=fdfind
+fi
+
 if _exists git
 then
 	alias gci='git commit -m "Initial commit"'
