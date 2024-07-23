@@ -190,11 +190,6 @@ then
 	alias codew='code -w'
 fi
 
-if _exists fdfind && ! _exists fd
-then
-	alias fd=fdfind
-fi
-
 if _exists git
 then
 	alias gci='git commit -m "Initial commit"'
@@ -837,6 +832,27 @@ _exists atuin && eval "$(atuin init zsh)"
 if _exists mc
 then
 	alias mc='mc --nosubshell -S gotar'
+fi
+
+# ######## ########
+# ##       ##     ##
+# ##       ##     ##
+# ######   ##     ##
+# ##       ##     ##
+# ##       ##     ##
+# ##       ########
+
+if _exists fdfind && ! command -v fd > /dev/null 2>&1
+then
+	# is fd an alias? If so, rename it fD
+	if alias fd > /dev/null 2>&1
+	then
+		_old_cmd="$( alias fd | sed -E 's/^.*?=\s*//;s/\s*$//' )"
+		alias fD="$_old_cmd"
+		unset _old_cmd
+	fi
+
+	alias fd=fdfind
 fi
 
 # ##    ## ########         ########  ##       ########
