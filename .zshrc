@@ -676,6 +676,26 @@ do
 	source "$include"
 done
 
+#  ######    #######
+# ##    ##  ##     ##
+# ##        ##     ##
+# ##   #### ##     ##
+# ##    ##  ##     ##
+# ##    ##  ##     ##
+#  ######    #######
+
+if _exists go
+then
+	_add_plugin_if_exists golang
+
+	[ -z "$GOPATH" ] && export GOPATH="$HOME/.local/share/go"
+	[ -z "$GOROOT" ] && export GOROOT="$( go env GOROOT )"
+
+	path+=("$GOPATH/bin" "$GOROOT/bin")
+
+	export path
+fi
+
 # ##     ## ########  ######   ######     ###     ######   ########
 # ###   ### ##       ##    ## ##    ##   ## ##   ##    ##  ##
 # #### #### ##       ##       ##        ##   ##  ##        ##
