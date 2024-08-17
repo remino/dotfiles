@@ -293,7 +293,6 @@ mysql mysql-alias
 node
 op 1password
 pip
-rg ripgrep
 rsync cp rsync
 ruby
 sudo
