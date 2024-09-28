@@ -12,7 +12,6 @@ includes = {
 	"hammerspoon",
 	"spoons",
 	"os",
-	"clock",
 	"display",
 	"keyboard",
 	"mouse",
