@@ -1,4 +1,8 @@
-function focusDockApp(num)
+dock = {
+	autoHide = false
+}
+
+function dock.focusApp(num)
 	ok, result = hs.osascript.applescript(string.format([[
 		tell application "System Events"
 			click UI element %d of list 1 of process "Dock"
@@ -12,9 +16,6 @@ function focusDockApp(num)
 
 	moveMouseToFocusedWindow()
 end
-
-autoHide = false
-dock = {}
 
 function dock.show()
 	ok, result = hs.osascript.applescript([[
@@ -30,7 +31,7 @@ function dock.show()
 		return
 	end
 
-	autoHide = result
+	dock.autoHide = result
 
 	hs.osascript.applescript([[
 		tell application "System Events"

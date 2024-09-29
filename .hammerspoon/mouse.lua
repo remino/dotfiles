@@ -11,7 +11,7 @@ local windowAlertStyle = {
 	fadeOutDuration = 0.30,
 }
 
-local function moveMouseToFocusedWindow()
+function moveMouseToFocusedWindow()
 	local win = hs.window.focusedWindow()
 
 	if not win then
