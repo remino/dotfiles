@@ -16,7 +16,6 @@ includes = {
 	"keyboard",
 	"mouse",
 	"dock",
-	"urlevent",
 	"wallpaper",
 	"local",
 }
