@@ -60,7 +60,6 @@ local function runCommand(data)
 end
 
 local function toggleMenu()
-	print(menu.chooser and menu.chooser:isVisible())
 	if menu.chooser and menu.chooser:isVisible() then
 		menu.chooser:hide()
 		menu.chooser:delete()
