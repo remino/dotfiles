@@ -369,10 +369,7 @@ editor() {
 }
 
 # Preferred editor for local and remote sessions
-if [ -z "$SSH_CONNECTION" ] && _exists code
-then
-	editor "$HOME/.config/editor/codew" > /dev/null
-elif _exists nvim
+if _exists nvim
 then
 	editor nvim > /dev/null
 else
