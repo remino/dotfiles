@@ -341,7 +341,7 @@ BATCMD="$( _which_exists batcat bat )"
 
 if [ -n "$BATCMD" ]
 then
-	alias bat="\$BATCMD --tabs=2 --style=full --pager 'command less -RX'"
+	alias bat="\$BATCMD --tabs=2 --style=full --pager 'less -RX'"
 	alias cat=less
 	export MANPAGER="sh -c 'col -bx | $BATCMD -l man -p'"
 	alias less="bat -p"
