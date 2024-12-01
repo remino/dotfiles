@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+bootstrap_main() {
+	if [ ! -d "$HOME/.config/nvim" ]; then
+		git clone git@github.com:remino/nvim.git "$HOME/.config/nvim"
+	fi
+}
+
+bootstrap_main
