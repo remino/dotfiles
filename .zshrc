@@ -237,7 +237,7 @@ fi
 # ##        ##      ##
 # ##       ######## ##
 
-FZF_DEFAULT_OPTS="--ansi --cycle --exact"
+FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
 
 # ########  ##       ##     ##  ######   #### ##    ##  ######
 # ##     ## ##       ##     ## ##    ##   ##  ###   ## ##    ##
