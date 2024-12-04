@@ -301,6 +301,7 @@ thefuck
 tmuxinator
 ufw
 wp wp-cli
+zoxide
 
 fzf
 LIST
