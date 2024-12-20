@@ -202,6 +202,7 @@ alias reload=". \$HOME/.zshrc"
 alias s='ssh'
 alias ssu='ssuu -'
 alias ssuu='sudo su'
+alias v=vi
 alias zshrc='edit "$HOME/.zshrc"'
 alias zshrcbase='edit "$HOME/.zshrc.base"'
 
@@ -232,17 +233,17 @@ then
 	alias tree='tree -CNhp'
 fi
 
-if _exists nvim
+if _exists vim
 then
-	alias v=nvim
-	alias vi=nvim
-	alias vim=nvim
-	alias neovim=nvim
-elif _exists vim
-then
-	alias v=vim
 	alias vi=vim
 	alias vim='vim -p'
+fi
+
+if _exists nvim
+then
+	# Override vim alias
+	alias vim=nvim
+	alias neovim=nvim
 fi
 
 if ls --group-directories-first / > /dev/null 2>&1
