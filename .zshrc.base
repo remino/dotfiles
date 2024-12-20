@@ -203,7 +203,7 @@ alias s='ssh'
 alias ssu='ssuu -'
 alias ssuu='sudo su'
 alias zshrc='edit "$HOME/.zshrc"'
-alias zshrcbase='edit "$ZSH/zshrcbase"'
+alias zshrcbase='edit "$HOME/.zshrc.base"'
 
 if _exists code
 then
