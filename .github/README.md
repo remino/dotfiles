@@ -1,5 +1,4 @@
-dotfiles
-========
+# dotfiles
 
 By Rémino Rem <https://remino.net>
 
@@ -7,11 +6,10 @@ Small collection of dotfiles.
 
 - [About](#about)
 - [Getting Started](#getting-started)
-	- [Installation](#installation)
+  - [Installation](#installation)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
-
 
 ## About
 
@@ -40,11 +38,11 @@ A minimal collection of dotfiles to work with:
 - [youtube-dl](https://youtube-dl.org)
 - [Z Shell](https://zsh.sourceforge.io) (zsh)
 
-
 ## Getting Started
 
-The dotfiles should work on their own if you move, copy, or symlink every file where they belong, but using a dotfile manager like [yadm](https://yadm.io) is recommended.
-
+The dotfiles should work on their own if you move, copy, or symlink every file
+where they belong, but using a dotfile manager like [yadm](https://yadm.io) is
+recommended.
 
 ### Installation
 
@@ -66,14 +64,15 @@ yadm diff
 
 [Back to top](#dotfiles)
 
-
-
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to
+learn, inspire, and create. Any contributions you make are **greatly
+appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+If you have a suggestion that would make this better, please fork the repo and
+create a pull request. You can also simply open an issue with the tag
+"enhancement". Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -83,19 +82,14 @@ Don't forget to give the project a star! Thanks again!
 
 [Back to top](#dotfiles)
 
-
-
 ## License
 
 Distributed under the ISC License. See `LICENSE.txt` for more information.
 
 [Back to top](#dotfiles)
 
-
-
 ## Contact
 
-Rémino Rem
-https://remino.net/
+Rémino Rem https://remino.net/
 
 [Back to top](#dotfiles)
