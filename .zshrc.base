@@ -26,9 +26,13 @@ _plugin_exists() {
 	[ -d "$ZSH/plugins/$1" ] || [ -d "$ZSH/custom/plugins/$1" ]
 }
 
+_add_plugin() {
+	plugins+=("$1")
+}
+
 _add_plugin_if_exists() {
 	_plugin_exists "$1" || return
-	plugins+=("$1")
+	_add_plugin "$1"
 }
 
 _unalias() {
@@ -245,6 +249,28 @@ then
 	alias ls='ls --color=tty --group-directories-first'
 fi
 
+if _plugin_exists alias-finder
+then
+	_add_plugin alias-finder
+
+	alias af='alias-finder'
+
+	af_set() {
+		zstyle ':omz:plugins:alias-finder' autoload "$1"
+    zstyle ':omz:plugins:alias-finder' longer "$1"
+    zstyle ':omz:plugins:alias-finder' exact "$1"
+    zstyle ':omz:plugins:alias-finder' cheaper "$1"
+	}
+
+	af_disable() {
+		af_set no
+	}
+
+	af_enable() {
+		af_set yes
+	}
+fi
+
 # ######## ######## ########
 # ##            ##  ##
 # ##           ##   ##
@@ -270,7 +296,6 @@ FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
 # Add wisely, as too many plugins slow down shell startup.
 for plugin in \
 	autoupdate \
-	alias-finder \
 	aliases \
 	catimg \
 	command-not-found \
