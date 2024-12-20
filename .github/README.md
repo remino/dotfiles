@@ -54,6 +54,8 @@ git clone https://github.com/remino/dotfiles .config/dotfiles
 cp ~/.config/dotfiles/.zshrc ~/.zshrc
 # Or create symlinks to them
 ln -s .config/dotfiles/.zshrc
+# Run bootstrap script
+~/.config/yadm/bootstrap
 
 # By using yadm
 yadm clone https://github.com/remino/dotfiles
