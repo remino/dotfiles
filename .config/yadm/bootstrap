@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
 bootstrap_main() {
+	_run_if_exists "$( dirname "${BASH_SOURCE[0]}" )/install_zshrc"
+
 	if [ ! -d "$HOME/.config/nvim" ]; then
 		git clone git@github.com:remino/nvim.git "$HOME/.config/nvim"
+	fi
+}
+
+_run_if_exists() {
+	if [ -x "$1" ]; then
+		"$@"
 	fi
 }
 

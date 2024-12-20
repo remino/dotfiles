@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+install_zshrc() {
+	_add_line "[ -f \"\$HOME/.zshrc.base\" ] && source \"\$HOME/.zshrc.base\"" "$HOME/.zshrc"
+}
+
+_add_line() {
+	if ! _has_line "$1" "$2"; then
+		echo "$1" >> "$2"
+	fi
+}
+
+_has_line() {
+	grep -F -q "$1" "$2"
+}
+
+install_zshrc
