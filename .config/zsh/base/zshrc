@@ -709,7 +709,7 @@ TRAPINT() {
 # ##       ##     ## ##    ## ##     ## ##
 # ########  #######   ######  ##     ## ########
 
-for include in "$HOME/.zshrc.local" "$XDG_CONFIG_DIR/zsh/local"
+for include in "$HOME/.zshrc.local" "$XDG_CONFIG_DIR/zsh/local" "$XDG_CONFIG_DIR/zsh/local/zshrc"
 do
 	[ ! -f "$include" ] && continue
 	# shellcheck source=/dev/null
