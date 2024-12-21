@@ -64,10 +64,10 @@ yadm clone https://github.com/remino/dotfiles
 yadm diff
 ```
 
-### `.zshrc.base`
+### `.zshrc` Base
 
 To keep the `.zshrc` file clean, the base config has been moved to
-`.zshrc.base`.
+`.config/zsh/base/zshrc`.
 
 Thanks to this, you can have scripts mess with the `.zshrc` file without having
 to worry about breaking the base config.

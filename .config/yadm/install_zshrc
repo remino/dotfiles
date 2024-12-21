@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 install_zshrc() {
-	_add_line "[ -f \"\$HOME/.zshrc.base\" ] && source \"\$HOME/.zshrc.base\"" "$HOME/.zshrc"
+	_add_line "$(_zshrc_line)" "$HOME/.zshrc"
 }
 
 _add_line() {
@@ -12,6 +12,12 @@ _add_line() {
 
 _has_line() {
 	grep -F -q "$1" "$2" 2> /dev/null
+}
+
+_zshrc_line() {
+	cat << EOF
+{ ZSHBASE="\${XDG_CONFIG_HOME:-\$HOME/.config}/zsh/base/zshrc"; [ -f "\$ZSHBASE" ] && source "\$ZSHBASE"; unset ZSHBASE; }
+EOF
 }
 
 install_zshrc
