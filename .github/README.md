@@ -64,15 +64,16 @@ yadm clone https://github.com/remino/dotfiles
 yadm diff
 ```
 
-### `.zshrc` Base
+### Z Shell Config Base
 
-To keep the `.zshrc` file clean, the base config has been moved to
-`.config/zsh/base/zshrc`.
+To keep the `.zsh*` files and the home directory clean, the base config files
+have been moved to `.config/zsh/base`.
 
-Thanks to this, you can have scripts mess with the `.zshrc` file without having
-to worry about breaking the base config.
+Thanks to this, you can have scripts mess with the `.zshenv` and `.zshrc` files
+without having to worry about breaking the base config.
 
-If it's sourced already, you can run the `install_zshrc` script to install it:
+If it's not sourced already, you can run the `install_zshrc` script to install
+the base config:
 
 ```sh
 ~/.config/yadm/install_zshrc
