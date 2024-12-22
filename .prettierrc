@@ -15,7 +15,7 @@ overrides:
   - files: '*.md'
     options:
       parser: 'markdown'
-      proseWrap: 'always'
+      proseWrap: 'preserve'
       useTabs: false
   - files: '*.yml'
     options:
