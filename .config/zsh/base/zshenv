@@ -49,3 +49,17 @@ then
 	fi
 fi
 
+# ##        #######   ######     ###    ##
+# ##       ##     ## ##    ##   ## ##   ##
+# ##       ##     ## ##        ##   ##  ##
+# ##       ##     ## ##       ##     ## ##
+# ##       ##     ## ##       ######### ##
+# ##       ##     ## ##    ## ##     ## ##
+# ########  #######   ######  ##     ## ########
+
+for include in "$HOME/.zshenv.local" "$XDG_CONFIG_HOME/zsh/local/zshenv"
+do
+	[ ! -f "$include" ] && continue
+	# shellcheck source=/dev/null
+	source "$include"
+done
