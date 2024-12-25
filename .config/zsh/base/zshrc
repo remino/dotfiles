@@ -629,8 +629,8 @@ fancyhostname() {
 		;
 }
 
-mcd() {
-	[ $# -lt 1 ] && "Usage: mcd <dir>"
+mdcd() {
+	[ $# -lt 1 ] && "Usage: mdcd <dir>"
 	mkdir -p "$1"
 	cd "$1"
 }
