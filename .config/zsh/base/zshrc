@@ -845,6 +845,7 @@ then
 	alias lg='eza -laG'
 	alias ls=eza
 	alias ll='eza -l'
+	alias la='ll -AF'
 	alias t=tree
 	alias tree='ll -T'
 	alias exa='eza'
@@ -855,6 +856,7 @@ then
 	alias lg='exa -laG'
 	alias ls=exa
 	alias ll='exa -l'
+	alias la='ll -AF'
 	alias t=tree
 	alias tree='ll -T'
 fi
