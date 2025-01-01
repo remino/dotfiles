@@ -333,7 +333,6 @@ tmuxinator
 ufw
 wp wp-cli
 yt-dlp
-zoxide
 
 fzf
 LIST
@@ -347,6 +346,19 @@ do
 		_add_plugin_if_exists "$plugin"
 	done
 done
+
+# ########  #######  ##     ## #### ########  ########
+#      ##  ##     ##  ##   ##   ##  ##     ## ##
+#     ##   ##     ##   ## ##    ##  ##     ## ##
+#    ##    ##     ##    ###     ##  ##     ## ######
+#   ##     ##     ##   ## ##    ##  ##     ## ##
+#  ##      ##     ##  ##   ##   ##  ##     ## ##
+# ########  #######  ##     ## #### ########  ########
+
+if _exists zoxide && _plugin_exists zoxide; then
+	ZOXIDE_CMD_OVERRIDE="cd"
+	_add_plugin zoxide
+fi
 
 #    ###     ######  ########  ########
 #   ## ##   ##    ## ##     ## ##
