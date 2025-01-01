@@ -323,6 +323,7 @@ tmuxinator
 ufw
 wp wp-cli
 yt-dlp
+zoxide
 LIST
 do
 	[ -z "$cmd" ] && continue
@@ -346,19 +347,6 @@ done
 if _exists fzf && _plugin_exists fzf; then
 	FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
 	_add_plugin fzf
-fi
-
-# ########  #######  ##     ## #### ########  ########
-#      ##  ##     ##  ##   ##   ##  ##     ## ##
-#     ##   ##     ##   ## ##    ##  ##     ## ##
-#    ##    ##     ##    ###     ##  ##     ## ######
-#   ##     ##     ##   ## ##    ##  ##     ## ##
-#  ##      ##     ##  ##   ##   ##  ##     ## ##
-# ########  #######  ##     ## #### ########  ########
-
-if _exists zoxide && _plugin_exists zoxide; then
-	ZOXIDE_CMD_OVERRIDE="cd"
-	_add_plugin zoxide
 fi
 
 #    ###     ######  ########  ########
