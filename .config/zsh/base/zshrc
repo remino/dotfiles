@@ -260,16 +260,6 @@ then
 	}
 fi
 
-# ######## ######## ########
-# ##            ##  ##
-# ##           ##   ##
-# ######      ##    ######
-# ##         ##     ##
-# ##        ##      ##
-# ##       ######## ##
-
-FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
-
 # ########  ##       ##     ##  ######   #### ##    ##  ######
 # ##     ## ##       ##     ## ##    ##   ##  ###   ## ##    ##
 # ##     ## ##       ##     ## ##         ##  ####  ## ##
@@ -333,8 +323,6 @@ tmuxinator
 ufw
 wp wp-cli
 yt-dlp
-
-fzf
 LIST
 do
 	[ -z "$cmd" ] && continue
@@ -346,6 +334,19 @@ do
 		_add_plugin_if_exists "$plugin"
 	done
 done
+
+# ######## ######## ########
+# ##            ##  ##
+# ##           ##   ##
+# ######      ##    ######
+# ##         ##     ##
+# ##        ##      ##
+# ##       ######## ##
+
+if _exists fzf && _plugin_exists fzf; then
+	FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
+	_add_plugin fzf
+fi
 
 # ########  #######  ##     ## #### ########  ########
 #      ##  ##     ##  ##   ##   ##  ##     ## ##
