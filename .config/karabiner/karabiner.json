@@ -44,17 +44,9 @@
                                 ],
                                 "from": {
                                     "key_code": "left_control",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open '/Applications/iTerm.app'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open '/Applications/iTerm.app'" }],
                                 "type": "basic"
                             },
                             {
@@ -73,24 +65,16 @@
                                 ],
                                 "from": {
                                     "key_code": "left_control",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "m",
-                                        "modifiers": [
-                                            "command"
-                                        ]
+                                        "modifiers": ["command"]
                                     },
                                     {
                                         "key_code": "tab",
-                                        "modifiers": [
-                                            "command"
-                                        ]
+                                        "modifiers": ["command"]
                                     }
                                 ],
                                 "type": "basic"
@@ -98,11 +82,7 @@
                             {
                                 "from": {
                                     "key_code": "left_control",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
                                     {
@@ -111,9 +91,7 @@
                                             "value": 1
                                         }
                                     },
-                                    {
-                                        "key_code": "left_control"
-                                    }
+                                    { "key_code": "left_control" }
                                 ],
                                 "to_delayed_action": {
                                     "to_if_canceled": [
@@ -143,161 +121,81 @@
                             {
                                 "from": {
                                     "key_code": "1",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=1'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=1'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "2",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=2'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=2'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "3",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=3'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=3'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "4",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=4'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=4'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "5",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=5'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=5'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "6",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=6'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=6'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "7",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=7'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=7'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "8",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=8'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=8'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "9",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=9'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=9'" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "0",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "fn"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["fn"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open 'hammerspoon://focusDockApp?n=10'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open 'hammerspoon://focusDockApp?n=10'" }],
                                 "type": "basic"
                             }
                         ]
