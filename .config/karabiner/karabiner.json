@@ -5,6 +5,27 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Map F21-F23 to change display input (via Hammerspoon)",
+                        "enabled": false,
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "f21" },
+                                "to": [{ "shell_command": "open 'hammerspoon://displayInputChange?id=209'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "f22" },
+                                "to": [{ "shell_command": "open 'hammerspoon://displayInputChange?id=208'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "f23" },
+                                "to": [{ "shell_command": "open 'hammerspoon://displayInputChange?id=144'" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Hit Ctrl twice to toggle iTerm",
                         "manipulators": [
                             {
