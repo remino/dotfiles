@@ -63,23 +63,20 @@ export XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME
 
 # Oh My Zsh plugin added later, after bundler plugin.
 
+#  ######  ########
+# ##    ## ##     ##
+# ##       ##     ##
+# ##       ##     ##
+# ##       ##     ##
+# ##    ## ##     ##
+#  ######  ########
 
-#  ######  ########  ########     ###    ######## ##     ##
-# ##    ## ##     ## ##     ##   ## ##      ##    ##     ##
-# ##       ##     ## ##     ##  ##   ##     ##    ##     ##
-# ##       ##     ## ########  ##     ##    ##    #########
-# ##       ##     ## ##        #########    ##    ##     ##
-# ##    ## ##     ## ##        ##     ##    ##    ##     ##
-#  ######  ########  ##        ##     ##    ##    ##     ##
+cdpath+=("$HOME")
 
-cat <<DIRS | while read -r dir
-	$HOME
-	$HOME/Library/Mobile Documents/com~apple~CloudDocs
-DIRS
-do
-	[ ! -d "$dir" ] && continue
-	cdpath+=("$dir")
-done
+# Allow auto-completion of `cd` command to be case-insensitive
+# and anywhere in the string.
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} l:|=* r:|=*'
+zstyle ':completion:*' menu select
 
 # ########     ##     #####   ##    ##
 # ##     ##  ####    ##   ##  ##   ##
