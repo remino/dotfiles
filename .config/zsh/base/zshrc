@@ -640,6 +640,8 @@ unifetch() {
 	fi
 }
 
+alias sysinfo=minifetch
+
 _unalias k
 k() {
 	if [ -f bun.lockb ]; then
