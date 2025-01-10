@@ -272,7 +272,6 @@ for plugin in \
 	fancy-ctrl-z \
 	jump \
 	macos \
-	pj \
 	urltools \
 	vi-mode \
 	zsh-interactive-cd
