@@ -48,6 +48,10 @@ _which_exists() {
 	done
 }
 
+_is_demo() {
+	[ -z "$DEMO" ] || [ "$DEMO" = "0" ]
+}
+
 export XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME
 
 # ##     ##  #######  ##     ## ######## ########  ########  ######## ##      ##
@@ -86,7 +90,12 @@ zstyle ':completion:*' menu select
 # ##           ##    ##   ##  ##   ##
 # ##         ######   #####   ##    ##
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+if _is_demo
+then
+	ZSH_THEME="powerlevel10k/powerlevel10k"
+else
+	PS1="❯ "
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # shellcheck source=/dev/null
@@ -721,13 +730,16 @@ fi
 # ##     ## ##       ##    ## ##    ## ##     ## ##    ##  ##
 # ##     ## ########  ######   ######  ##     ##  ######   ########
 
-repeat $(( LINES / 2 )) echo
-
-if type _private_msg > /dev/null 2>&1
+if _is_demo
 then
-	_private_msg
-else
-	unifetch
+	repeat $(( LINES / 2 )) echo
+
+	if type _private_msg > /dev/null 2>&1
+	then
+		_private_msg
+	else
+		unifetch
+	fi
 fi
 
 #  ######  ##    ##    ###    ########
