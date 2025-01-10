@@ -61,14 +61,8 @@ export XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME
 # For M1 Macs, init Homebrew first:
 [ -x "/opt/homebrew/bin/brew" ] && eval "$( /opt/homebrew/bin/brew shellenv )"
 
-if _exists brew
-then
-	alias bi='brew install'
-	alias bn='brew info'
-	alias bs='brew search'
+# Oh My Zsh plugin added later, after bundler plugin.
 
-	_add_plugin_if_exists brew
-fi
 
 #  ######  ########  ########     ###    ######## ##     ##
 # ##    ## ##     ## ##     ##   ## ##      ##    ##     ##
@@ -324,6 +318,8 @@ ufw
 wp wp-cli
 yt-dlp
 zoxide
+
+brew
 LIST
 do
 	[ -z "$cmd" ] && continue
