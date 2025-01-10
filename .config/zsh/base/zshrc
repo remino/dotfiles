@@ -919,3 +919,20 @@ cdpath+=("$HOME")
 # and anywhere in the string.
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} l:|=* r:|=*'
 zstyle ':completion:*' menu select
+
+#  ######  ##       ########    ###    ##    ## ##     ## ########
+# ##    ## ##       ##         ## ##   ###   ## ##     ## ##     ##
+# ##       ##       ##        ##   ##  ####  ## ##     ## ##     ##
+# ##       ##       ######   ##     ## ## ## ## ##     ## ########
+# ##       ##       ##       ######### ##  #### ##     ## ##
+# ##    ## ##       ##       ##     ## ##   ### ##     ## ##
+#  ######  ######## ######## ##     ## ##    ##  #######  ##
+
+unset -f \
+	_add_plugin \
+	_add_plugin_if_exists \
+	_which_exists \
+	_is_demo \
+	_plugin_exists \
+	_unalias \
+	;
