@@ -640,7 +640,7 @@ unifetch() {
 	fi
 }
 
-alias sysinfo=minifetch
+alias sysinfo=unifetch
 
 _unalias k
 k() {
