@@ -245,6 +245,20 @@ then
 	}
 fi
 
+# ########  #######  ##     ## #### ########  ########
+#      ##  ##     ##  ##   ##   ##  ##     ## ##
+#     ##   ##     ##   ## ##    ##  ##     ## ##
+#    ##    ##     ##    ###     ##  ##     ## ######
+#   ##     ##     ##   ## ##    ##  ##     ## ##
+#  ##      ##     ##  ##   ##   ##  ##     ## ##
+# ########  #######  ##     ## #### ########  ########
+# Directories in cdpath are added to zoxide later.
+
+if _exists zoxide; then
+	ZOXIDE_CMD_OVERRIDE=cd
+	_add_plugin_if_exists zoxide
+fi
+
 # ########  ##       ##     ##  ######   #### ##    ##  ######
 # ##     ## ##       ##     ## ##    ##   ##  ###   ## ##    ##
 # ##     ## ##       ##     ## ##         ##  ####  ## ##
@@ -302,7 +316,6 @@ tmuxinator
 ufw
 wp wp-cli
 yt-dlp
-zoxide
 
 brew
 LIST
@@ -931,6 +944,20 @@ fi
 #  ######  ########
 
 cdpath+=("$HOME")
+
+if (( $+commands[zoxide] )) ; then
+	add_cdpath_to_zoxide() {
+		local pths = ()
+		for pth in $cdpath ; do
+			[[ -d "$pth" ]] && pths += ("${pth}"/*(/N))
+		done
+		if [[ ${#pths[@]} -gt 0 ]]; then
+			zoxide add "${pths[@]}"
+		fi
+	}
+
+	add_cdpath_to_zoxide
+fi
 
 # Allow auto-completion of `cd` command to be case-insensitive
 # and anywhere in the string.
