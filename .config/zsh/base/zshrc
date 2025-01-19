@@ -373,6 +373,11 @@ then
 	alias cat=less
 	export MANPAGER="sh -c 'col -bx | $BATCMD -l man -p'"
 	alias less="bat -p"
+
+	if [ "$BATCMD" != "batcat" ]
+	then
+		alias batcat=bat
+	fi
 fi
 
 baturl() {
