@@ -952,13 +952,18 @@ cdpath+=("$HOME")
 
 if (( $+commands[zoxide] )) ; then
 	add_cdpath_to_zoxide() {
-		local pths = ()
-		for pth in $cdpath ; do
-			[[ -d "$pth" ]] && pths += ("${pth}"/*(/N))
+		local pths=()
+
+		setopt null_glob
+
+		for pth in $cdpath; do
+			[[ ! -d "$pth" ]] && continue
+			for dir in $pth/*(-/N); do
+				zoxide add "$dir"
+			done
 		done
-		if [[ ${#pths[@]} -gt 0 ]]; then
-			zoxide add "${pths[@]}"
-		fi
+
+		unsetopt null_glob
 	}
 
 	add_cdpath_to_zoxide
