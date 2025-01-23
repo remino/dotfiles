@@ -971,8 +971,8 @@ fi
 
 # Allow auto-completion of `cd` command to be case-insensitive
 # and anywhere in the string.
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} l:|=* r:|=*'
-zstyle ':completion:*' menu select
+zstyle ':completion::complete:cd:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} l:|=* r:|=*'
+zstyle ':completion::complete:cd:*' menu select
 
 #  ######  ##       ########    ###    ##    ## ##     ## ########
 # ##    ## ##       ##         ## ##   ###   ## ##     ## ##     ##
