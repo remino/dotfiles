@@ -282,7 +282,8 @@ for plugin in \
 	macos \
 	urltools \
 	vi-mode \
-	zsh-interactive-cd
+	zsh-interactive-cd \
+	zsh-syntax-highlighting
 do
 	_add_plugin_if_exists "$plugin"
 done
