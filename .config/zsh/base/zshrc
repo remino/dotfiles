@@ -997,3 +997,17 @@ unset -f \
 	_plugin_exists \
 	_unalias \
 	;
+
+# ########   #######   ######  ########
+# ##     ## ##     ## ##    ##    ##
+# ##     ## ##     ## ##          ##
+# ########  ##     ##  ######     ##
+# ##        ##     ##       ##    ##
+# ##        ##     ## ##    ##    ##
+# ##         #######   ######     ##
+
+if declare -f _post_init > /dev/null 2>&1
+then
+	_post_init
+	unset -f _post_init
+fi
