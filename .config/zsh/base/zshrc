@@ -246,6 +246,11 @@ then
 	}
 fi
 
+touchp() {
+	[ -z "$1" ] && echo "Usage: touchp <file>" >&2 && return 1
+	mkdir -p "$(dirname "$1")" && touch "$1"
+}
+
 # ########  #######  ##     ## #### ########  ########
 #      ##  ##     ##  ##   ##   ##  ##     ## ##
 #     ##   ##     ##   ## ##    ##  ##     ## ##
@@ -283,7 +288,8 @@ for plugin in \
 	macos \
 	urltools \
 	vi-mode \
-	zsh-interactive-cd
+	zsh-interactive-cd \
+	zsh-syntax-highlighting
 do
 	_add_plugin_if_exists "$plugin"
 done
@@ -303,6 +309,7 @@ git git git-aliases
 git-extras
 git-lfs
 gpg-agent
+mise
 mycli mycli-alias
 mysql mysql-alias
 node
@@ -972,8 +979,8 @@ fi
 
 # Allow auto-completion of `cd` command to be case-insensitive
 # and anywhere in the string.
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} l:|=* r:|=*'
-zstyle ':completion:*' menu select
+zstyle ':completion::complete:cd:*' matcher-list 'm:{[:lower:][:upper:]-_}={[:upper:][:lower:]_-} l:|=* r:|=*'
+zstyle ':completion::complete:cd:*' menu select
 
 #  ######  ##       ########    ###    ##    ## ##     ## ########
 # ##    ## ##       ##         ## ##   ###   ## ##     ## ##     ##
@@ -991,3 +998,17 @@ unset -f \
 	_plugin_exists \
 	_unalias \
 	;
+
+# ########   #######   ######  ########
+# ##     ## ##     ## ##    ##    ##
+# ##     ## ##     ## ##          ##
+# ########  ##     ##  ######     ##
+# ##        ##     ##       ##    ##
+# ##        ##     ## ##    ##    ##
+# ##         #######   ######     ##
+
+if declare -f _post_init > /dev/null 2>&1
+then
+	_post_init
+	unset -f _post_init
+fi

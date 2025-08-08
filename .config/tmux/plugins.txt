@@ -1,0 +1,8 @@
+https://github.com/tmux-plugins/tmux-battery
+https://github.com/tmux-plugins/tmux-copycat
+https://github.com/tmux-plugins/tmux-online-status
+https://github.com/tmux-plugins/tmux-open
+https://github.com/samoshkin/tmux-plugin-sysstat
+https://github.com/tmux-plugins/tmux-prefix-highlight
+https://github.com/tmux-plugins/tmux-sidebar
+https://github.com/tmux-plugins/tpm

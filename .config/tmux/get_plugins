@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+get_plugins_main() {
+	E_ARGS=16
+	E_CD_FAILED=17
+
+	cd "$( dirname "$0" )" || exit $E_CD_FAILED
+
+	[ ! -f plugins.txt ] && return
+
+	[ ! -d plugins ] && mkdir plugins
+
+	cat plugins.txt | while read -r url; do
+		cd plugins || exit $E_CD_FAILED
+		if [ ! -d "$(basename "$url")" ]; then
+			git clone "$url"
+		fi
+		cd - >/dev/null || exit $E_CD_FAILED
+	done
+}
+
+get_plugins_main "$@"
