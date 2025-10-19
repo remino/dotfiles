@@ -27,7 +27,7 @@
 [push]
 	autoSetupRemote = true
 [core]
-	pager = diff-so-fancy | less -RFX --tabs=2
+	pager = ~/.config/git/pager.sh
 [diff-so-fancy]
 	stripLeadingSymbols = false
 [diff]
@@ -39,7 +39,7 @@
 [pager]
 	difftool = true
 [interactive]
-	diffFilter = diff-so-fancy --patch
+	diffFilter = sh -c 'command -v diff-so-fancy >/dev/null 2>&1 && exec diff-so-fancy --patch || cat'
 [rerere]
 	enabled = true
 [filter "lfs"]
