@@ -213,7 +213,8 @@ fi
 
 if _exists nvim
 then
-	# Override vim alias
+	# Override vi & vim alias
+	alias vi=nvim
 	alias vim=nvim
 	alias neovim=nvim
 fi
