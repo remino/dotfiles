@@ -3,7 +3,6 @@
 [init]
 	defaultBranch = main
 [commit]
-	gpgsign = true
 	verbose = true
 [alias]
 	a = add
