@@ -16,6 +16,7 @@ overrides:
     options:
       parser: 'markdown'
       proseWrap: 'always'
+      tabWidth: 4
       useTabs: false
   - files: '*.yml'
     options:
