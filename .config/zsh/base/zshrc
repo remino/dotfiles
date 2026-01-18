@@ -302,6 +302,7 @@ chroma colorize
 code vscode
 date isodate
 deno
+fd
 fd fdfind
 gcloud
 gh
@@ -315,6 +316,7 @@ mysql mysql-alias
 node
 op 1password
 pip
+rg
 rsync cp rsync
 ruby
 sudo
