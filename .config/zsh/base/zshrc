@@ -177,6 +177,10 @@ alias ssuu='sudo su'
 alias v=vi
 alias zshrc='edit "$HOME/.zshrc"'
 alias zshrcbase='edit "$HOME/.zshrc.base"'
+alias -g C='| wc -l'
+alias -g J='| jq'
+alias -g S='| sort'
+alias -g U='| uniq'
 
 if _exists code
 then
