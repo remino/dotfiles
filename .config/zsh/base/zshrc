@@ -115,7 +115,9 @@ fi
 
 share_ssh_agent() {
 	[ -z "$SSH_AUTH_SOCK" ] && return
-	ssh_agent_path="$HOME/.ssh/agent"
+	# Remove old .ssh/agent file
+	[ -f "$HOME/.ssh/agent" ] && rm -f "$HOME/.ssh/agent"
+	ssh_agent_path="$HOME/.ssh/ssh-agent"
 	printenv | grep '^SSH' | sed -E 's/^([^=]+)=(.*)$/\1="\2"; export \1;/' > "$ssh_agent_path"
 }
 
