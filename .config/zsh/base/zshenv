@@ -20,9 +20,28 @@
 # ######## ##     ## ####  ######     ##     ######
 
 _exists() {
-	{
-		command -v "$1" || ( _asdf_exists "$1" )
-	} > /dev/null 2>&1
+	typeset -gA __exists_cache
+	local cmd="$1"
+
+	if [ -n "${__exists_cache[$cmd]+_}" ]
+	then
+		return "${__exists_cache[$cmd]}"
+	fi
+
+	if command -v "$cmd" > /dev/null 2>&1
+	then
+		__exists_cache[$cmd]=0
+		return 0
+	fi
+
+	if _asdf_exists "$cmd"
+	then
+		__exists_cache[$cmd]=0
+		return 0
+	fi
+
+	__exists_cache[$cmd]=1
+	return 1
 }
 
 _asdf_exists() {

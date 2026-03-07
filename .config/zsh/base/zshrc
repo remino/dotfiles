@@ -52,7 +52,32 @@ _is_demo() {
 	[ -z "$DEMO" ] || [ "$DEMO" = "0" ]
 }
 
-export XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME
+# ########  ######## ########  ##     ##  ######
+# ##     ## ##       ##     ## ##     ## ##    ##
+# ##     ## ##       ##     ## ##     ## ##
+# ##     ## ######   ########  ##     ## ##   ####
+# ##     ## ##       ##     ## ##     ## ##    ##
+# ##     ## ##       ##     ## ##     ## ##    ##
+# ########  ######## ########   #######   ######
+
+if [ -n "$ZSH_STARTUP_DEBUG" ] && [ "$ZSH_STARTUP_DEBUG" != "0" ]
+then
+	zmodload zsh/datetime > /dev/null 2>&1
+	zmodload zsh/zprof > /dev/null 2>&1
+	typeset -gF _zsh_startup_t0="$EPOCHREALTIME"
+fi
+
+#  ######   #######  ##     ## ########
+# ##    ## ##     ## ###   ### ##     ##
+# ##       ##     ## #### #### ##     ##
+# ##       ##     ## ## ### ## ########
+# ##       ##     ## ##     ## ##
+# ##    ## ##     ## ##     ## ##
+#  ######   #######  ##     ## ##
+
+export ZSH_DISABLE_COMPFIX=true
+export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump-${ZSH_VERSION}"
+mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" > /dev/null 2>&1
 
 # ##     ##  #######  ##     ## ######## ########  ########  ######## ##      ##
 # ##     ## ##     ## ###   ### ##       ##     ## ##     ## ##       ##  ##  ##
@@ -63,7 +88,29 @@ export XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_STATE_HOME
 # ##     ##  #######  ##     ## ######## ########  ##     ## ########  ###  ###
 
 # For M1 Macs, init Homebrew first:
-[ -x "/opt/homebrew/bin/brew" ] && eval "$( /opt/homebrew/bin/brew shellenv )"
+if [ -x "/opt/homebrew/bin/brew" ]
+then
+	brew_shellenv_cache_dir="$XDG_CACHE_HOME/zsh"
+	brew_shellenv_cache="$brew_shellenv_cache_dir/brew-shellenv.zsh"
+
+	if [ ! -f "$brew_shellenv_cache" ] || [ "/opt/homebrew/bin/brew" -nt "$brew_shellenv_cache" ]
+	then
+		if mkdir -p "$brew_shellenv_cache_dir" > /dev/null 2>&1 && [ -w "$brew_shellenv_cache_dir" ]
+		then
+			/opt/homebrew/bin/brew shellenv > "$brew_shellenv_cache" 2> /dev/null
+		fi
+	fi
+
+	if [ -s "$brew_shellenv_cache" ]
+	then
+		# shellcheck source=/dev/null
+		source "$brew_shellenv_cache"
+	else
+		eval "$( /opt/homebrew/bin/brew shellenv )"
+	fi
+
+	unset brew_shellenv_cache_dir brew_shellenv_cache
+fi
 
 # Oh My Zsh plugin added later, after bundler plugin.
 
@@ -267,6 +314,8 @@ touchp() {
 # Directories in cdpath are added to zoxide later.
 
 if _exists zoxide; then
+	[ -z "$ZSH_ZOXIDE_PRELOAD" ] && ZSH_ZOXIDE_PRELOAD=0
+
 	ZOXIDE_CMD_OVERRIDE=cd
 	_add_plugin_if_exists zoxide
 fi
@@ -280,7 +329,6 @@ fi
 # ##        ########  #######   ######   #### ##    ##  ######
 
 for plugin in \
-	autoupdate \
 	aliases \
 	catimg \
 	command-not-found \
@@ -824,8 +872,8 @@ _exists snap && _add_plugin_if_exists snap
 HYPHEN_INSENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -996,7 +1044,7 @@ if (( $+commands[zoxide] )) ; then
 		unsetopt null_glob
 	}
 
-	add_cdpath_to_zoxide
+	[ "$ZSH_ZOXIDE_PRELOAD" = "1" ] && add_cdpath_to_zoxide
 fi
 
 # Allow auto-completion of `cd` command to be case-insensitive
@@ -1040,4 +1088,13 @@ if declare -f _post_init > /dev/null 2>&1
 then
 	_post_init
 	unset -f _post_init
+fi
+
+if [ -n "$_zsh_startup_t0" ]
+then
+	typeset -F3 _zsh_startup_elapsed
+	_zsh_startup_elapsed="$(( EPOCHREALTIME - _zsh_startup_t0 ))"
+	printf '[zsh-startup] %.3fs\n' "$_zsh_startup_elapsed"
+	type zprof > /dev/null 2>&1 && zprof
+	unset _zsh_startup_elapsed _zsh_startup_t0
 fi
