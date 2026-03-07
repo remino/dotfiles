@@ -373,6 +373,7 @@ pip
 rg
 rsync cp rsync
 ruby
+sesh
 sudo
 system
 thefuck
