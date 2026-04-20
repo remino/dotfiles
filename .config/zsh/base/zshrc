@@ -583,6 +583,12 @@ if _exists tmux
 then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
 	_add_plugin_if_exists tmux
+
+	if _exists sesh && [[ -z "$TMUX" && "$ZSH_TMUX_AUTOSTART" = "true" ]]; then
+		echo picking session...
+		sesh picker
+		ZSH_TMUX_AUTOSTART=false
+	fi
 fi
 
 # ######## ########     ###     ######  ##     ##
