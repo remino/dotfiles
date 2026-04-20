@@ -584,10 +584,12 @@ then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
 	_add_plugin_if_exists tmux
 
-	if _exists sesh && [[ -z "$TMUX" && "$ZSH_TMUX_AUTOSTART" = "true" ]]; then
-		echo picking session...
-		sesh picker
+	if _exists sesh && [ "$ZSH_TMUX_AUTOSTART" = "true" ] && [ -n "$TMUX" ] && [ "$( sesh list -t 2>&1 | wc -l )" -gt 0 ]
+	then
 		ZSH_TMUX_AUTOSTART=false
+		ZSH_TMUX_AUTOCONNECT=false
+
+		export ZSH_SESH_AUTOSTART=true
 	fi
 fi
 
@@ -1067,4 +1069,17 @@ then
 	printf '[zsh-startup] %.3fs\n' "$_zsh_startup_elapsed"
 	type zprof > /dev/null 2>&1 && zprof
 	unset _zsh_startup_elapsed _zsh_startup_t0
+fi
+
+#  ######  ########  ######  ##     ##
+# ##    ## ##       ##    ## ##     ##
+# ##       ##       ##       ##     ##
+#  ######  ######    ######  #########
+#       ## ##             ## ##     ##
+# ##    ## ##       ##    ## ##     ##
+#  ######  ########  ######  ##     ##
+
+if [ "$ZSH_SESH_AUTOSTART" = "true" ]
+then
+	sesh picker
 fi
