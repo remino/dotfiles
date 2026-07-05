@@ -600,6 +600,34 @@ then
 	alias txS='tmuxinator stop'
 fi
 
+#  ######  ########  ######  ##     ##
+# ##    ## ##       ##    ## ##     ##
+# ##       ##       ##       ##     ##
+#  ######  ######    ######  #########
+#       ## ##             ## ##     ##
+# ##    ## ##       ##    ## ##     ##
+#  ######  ########  ######  ##     ##
+
+ZSH_SESH_AUTOSTART=true
+
+if _exists sesh
+then
+	if [ "$ZSH_SESH_AUTOSTART" = "true" ] && [ -z "$TMUX" ]
+	then
+		if [ "$ZSH_TMUX_AUTOSTART" = "true" ]
+		then
+			ZSH_TMUX_AUTOSTART=false
+		fi
+
+		if [ "$ZSH_TMUX_ITERM2" = "true" ]
+		then
+			tmux -CC attach -t "$(sesh list --tmux --tmuxinator | fzf)"
+		else
+			sesh picker --icons
+		fi
+	fi
+fi
+
 # ######## ########     ###     ######  ##     ##
 #    ##    ##     ##   ## ##   ##    ## ##     ##
 #    ##    ##     ##  ##   ##  ##       ##     ##
