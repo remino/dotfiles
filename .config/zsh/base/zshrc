@@ -364,6 +364,7 @@ git git git-aliases
 git-extras
 git-lfs
 gpg-agent
+imgmod
 mise
 mycli mycli-alias
 mysql mysql-alias
@@ -378,6 +379,7 @@ sudo
 system
 thefuck
 ufw
+vidmod
 wp wp-cli
 yt-dlp
 
