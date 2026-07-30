@@ -1,0 +1,14 @@
+# The Cyberwave theme needs to be available at:
+#
+#   ~/.config/ghostty/themes/Cyberwave
+#
+# You can clone the remino/customize repo and link it:
+#
+#   mkdir ~/opt
+#   git clone https://github.com/remino/customize ~/opt/customize
+#   cd ~/.config/ghostty
+#   ln -s ~/opt/customize/ghostty/themes
+#
+theme = "Cyberwave"
+
+macos-titlebar-style = "hidden"
