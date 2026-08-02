@@ -11,4 +11,15 @@
 #
 theme = "Cyberwave"
 
-macos-titlebar-style = "hidden"
+cursor-style = block
+cursor-style-blink = true
+cursor-click-to-move = true
+macos-option-as-alt = true
+# macos-titlebar-style = "hidden"
+mouse-hide-while-typing = true
+mouse-shift-capture = true
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = bell, notify
+notify-on-command-finish-after = 30s
+
+config-file = ?config.local
