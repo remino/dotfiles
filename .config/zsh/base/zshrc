@@ -403,18 +403,21 @@ done
 # ##        ##      ##
 # ##       ######## ##
 
-if _exists fzf && _plugin_exists fzf; then
+if _exists fzf; then
 	FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
-	_add_plugin fzf
 
 	if _plugin_exists fzf-tab
 	then
 		_add_plugin fzf-tab
-	elif _plugin_exists zsh-interactive-cd
+	elif _plugin_exists fzf
 	then
-		# Retain the previous cd picker only if fzf-tab is unavailable.
-		zic_case_insensitive=true
-		_add_plugin zsh-interactive-cd
+		# The legacy fzf plugin remains the fallback when fzf-tab is unavailable.
+		_add_plugin fzf
+		if _plugin_exists zsh-interactive-cd
+		then
+			zic_case_insensitive=true
+			_add_plugin zsh-interactive-cd
+		fi
 	fi
 fi
 
