@@ -978,6 +978,9 @@ zstyle ':completion:*' matcher-list \
 	'm:{[:lower:]-_}={[:upper:]_-} l:|=* r:|=*' \
 	'm:{[:upper:]-_}={[:lower:]_-} l:|=* r:|=*'
 
+# Complete at an empty prompt instead of inserting a literal tab character.
+zstyle ':completion:*' insert-tab no
+
 # fzf-tab renders the selection UI itself. Keep zsh's menu available when the
 # plugin is absent and normal completion is the fallback.
 if (( ${plugins[(Ie)fzf-tab]} ))
