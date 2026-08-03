@@ -611,51 +611,6 @@ then
 	alias txS='tmuxinator stop'
 fi
 
-#  ######  ########  ######  ##     ##
-# ##    ## ##       ##    ## ##     ##
-# ##       ##       ##       ##     ##
-#  ######  ######    ######  #########
-#       ## ##             ## ##     ##
-# ##    ## ##       ##    ## ##     ##
-#  ######  ########  ######  ##     ##
-
-if _exists sesh
-then
-	_sesh_connect() {
-		local target
-		target="$(sesh list --tmux --tmuxinator | fzf)" || return
-
-		[ -n "$target" ] || return
-
-		if ! tmux has-session -t "$target" 2>/dev/null
-		then
-			tmuxinator start "$target" --no-attach
-		fi
-
-		tmux -CC attach -t "$target"
-	}
-
-	ZSH_SESH_AUTOSTART=true
-
-	if [ "$ZSH_SESH_AUTOSTART" = "true" ] && [ -z "$TMUX" ]
-	then
-		if [ "$ZSH_TMUX_AUTOSTART" = "true" ]
-		then
-			ZSH_TMUX_AUTOSTART=false
-		fi
-
-		if [ "$ZSH_TMUX_ITERM2" = "true" ]
-		then
-			_sesh_connect
-		else
-			sesh picker --icons
-		fi
-	fi
-
-	unset _sesh_connect
-fi
-
-
 # ######## ########     ###     ######  ##     ##
 #    ##    ##     ##   ## ##   ##    ## ##     ##
 #    ##    ##     ##  ##   ##  ##       ##     ##
