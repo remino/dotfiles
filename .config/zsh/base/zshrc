@@ -342,9 +342,7 @@ for plugin in \
 	jump \
 	macos \
 	urltools \
-	vi-mode \
-	zsh-interactive-cd \
-	zsh-syntax-highlighting
+	vi-mode
 do
 	_add_plugin_if_exists "$plugin"
 done
@@ -408,7 +406,21 @@ done
 if _exists fzf && _plugin_exists fzf; then
 	FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
 	_add_plugin fzf
+
+	if _plugin_exists fzf-tab
+	then
+		_add_plugin fzf-tab
+	elif _plugin_exists zsh-interactive-cd
+	then
+		# Retain the previous cd picker only if fzf-tab is unavailable.
+		zic_case_insensitive=true
+		_add_plugin zsh-interactive-cd
+	fi
 fi
+
+# fzf-tab must load after completion providers, but before ZLE wrappers such
+# as zsh-syntax-highlighting.
+_add_plugin_if_exists zsh-syntax-highlighting
 
 #    ###     ######  ########  ########
 #   ## ##   ##    ## ##     ## ##
@@ -884,8 +896,9 @@ _exists snap && _add_plugin_if_exists snap
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# Load Oh My Zsh's strict matcher first. It is replaced after Oh My Zsh loads
+# with an exact-case-first fallback matcher (see below).
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -948,6 +961,24 @@ setopt AUTO_LIST
 setopt CHECK_JOBS
 setopt CORRECT
 setopt PATH_DIRS
+
+# Prefer exact-case candidates, then fall back to case-insensitive and
+# substring matching. This keeps `exa<Tab>` on lowercase `example` instead of
+# inserting `Exa`, while still allowing `Ze<Tab>` and `Er<Tab>` to find `zero`.
+zstyle ':completion:*' matcher-list \
+	'' \
+	'm:{[:lower:]-_}={[:upper:]_-}' \
+	'm:{[:upper:]-_}={[:lower:]_-}' \
+	'l:|=* r:|=*' \
+	'm:{[:lower:]-_}={[:upper:]_-} l:|=* r:|=*' \
+	'm:{[:upper:]-_}={[:lower:]_-} l:|=* r:|=*'
+
+# fzf-tab renders the selection UI itself. Keep zsh's menu available when the
+# plugin is absent and normal completion is the fallback.
+if (( ${plugins[(Ie)fzf-tab]} ))
+then
+	zstyle ':completion:*' menu no
+fi
 
 # ######## ########    ###
 # ##            ##    ## ##
@@ -1066,18 +1097,6 @@ if (( $+commands[zoxide] )) ; then
 
 	[ "$ZSH_ZOXIDE_PRELOAD" = "1" ] && add_cdpath_to_zoxide
 fi
-
-# Allow auto-completion of `cd` command to be case-insensitive
-# and anywhere in the string.
-zstyle ':completion::complete:cd:*' matcher-list \
-  '' \
-  'm:{[:lower:]-_}={[:upper:]_-}' \
-  'm:{[:upper:]-_}={[:lower:]_-}' \
-  'l:|=* r:|=*' \
-	;
-
-zstyle ':completion::complete:cd:*' insert-unambiguous false
-zstyle ':completion::complete:cd:*' menu select
 
 #  ######  ##       ########    ###    ##    ## ##     ## ########
 # ##    ## ##       ##         ## ##   ###   ## ##     ## ##     ##
