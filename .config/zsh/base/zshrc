@@ -79,6 +79,22 @@ export ZSH_DISABLE_COMPFIX=true
 export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompdump-${ZSH_VERSION}"
 mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" > /dev/null 2>&1
 
+# ######## ######## ########  ##     ##
+#    ##    ##       ##     ## ###   ###
+#    ##    ##       ##     ## #### ####
+#    ##    ######   ########  ## ### ##
+#    ##    ##       ##   ##   ##     ##
+#    ##    ##       ##    ##  ##     ##
+#    ##    ######## ##     ## ##     ##
+
+if [[ -n $SSH_TTY && -z $COLORTERM ]]; then
+	case $TERM in
+		xterm-ghostty|xterm-kitty|xterm-256color|screen-256color|tmux-256color|wezterm|*-direct|*-truecolor)
+			export COLORTERM=truecolor
+			;;
+	esac
+fi
+
 # ##     ##  #######  ##     ## ######## ########  ########  ######## ##      ##
 # ##     ## ##     ## ###   ### ##       ##     ## ##     ## ##       ##  ##  ##
 # ##     ## ##     ## #### #### ##       ##     ## ##     ## ##       ##  ##  ##
