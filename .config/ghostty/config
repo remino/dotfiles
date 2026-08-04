@@ -11,6 +11,10 @@
 #
 theme = "Cyberwave"
 
+clipboard-paste-bracketed-safe = true
+clipboard-paste-protection = true
+clipboard-read = allow
+clipboard-write = allow
 cursor-style = block
 cursor-style-blink = true
 cursor-click-to-move = true
