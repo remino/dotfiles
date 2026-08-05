@@ -1064,8 +1064,7 @@ fi
 if _exists yt-dlp
 then
 	alias youtube-dl='yt-dlp'
-	alias ydl=ydl
-	alias yd='yt-dlp'
+	alias ydl='yt-dlp'
 fi
 
 #  ######  ########
