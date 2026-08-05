@@ -242,11 +242,13 @@ alias ssuu='sudo su'
 alias v=vi
 alias zshrcedit='edit "$HOME/.zsh"{rc,env} "$XDG_CONFIG_HOME/zsh/"*/zsh*'
 alias -g A='| xargs'
-alias -g C='| clipcopy'
+alias -g B='| $BATCMD'
+alias -g C='| command cat'
+alias -g CC='| clipcopy'
+alias -g CL='| wc -l'
 alias -g J='| jq'
 alias -g S='| sort'
 alias -g U='| uniq'
-alias -g W='| wc -l'
 
 if _exists code
 then
