@@ -6,14 +6,18 @@
 	verbose = true
 [alias]
 	a = add
+	ap = add -p
 	b = branch
 	c = commit
+	cn = commit --no-verify
 	co = checkout
+	cop = checkout -p
 	dft = difftool
 	l = pull
 	lo = log --oneline --decorate
 	pl = pull
 	po = push origin
+	pon = push origin --no-verify
 	pot = push origin --tags
 	por = push origin --remote
 	r = remote
