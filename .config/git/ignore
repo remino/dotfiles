@@ -29,5 +29,8 @@ Temporary Items
 .apdisk
 
 # Local files
+.env
+.env.*
+!.env.example
 .codex.local
 AGENTS.local.md
