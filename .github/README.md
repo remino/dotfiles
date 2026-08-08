@@ -1,112 +1,64 @@
 # dotfiles
 
-By Rémino Rem <https://remino.net>
+Personal macOS-oriented dotfiles, managed with [yadm](https://yadm.io).
 
-Small collection of dotfiles.
+## What's included
 
-- [About](#about)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+Configuration is provided for:
 
-## About
+- Shell: [Zsh](https://www.zsh.org/), [Powerlevel10k](https://github.com/romkatv/powerlevel10k), [Atuin](https://atuin.sh/), and [asdf](https://asdf-vm.com/)
+- Terminal: [Ghostty](https://ghostty.org/) and [tmux](https://github.com/tmux/tmux)
+- Development tools: [Git](https://git-scm.com/), [GitHub CLI](https://cli.github.com/), [ripgrep](https://github.com/BurntSushi/ripgrep), [bat](https://github.com/sharkdp/bat), and [EditorConfig](https://editorconfig.org/)
+- Utilities: [Fastfetch](https://github.com/fastfetch-cli/fastfetch), [Finicky](https://github.com/johnste/finicky), [yt-dlp](https://github.com/yt-dlp/yt-dlp), [Tridactyl](https://github.com/tridactyl/tridactyl), [GnuPG](https://gnupg.org/), and OpenSSH
 
-A minimal collection of dotfiles to work with:
+It also contains configuration for `cheat`, `curl`, `gh`, `shellcheck`, and a
+few small helper scripts.
 
-- [asdf](https://asdf-vm.com)
-- [bat](https://github.com/sharkdp/bat)
-- [EditorConfig](https://editorconfig.org)
-- [exa](https://the.exa.website)
-- [getup](https://github.com/remino/getup)
-- [Git](https://git-scm.com)
-- [GitHub CLI](https://cli.github.com) (gh)
-- [GnuPG](https://gnupg.org) (gpg)
-- [Homebrew](https://brew.sh)
-- [iTerm2](https://iterm2.com)
-- [Karabiner Elements](https://karabiner-elements.pqrs.org)
-- [npm](https://docs.npmjs.com)
-- [Oh My Zsh](https://ohmyz.sh)
-- [OpenSSH](https://www.openssh.com) (ssh)
-- [pnpm](https://pnpm.io)
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [tmux](https://tmux.github.io/)
-- [trash](https://hasseg.org/trash/)
-- [Vim](https://www.vim.org/)
-- [yadm](https://yadm.io)
-- [youtube-dl](https://youtube-dl.org)
-- [Z Shell](https://zsh.sourceforge.io) (zsh)
+## Installation
 
-## Getting Started
-
-The dotfiles should work on their own if you move, copy, or symlink every file
-where they belong, but using a dotfile manager like [yadm](https://yadm.io) is
-recommended.
-
-### Installation
+Install [yadm](https://yadm.io/) first, then clone the repository:
 
 ```sh
-# On its own
-cd ~
-git clone https://github.com/remino/dotfiles .config/dotfiles
-# Copy files you need
-cp ~/.config/dotfiles/.zshrc ~/.zshrc
-# Or create symlinks to them
-ln -s .config/dotfiles/.zshrc
-# Run bootstrap script
-~/.config/yadm/bootstrap
-
-# By using yadm
 yadm clone https://github.com/remino/dotfiles
-# The above will automatically move in all dotfiles in your home directory.
-# Review the changes
+```
+
+After cloning, review the files yadm manages:
+
+```sh
 yadm diff
 ```
 
-### Z Shell Config Base
+The yadm bootstrap script installs the base Zsh loader when necessary and,
+when `~/.config/nvim` does not already exist, clones
+[`remino/nvim`](https://github.com/remino/nvim) there. The Neovim clone uses an
+SSH Git URL, so ensure your GitHub SSH access is configured before running it.
 
-To keep the `.zsh*` files and the home directory clean, the base config files
-have been moved to `.config/zsh/base`.
+To rerun the bootstrap step manually:
 
-Thanks to this, you can have scripts mess with the `.zshenv` and `.zshrc` files
-without having to worry about breaking the base config.
+```sh
+~/.config/yadm/bootstrap
+```
 
-If it's not sourced already, you can run the `install_zshrc` script to install
-the base config:
+### Zsh base configuration
+
+The durable Zsh configuration lives in `~/.config/zsh/base`. The
+`~/.zshenv` and `~/.zshrc` loader files may be recreated or modified by other
+tools without changing that base configuration. To reinstall those loaders:
 
 ```sh
 ~/.config/yadm/install_zshrc
 ```
 
-[Back to top](#dotfiles)
-
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to
-learn, inspire, and create. Any contributions you make are **greatly
-appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and
-create a pull request. You can also simply open an issue with the tag
-"enhancement". Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-[Back to top](#dotfiles)
+This is primarily a personal configuration repository, but focused fixes and
+improvements are welcome. Please open an issue or pull request with a concise
+description of the change.
 
 ## License
 
-Distributed under the ISC License. See `LICENSE.txt` for more information.
-
-[Back to top](#dotfiles)
+Distributed under the ISC License. See [LICENSE.txt](LICENSE.txt).
 
 ## Contact
 
-Rémino Rem https://remino.net/
-
-[Back to top](#dotfiles)
+Rémino Rem — <https://remino.net/>
