@@ -1,0 +1,40 @@
+#!/bin/sh
+
+config="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/macos-option.local"
+key='macos-option-as-alt'
+
+current=$(
+	sed -n "s/^$key[[:space:]]*=[[:space:]]*//p" "$config" \
+		| tail -n 1
+)
+
+case "${1:-toggle}" in
+	on | true)
+		next=true
+		;;
+	off | false)
+		next=false
+		;;
+	toggle)
+		case "$current" in
+			true) next=false ;;
+			*) next=true ;;
+		esac
+		;;
+	*)
+		printf 'usage: %s [on|off|toggle]\n' "${0##*/}" >&2
+		exit 2
+		;;
+esac
+
+if [ ! -f "$config" ]; then
+	touch "$config"
+fi
+
+if grep -q "^$key[[:space:]]*=" "$config"; then
+	sed -i '' "s/^$key[[:space:]]*=.*/$key = $next/" "$config"
+else
+	printf '\n%s = %s\n' "$key" "$next" >> "$config"
+fi
+
+printf 'Ghostty Option-as-Alt: %s\n' "$next"
