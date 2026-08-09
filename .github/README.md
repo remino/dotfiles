@@ -26,7 +26,7 @@ By Rémino Rem<br>
 
 Configuration is provided for:
 
-- Shell: [Zsh](https://www.zsh.org/), [Powerlevel10k](https://github.com/romkatv/powerlevel10k), [Atuin](https://atuin.sh/), and [asdf](https://asdf-vm.com/)
+- Shell: [Zsh](https://www.zsh.org/), [Powerlevel10k](https://github.com/romkatv/powerlevel10k), [Atuin](https://atuin.sh/), and [mise-en-scene](https://mise.jdx.dev/)
 - Terminal: [Ghostty](https://ghostty.org/) and [tmux](https://github.com/tmux/tmux)
 - Development tools: [Git](https://git-scm.com/), [GitHub CLI](https://cli.github.com/), [ripgrep](https://github.com/BurntSushi/ripgrep), [bat](https://github.com/sharkdp/bat), and [EditorConfig](https://editorconfig.org/)
 - Utilities: [Fastfetch](https://github.com/fastfetch-cli/fastfetch), [Finicky](https://github.com/johnste/finicky), [yt-dlp](https://github.com/yt-dlp/yt-dlp), [Tridactyl](https://github.com/tridactyl/tridactyl), [GnuPG](https://gnupg.org/), and OpenSSH
