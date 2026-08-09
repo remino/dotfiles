@@ -2,7 +2,27 @@
 
 Personal macOS-oriented dotfiles, managed with [yadm](https://yadm.io).
 
-## What's included
+By Rémino Rem<br>
+<https://remino.net/>
+
+[Code Repo](https://github.com/remino/dotfiles)
+| [ISC License](LICENSE.txt)
+
+---
+
+<!-- mtoc-start -->
+
+- [What's Included](#whats-included)
+- [Installation](#installation)
+    - [Zsh Base Configuration](#zsh-base-configuration)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- mtoc-end -->
+
+---
+
+## What's Included
 
 Configuration is provided for:
 
@@ -13,6 +33,10 @@ Configuration is provided for:
 
 It also contains configuration for `cheat`, `curl`, `gh`, `shellcheck`, and a
 few small helper scripts.
+
+[Back to top](#)
+
+---
 
 ## Installation
 
@@ -39,7 +63,7 @@ To rerun the bootstrap step manually:
 ~/.config/yadm/bootstrap
 ```
 
-### Zsh base configuration
+### Zsh Base Configuration
 
 The durable Zsh configuration lives in `~/.config/zsh/base`. The
 `~/.zshenv` and `~/.zshrc` loader files may be recreated or modified by other
@@ -49,16 +73,22 @@ tools without changing that base configuration. To reinstall those loaders:
 ~/.config/yadm/install_zshrc
 ```
 
+[Back to top](#)
+
+---
+
 ## Contributing
 
 This is primarily a personal configuration repository, but focused fixes and
 improvements are welcome. Please open an issue or pull request with a concise
 description of the change.
 
+[Back to top](#)
+
+---
+
 ## License
 
 Distributed under the ISC License. See [LICENSE.txt](LICENSE.txt).
 
-## Contact
-
-Rémino Rem — <https://remino.net/>
+[Back to top](#)
