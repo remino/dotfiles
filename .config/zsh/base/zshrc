@@ -438,12 +438,12 @@ done
 # ##     ##  ##  ##    ## ##
 # ##     ## ####  ######  ########
 
-# Oh My Zsh activates mise through eval. Source mise's zsh output directly so
-# its initial activation is parsed as a script instead of an eval argument.
+# Use mise shims instead of its dynamic shell hook. This keeps mise-managed
+# tool selection while avoiding generated eval/unset code during shell startup.
 if _exists mise
 then
 	# shellcheck source=/dev/null
-	source <(command mise activate zsh)
+	source <(command mise activate zsh --shims)
 fi
 
 # ######## ######## ########
