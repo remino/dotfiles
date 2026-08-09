@@ -400,7 +400,6 @@ git-extras
 git-lfs
 gpg-agent
 imgmod
-mise
 mycli mycli-alias
 mysql mysql-alias
 node
@@ -430,6 +429,22 @@ do
 		_add_plugin_if_exists "$plugin"
 	done
 done
+
+# ##     ## ####  ######  ########
+# ###   ###  ##  ##    ## ##
+# #### ####  ##  ##       ##
+# ## ### ##  ##   ######  ######
+# ##     ##  ##        ## ##
+# ##     ##  ##  ##    ## ##
+# ##     ## ####  ######  ########
+
+# Oh My Zsh activates mise through eval. Source mise's zsh output directly so
+# its initial activation is parsed as a script instead of an eval argument.
+if _exists mise
+then
+	# shellcheck source=/dev/null
+	source <(command mise activate zsh)
+fi
 
 # ######## ######## ########
 # ##            ##  ##
