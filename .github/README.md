@@ -2,11 +2,9 @@
 
 Personal macOS-oriented dotfiles, managed with [yadm](https://yadm.io).
 
-By Rémino Rem<br>
-<https://remino.net/>
+By Rémino Rem<br> <https://remino.net/>
 
-[Code Repo](https://github.com/remino/dotfiles)
-| [ISC License](LICENSE.txt)
+[Code Repo](https://github.com/remino/dotfiles) | [ISC License](LICENSE.txt)
 
 ---
 
@@ -26,10 +24,21 @@ By Rémino Rem<br>
 
 Configuration is provided for:
 
-- Shell: [Zsh](https://www.zsh.org/), [Powerlevel10k](https://github.com/romkatv/powerlevel10k), [Atuin](https://atuin.sh/), and [mise-en-scene](https://mise.jdx.dev/)
-- Terminal: [Ghostty](https://ghostty.org/) and [tmux](https://github.com/tmux/tmux)
-- Development tools: [Git](https://git-scm.com/), [GitHub CLI](https://cli.github.com/), [ripgrep](https://github.com/BurntSushi/ripgrep), [bat](https://github.com/sharkdp/bat), and [EditorConfig](https://editorconfig.org/)
-- Utilities: [Fastfetch](https://github.com/fastfetch-cli/fastfetch), [Finicky](https://github.com/johnste/finicky), [yt-dlp](https://github.com/yt-dlp/yt-dlp), [Tridactyl](https://github.com/tridactyl/tridactyl), [GnuPG](https://gnupg.org/), and OpenSSH
+- Shell: [Zsh](https://www.zsh.org/),
+  [Powerlevel10k](https://github.com/romkatv/powerlevel10k),
+  [Atuin](https://atuin.sh/), and [mise-en-scene](https://mise.jdx.dev/)
+- Terminal: [Ghostty](https://ghostty.org/) and
+  [tmux](https://github.com/tmux/tmux)
+- Development tools: [Git](https://git-scm.com/),
+  [GitHub CLI](https://cli.github.com/),
+  [ripgrep](https://github.com/BurntSushi/ripgrep),
+  [bat](https://github.com/sharkdp/bat), and
+  [EditorConfig](https://editorconfig.org/)
+- Utilities: [Fastfetch](https://github.com/fastfetch-cli/fastfetch),
+  [Finicky](https://github.com/johnste/finicky),
+  [yt-dlp](https://github.com/yt-dlp/yt-dlp),
+  [Tridactyl](https://github.com/tridactyl/tridactyl),
+  [GnuPG](https://gnupg.org/), and OpenSSH
 
 It also contains configuration for `cheat`, `curl`, `gh`, `shellcheck`, and a
 few small helper scripts.
@@ -52,8 +61,8 @@ After cloning, review the files yadm manages:
 yadm diff
 ```
 
-The yadm bootstrap script installs the base Zsh loader when necessary and,
-when `~/.config/nvim` does not already exist, clones
+The yadm bootstrap script installs the base Zsh loader when necessary and, when
+`~/.config/nvim` does not already exist, clones
 [`remino/nvim`](https://github.com/remino/nvim) there. The Neovim clone uses an
 SSH Git URL, so ensure your GitHub SSH access is configured before running it.
 
@@ -65,9 +74,9 @@ To rerun the bootstrap step manually:
 
 ### Zsh Base Configuration
 
-The durable Zsh configuration lives in `~/.config/zsh/base`. The
-`~/.zshenv` and `~/.zshrc` loader files may be recreated or modified by other
-tools without changing that base configuration. To reinstall those loaders:
+The durable Zsh configuration lives in `~/.config/zsh/base`. The `~/.zshenv` and
+`~/.zshrc` loader files may be recreated or modified by other tools without
+changing that base configuration. To reinstall those loaders:
 
 ```sh
 ~/.config/yadm/install_zshrc
