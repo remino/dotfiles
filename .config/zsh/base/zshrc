@@ -442,18 +442,18 @@ done
 if _exists fzf; then
 	FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
 
+	# Let fzf provide its own integration instead of using Oh My Zsh's legacy
+	# fzf plugin. The latter guesses installation directories and mistakes the
+	# pkgsrc prefix (/usr/pkg on NetBSD) for fzf's source directory.
+	if fzf --zsh > /dev/null 2>&1
+	then
+		# shellcheck source=/dev/null
+		source <(fzf --zsh)
+	fi
+
 	if _plugin_exists fzf-tab
 	then
 		_add_plugin fzf-tab
-	elif _plugin_exists fzf
-	then
-		# The legacy fzf plugin remains the fallback when fzf-tab is unavailable.
-		_add_plugin fzf
-		if _plugin_exists zsh-interactive-cd
-		then
-			zic_case_insensitive=true
-			_add_plugin zsh-interactive-cd
-		fi
 	fi
 fi
 
