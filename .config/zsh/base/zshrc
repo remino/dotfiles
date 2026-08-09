@@ -461,20 +461,6 @@ fi
 # as zsh-syntax-highlighting.
 _add_plugin_if_exists zsh-syntax-highlighting
 
-#    ###     ######  ########  ########
-#   ## ##   ##    ## ##     ## ##
-#  ##   ##  ##       ##     ## ##
-# ##     ##  ######  ##     ## ######
-# #########       ## ##     ## ##
-# ##     ## ##    ## ##     ## ##
-# ##     ##  ######  ########  ##
-
-if _exists asdf
-then
-	ASDF_CONFIG_FILE="$XDG_CONFIG_HOME/asdf/config"
-	_add_plugin_if_exists asdf
-fi
-
 # ########     ###    ########
 # ##     ##   ## ##      ##
 # ##     ##  ##   ##     ##
