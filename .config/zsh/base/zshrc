@@ -1045,7 +1045,7 @@ if _exists fdfind && ! type -p fd > /dev/null 2>&1
 then
 	if alias fd > /dev/null 2>&1 && ! _exists fD
 	then
-		_old_cmd="$( alias fd | sed -E 's/^.*?=\s*//;s/\s*$//' )"
+		_old_cmd="$( alias fd | sed -E "s/^[^=]*=[[:space:]]*//;s/[[:space:]]*$//;s/^'//;s/'$//" )"
 		alias fD="$_old_cmd"
 		unset _old_cmd
 	fi
