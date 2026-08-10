@@ -250,6 +250,7 @@ alias -g CL='| wc -l'
 alias -g J='| jq'
 alias -g S='| sort'
 alias -g U='| uniq'
+alias -g X='| xargs'
 
 if _exists code
 then
