@@ -108,8 +108,7 @@ Plugins are optional. To enable the configured plugin set, install
 declared plugins:
 
 ```sh
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+~/.vim/install-vim-plug
 vim +PlugInstall +qall
 ```
 

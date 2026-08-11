@@ -1,0 +1,29 @@
+#!/bin/sh
+# Install vim-plug for the conventional ~/.vim plugin layout used by .vimrc.
+set -eu
+
+: "${HOME:?HOME must be set}"
+
+vim_dir="${VIM_DIR:-$HOME/.vim}"
+plug_path="$vim_dir/autoload/plug.vim"
+plug_url="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+
+if [ -f "$plug_path" ]; then
+  printf 'vim-plug is already installed at %s\n' "$plug_path"
+  exit 0
+fi
+
+if ! command -v curl >/dev/null 2>&1; then
+  printf '%s\n' 'error: curl is required to install vim-plug' >&2
+  exit 1
+fi
+
+mkdir -p "$(dirname "$plug_path")"
+temp_path="${plug_path}.tmp.$$"
+trap 'rm -f "$temp_path"' EXIT HUP INT TERM
+
+curl --fail --location --output "$temp_path" "$plug_url"
+mv "$temp_path" "$plug_path"
+trap - EXIT HUP INT TERM
+
+printf 'Installed vim-plug at %s\nRun: vim +PlugInstall +qall\n' "$plug_path"
