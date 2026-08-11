@@ -606,6 +606,7 @@ fi
 #    ##    ##     ##  #######  ##     ##
 
 ZSH_TMUX_AUTOQUIT=false
+ZSH_TMUX_AUTOREFRESH=true
 ZSH_TMUX_CONFIG="$XDG_CONFIG_HOME/tmux/tmux.conf"
 ZSH_TMUX_DEFAULT_SESSION_NAME=main
 ZSH_TMUX_UNICODE=true
