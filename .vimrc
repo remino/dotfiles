@@ -29,19 +29,11 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-plug Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Install vim-plug if not found
-" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-endif
-
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
-
-call plug#begin()
+" Plugins are optional: this file remains useful on a fresh server with only
+" Vim installed.  Install vim-plug and run :PlugInstall on machines where you
+" want the extra integrations; never download or install packages on startup.
+if exists('*plug#begin')
+call plug#begin('~/.vim/plugged')
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
 "   - Vim (Windows): '~/vimfiles/plugged'
@@ -55,6 +47,10 @@ call plug#begin()
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 " Plug 'junegunn/vim-easy-align'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf.vim'
 
 " Load dash plugin only if on a Mac and Dash is installed
 if has('mac')
@@ -67,6 +63,7 @@ endif
 
 " Initialize plugin system
 call plug#end()
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -86,9 +83,9 @@ filetype indent on
 set autoread
 au FocusGained,BufEnter * checktime
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
+" Match the Neovim setup: Space is leader and ; enters command mode.
+let mapleader = ' '
+nnoremap ; :
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -168,7 +165,7 @@ set tm=500
 set number
 
 " Set line length marker to 80 chars
-set colorcolumn=80
+set colorcolumn=80,120
 
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
@@ -190,12 +187,24 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-try
-    colorscheme default
-catch
-endtry
-
 set background=dark
+
+" Use true colour when the terminal and Vim support it.
+if has('termguicolors')
+    set termguicolors
+endif
+
+" A modern, bundled dark palette. `habamax` is included with Vim 8.2+;
+" older Vim versions fall back cleanly to the stock default. Override this
+" before sourcing this file to try another installed scheme.
+if !exists('g:vim_lite_colorscheme')
+    let g:vim_lite_colorscheme = 'torte'
+endif
+try
+    execute 'colorscheme ' . fnameescape(g:vim_lite_colorscheme)
+catch
+    colorscheme default
+endtry
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -211,12 +220,6 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-" Set line number colour
-highlight LineNr ctermfg=grey
-
-" Set line length marker colour
-highlight ColorColumn ctermbg=gray
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -225,6 +228,19 @@ highlight ColorColumn ctermbg=gray
 set nobackup
 set nowb
 set noswapfile
+
+" Keep undo history between sessions without leaving files beside projects.
+if exists('*mkdir')
+    let s:vim_state_dir = empty($XDG_STATE_HOME) ? expand('~/.vim') : $XDG_STATE_HOME . '/vim'
+    let s:vim_undo_dir = s:vim_state_dir . '/undo'
+    if !isdirectory(s:vim_undo_dir)
+        silent! call mkdir(s:vim_undo_dir, 'p', 0700)
+    endif
+    if isdirectory(s:vim_undo_dir)
+        let &undodir = s:vim_undo_dir
+        set undofile
+    endif
+endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -261,9 +277,6 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to the : for easier reach.
-nnoremap <Space> :
-
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
@@ -302,6 +315,35 @@ map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
+" Lightweight project navigation using tools already available on most hosts.
+" :Files and :Grep fill the quickfix list, so :cnext/:cprev and :copen work
+" exactly like a small, dependency-free Telescope substitute.
+if executable('rg')
+    let &grepprg = 'rg --vimgrep --smart-case --hidden -g ''!.git'''
+    set grepformat=%f:%l:%c:%m
+
+    function! s:Files() abort
+        let l:items = []
+        for l:file in systemlist('rg --files --hidden -g ''!.git''')
+            call add(l:items, {'filename': l:file, 'lnum': 1, 'col': 1, 'text': l:file})
+        endfor
+        call setqflist([], 'r', {'title': 'Files', 'items': l:items})
+        copen
+    endfunction
+
+    command! Files call <SID>Files()
+    command! -nargs=+ Grep execute 'silent grep! ' . <q-args> | copen
+    nnoremap <silent> <leader>ff :Files<CR>
+    nnoremap <leader>fg :Grep<Space>
+endif
+
+nnoremap <silent> <leader>e :Lexplore<CR>
+nnoremap <silent> <leader>cq :cclose<CR>
+
+if exists(':Git')
+    nnoremap <silent> <leader>gg :Git<CR>
+endif
+
 " Specify the behavior when switching between buffers
 try
   set switchbuf=useopen,usetab,newtab
@@ -318,6 +360,18 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
+set showmode
+set signcolumn=yes
+set splitbelow
+set splitright
+set cursorline
+set mouse=a
+set completeopt=menuone,noselect
+set wildmode=longest:full,full
+
+if exists('&inccommand')
+    set inccommand=split
+endif
 
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
