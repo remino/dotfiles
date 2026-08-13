@@ -242,7 +242,6 @@ alias ssuu='sudo su'
 alias v=vi
 alias zshrcedit='edit "$HOME/.zsh"{rc,env} "$XDG_CONFIG_HOME/zsh/"*/zsh*'
 alias -g A='| xargs'
-alias -g B='| $BATCMD'
 alias -g C='| command cat'
 alias -g CC='| clipcopy'
 alias -g CP='| clipcopy && clippaste'
@@ -493,6 +492,9 @@ then
 	alias bat="\$BATCMD --tabs=2 --style=full --pager 'less -RX'"
 	alias cat=less
 	alias less="bat -p"
+	alias -g B='| $BATCMD'
+	alias -g BL='| $BATCMD -pp -l log'
+	alias -g BJ='| $BATCMD -pp -l json'
 
 	if [ "$BATCMD" != "batcat" ]
 	then
