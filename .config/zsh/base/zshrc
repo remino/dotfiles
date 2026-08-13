@@ -834,61 +834,12 @@ fi
 # ##     ## ##    ## ##    ## ##    ## ##
 #  #######   ######   ######   ######  #########
 
-osc52_b64encode() {
-  base64 | tr -d '\r\n'
-}
-
-osc52_b64decode() {
-  if base64 --decode </dev/null >/dev/null 2>&1; then
-    base64 --decode
-  else
-    base64 -D
-  fi
-}
-
-osc52copy() {
-  local data
-
-  if (( $# )); then
-    data="$*"
-  else
-    data="$(cat)"
-  fi
-
-  printf '\033]52;c;%s\007' \
-    "$(printf '%s' "$data" | osc52_b64encode)" >/dev/tty
-}
-
-osc52paste() {
-  local tty_state ch response encoded
-
-  tty_state="$(stty -g </dev/tty)" || return
-  trap 'stty "$tty_state" </dev/tty' EXIT INT TERM HUP
-
-  stty -echo -icanon min 1 time 10 </dev/tty
-
-  printf '\033]52;c;?\033\\' >/dev/tty
-
-  while IFS= read -r -k 1 ch </dev/tty; do
-    response+="$ch"
-
-    [[ "$ch" == $'\a' ]] && break
-    [[ "$response" == *$'\e\\' ]] && break
-  done
-
-  stty "$tty_state" </dev/tty
-  trap - EXIT INT TERM HUP
-
-  encoded="${response#*;c;}"
-  encoded="${encoded%$'\a'}"
-  encoded="${encoded%$'\e\\'}"
-
-  printf '%s' "$encoded" | osc52_b64decode
-}
-
-alias -g O='| osc52copy'
-alias 52c=osc52copy
-alias 52p=osc52paste
+if _exists osc52
+then
+	alias -g O='| osc52copy'
+	alias 52c=osc52copy
+	alias 52p=osc52paste
+fi
 
 # ##     ## ########  ######   ######     ###     ######   ########
 # ###   ### ##       ##    ## ##    ##   ## ##   ##    ##  ##
