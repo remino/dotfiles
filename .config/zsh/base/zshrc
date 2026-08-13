@@ -826,6 +826,65 @@ then
 	export path
 fi
 
+#  #######   ######   ######  ########  #######
+# ##     ## ##    ## ##    ## ##       ##     ##
+# ##     ## ##       ##       ##              ##
+# ##     ##  ######  ##       #######   #######
+# ##     ##       ## ##             ## ##
+# ##     ## ##    ## ##    ## ##    ## ##
+#  #######   ######   ######   ######  #########
+
+osc52_b64encode() {
+  base64 | tr -d '\r\n'
+}
+
+osc52_b64decode() {
+  if base64 --decode </dev/null >/dev/null 2>&1; then
+    base64 --decode
+  else
+    base64 -D
+  fi
+}
+
+osc52copy() {
+  local data
+
+  if (( $# )); then
+    data="$*"
+  else
+    data="$(cat)"
+  fi
+
+  printf '\033]52;c;%s\007' \
+    "$(printf '%s' "$data" | osc52_b64encode)" >/dev/tty
+}
+
+osc52paste() {
+  local response encoded tty_state rc
+
+  tty_state="$(stty -g </dev/tty)" || return
+
+  trap 'stty "$tty_state" </dev/tty' EXIT INT TERM HUP
+
+  stty -echo </dev/tty
+  printf '\033]52;c;?\007' >/dev/tty
+
+  IFS= read -r -d $'\a' response </dev/tty
+  rc=$?
+
+  stty "$tty_state" </dev/tty
+  trap - EXIT INT TERM HUP
+
+  (( rc == 0 )) || return "$rc"
+
+  encoded="${response##*;}"
+  printf '%s' "$encoded" | osc52_b64decode
+}
+
+alias -g O='| osc52copy'
+alias 52c=osc52copy
+alias 52p=osc52paste
+
 # ##     ## ########  ######   ######     ###     ######   ########
 # ###   ### ##       ##    ## ##    ##   ## ##   ##    ##  ##
 # #### #### ##       ##       ##        ##   ##  ##        ##
