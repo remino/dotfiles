@@ -860,24 +860,29 @@ osc52copy() {
 }
 
 osc52paste() {
-  local response encoded tty_state rc
+  local tty_state ch response encoded
 
   tty_state="$(stty -g </dev/tty)" || return
-
   trap 'stty "$tty_state" </dev/tty' EXIT INT TERM HUP
 
-  stty -echo </dev/tty
-  printf '\033]52;c;?\007' >/dev/tty
+  stty -echo -icanon min 1 time 10 </dev/tty
 
-  IFS= read -r -d $'\a' response </dev/tty
-  rc=$?
+  printf '\033]52;c;?\033\\' >/dev/tty
+
+  while IFS= read -r -k 1 ch </dev/tty; do
+    response+="$ch"
+
+    [[ "$ch" == $'\a' ]] && break
+    [[ "$response" == *$'\e\\' ]] && break
+  done
 
   stty "$tty_state" </dev/tty
   trap - EXIT INT TERM HUP
 
-  (( rc == 0 )) || return "$rc"
+  encoded="${response#*;c;}"
+  encoded="${encoded%$'\a'}"
+  encoded="${encoded%$'\e\\'}"
 
-  encoded="${response##*;}"
   printf '%s' "$encoded" | osc52_b64decode
 }
 
