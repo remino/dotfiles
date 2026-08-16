@@ -220,6 +220,7 @@ alias expaloff='bindkey " " self-insert'
 alias f='printf'
 alias findreadme="find . -iname 'readme\.*' -maxdepth 1"
 alias lns='ln -s'
+alias imgo='image_optim'
 alias j='jeksite'
 alias js='jekyll'
 alias m='mansite'
