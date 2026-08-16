@@ -281,7 +281,7 @@ fi
 
 if _exists tree
 then
-	alias tr=tree
+	alias tt=tree
 	alias tree='tree -CNhp'
 fi
 
@@ -874,6 +874,8 @@ fi
 # ##     ## ##       ##    ## ##    ## ##     ## ##    ##  ##
 # ##     ## ########  ######   ######  ##     ##  ######   ########
 
+MESSAGE_FONT=banner
+
 idbanner() {
 	_exists figlet || return
 
@@ -882,11 +884,11 @@ idbanner() {
 	if _exists lolcat
 	then
 		local seed="$( printf "%d" "$( printf "0x%s" "$( printf "%s" "$ident" | md5sum | cut -c1-4 )" )" | awk '{print $1 % 10000}' )"
-		echo "$ident" | figlet -f slant | lolcat -S "$seed"
+		echo "$ident" | figlet -f $MESSAGE_FONT | lolcat -S "$seed"
 		return
 	fi
 
-	echo "$ident" | figlet -f slant
+	echo "$ident" | figlet -f $MESSAGE_FONT
 }
 
 if _is_demo
