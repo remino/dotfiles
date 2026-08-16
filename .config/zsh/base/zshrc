@@ -1055,7 +1055,6 @@ then
 	alias ls=eza
 	alias ll='eza -l'
 	alias la='ll -AF'
-	alias t=tree
 	alias tree='ll -T'
 	alias exa='eza'
 elif _exists exa
@@ -1066,7 +1065,6 @@ then
 	alias ls=exa
 	alias ll='exa -l'
 	alias la='ll -AF'
-	alias t=tree
 	alias tree='ll -T'
 fi
 
