@@ -210,6 +210,7 @@ _add_plugin_if_exists ssh-agent
 
 [ -z "$EXT_IP_URL" ] && EXT_IP_URL="https://icanhazip.com"
 
+alias anchor='anchor=$PWD'
 alias c='cat'
 alias copa='clipcopy; clippaste'
 alias e='edit'
@@ -239,6 +240,7 @@ alias reload='. "$HOME/.zshrc"'
 alias s='ssh'
 alias ssu='ssuu -'
 alias ssuu='sudo su'
+alias unanchor='unset anchor'
 alias v=vi
 alias zshrcedit='edit "$HOME/.zsh"{rc,env} "$XDG_CONFIG_HOME/zsh/"*/zsh*'
 alias -g A='| xargs'
