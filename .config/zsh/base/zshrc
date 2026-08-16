@@ -630,7 +630,7 @@ fi
 if _exists tmux
 then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
-	alias t=tmux
+	alias tx=tmux
 	_add_plugin_if_exists tmux
 fi
 
