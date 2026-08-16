@@ -281,7 +281,7 @@ fi
 
 if _exists tree
 then
-	alias t=tree
+	alias tr=tree
 	alias tree='tree -CNhp'
 fi
 
