@@ -25,6 +25,7 @@ mouse-hide-while-typing = true
 notify-on-command-finish = unfocused
 notify-on-command-finish-action = bell, notify
 notify-on-command-finish-after = 30s
+shell-integration-features = no-title
 
 config-file = ?macos-option.local
 config-file = ?config.local
