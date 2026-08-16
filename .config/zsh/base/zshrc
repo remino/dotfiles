@@ -922,8 +922,8 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+# Use a custom terminal title hook below instead of Oh My Zsh's default one.
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -954,6 +954,31 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Path to your oh-my-zsh installation.
 [ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
+
+# Outside tmux, reflect the prompt directory or the command currently running
+# in the terminal title. tmux owns the outer title for its own clients.
+if [[ -z "$TMUX" ]]; then
+	_terminal_title() {
+		local title=$1
+		title=${title//$'\e'/}
+		title=${title//$'\a'/}
+		title=${title//$'\n'/ }
+		title=${title//$'\r'/ }
+		print -rn -- $'\e]2;'"$title"$'\a'
+	}
+
+	_terminal_title_precmd() {
+		_terminal_title "${HOST%%.*}:${PWD/#$HOME/~}"
+	}
+
+	_terminal_title_preexec() {
+		_terminal_title "${HOST%%.*}:$1"
+	}
+
+	autoload -Uz add-zsh-hook
+	add-zsh-hook precmd _terminal_title_precmd
+	add-zsh-hook preexec _terminal_title_preexec
+fi
 
 #  #######  ########  ######## ####  #######  ##    ##  ######
 # ##     ## ##     ##    ##     ##  ##     ## ###   ## ##    ##
