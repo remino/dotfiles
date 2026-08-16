@@ -213,10 +213,10 @@ _add_plugin_if_exists ssh-agent
 alias anchor='anchor=$PWD'
 alias c='cat'
 alias copa='clipcopy; clippaste'
-alias e='edit'
+alias d='edit'
+alias e='echo'
 alias edit='eval "$EDITOR"'
-alias expalon='omz plugin load globalias'
-alias expaloff='bindkey " " self-insert'
+alias expal='omz plugin load globalias'
 alias f='printf'
 alias findreadme="find . -iname 'readme\.*' -maxdepth 1"
 alias lns='ln -s'
@@ -232,8 +232,11 @@ alias mm='middleman'
 alias extip4='curl -4Ls "$EXT_IP_URL" | xargs echo'
 alias extip6='curl -6Ls "$EXT_IP_URL" | xargs echo'
 alias extip='extip4'
-alias o='echo'
+alias noexpal='bindkey " " self-insert'
+alias pa='ps aux'
 alias pbcp='copa'
+alias pg='pgrep'
+alias pk='pkill'
 alias pp='ps -auxwwf'
 alias ppt='pstree -pn'
 alias readme='cat $( findreadme )'
@@ -626,7 +629,7 @@ fi
 if _exists tmux
 then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
-	alias tx=tmux
+	alias t=tmux
 	_add_plugin_if_exists tmux
 fi
 
