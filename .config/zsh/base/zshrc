@@ -968,7 +968,7 @@ if [[ -z "$TMUX" ]]; then
 	}
 
 	_terminal_title_precmd() {
-		_terminal_title "${HOST%%.*}:${PWD/#$HOME/~}"
+		_terminal_title "${HOST%%.*}:${PWD:t}"
 	}
 
 	_terminal_title_preexec() {
