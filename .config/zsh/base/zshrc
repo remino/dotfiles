@@ -733,11 +733,6 @@ fi
 if _exists mkprj
 then
 	_add_plugin_if_exists cdmp
-
-	if _which_exists cdmp
-	then
-		alias mp=cdmp
-	fi
 fi
 
 # ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
@@ -1012,6 +1007,11 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Path to your oh-my-zsh installation.
 [ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
+
+if (( $+aliases[cdmp] ))
+then
+	alias mp=cdmp
+fi
 
 _tmux_create_or_switch() {
 	local session_name=$1
