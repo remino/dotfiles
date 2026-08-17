@@ -1012,6 +1012,62 @@ HIST_STAMPS="yyyy-mm-dd"
 # Path to your oh-my-zsh installation.
 [ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
 
+_tmux_create_or_switch() {
+	local session_name=$1
+
+	if [[ -z "$TMUX" ]]
+	then
+		command tmux new-session -A -s "$session_name"
+		return
+	fi
+
+	if ! command tmux has-session -t "=$session_name" 2> /dev/null
+	then
+		command tmux new-session -d -c "$PWD" -s "$session_name" || return
+	fi
+
+	command tmux switch-client -t "=$session_name"
+}
+
+_tmux_new_and_switch() {
+	local session_name
+
+	if [[ -z "$TMUX" ]]
+	then
+		command tmux new-session "$@"
+		return
+	fi
+
+	session_name="$( command tmux new-session -d -P -F '#{session_name}' -c "$PWD" "$@" )" || return
+	command tmux switch-client -t "=$session_name"
+}
+
+to() {
+	if [[ -n "$1" && "${1:0:1}" != '-' ]]
+	then
+		_tmux_create_or_switch "$1"
+	else
+		_tmux_new_and_switch "$@"
+	fi
+}
+
+ts() {
+	if [[ -n "$1" && "${1:0:1}" != '-' ]]
+	then
+		_tmux_new_and_switch -s "$@"
+	else
+		_tmux_new_and_switch "$@"
+	fi
+}
+
+_tmux_directory_session() {
+	local dir="${PWD##*/}"
+	local md5="$( printf '%s' "$PWD" | md5sum | cut -d ' ' -f 1 )"
+	local session_name="${dir}-${md5:0:6}"
+
+	_tmux_create_or_switch "$session_name"
+}
+
 # Outside tmux, reflect the prompt directory or the command currently running
 # in the terminal title. tmux owns the outer title for its own clients.
 if [[ -z "$TMUX" ]]; then
