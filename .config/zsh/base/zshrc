@@ -632,6 +632,7 @@ then
 	alias tmuxlc='tmux source "$ZSH_TMUX_CONFIG"'
 	alias tx=tmux
 	_add_plugin_if_exists tmux
+	_add_plugin_if_exists remino-tmux
 fi
 
 # ###### ##     ## ##   ## ##     ## ## ##    ##   ###   ######  #####  ######
@@ -1012,106 +1013,6 @@ if (( $+aliases[cdmp] ))
 then
 	alias mp=cdmp
 fi
-
-_tmux_create_or_switch() {
-	local session_name=$1
-
-	if [[ -z "$TMUX" ]]
-	then
-		command tmux new-session -A -s "$session_name"
-		return
-	fi
-
-	if ! command tmux has-session -t "=$session_name" 2> /dev/null
-	then
-		command tmux new-session -d -c "$PWD" -s "$session_name" || return
-	fi
-
-	command tmux switch-client -t "=$session_name"
-}
-
-_tmux_new_and_switch() {
-	local session_name
-
-	if [[ -z "$TMUX" ]]
-	then
-		command tmux new-session "$@"
-		return
-	fi
-
-	session_name="$( command tmux new-session -d -P -F '#{session_name}' -c "$PWD" "$@" )" || return
-	command tmux switch-client -t "=$session_name"
-}
-
-to() {
-	if [[ -n "$1" && "${1:0:1}" != '-' ]]
-	then
-		_tmux_create_or_switch "$1"
-	else
-		_tmux_new_and_switch "$@"
-	fi
-}
-
-ts() {
-	if [[ -n "$1" && "${1:0:1}" != '-' ]]
-	then
-		_tmux_new_and_switch -s "$@"
-	else
-		_tmux_new_and_switch "$@"
-	fi
-}
-
-_tmux_directory_session() {
-	local dir="${PWD##*/}"
-	local md5="$( printf '%s' "$PWD" | md5sum | cut -d ' ' -f 1 )"
-	local session_name="${dir}-${md5:0:6}"
-
-	_tmux_create_or_switch "$session_name"
-}
-
-tkss() {
-	local target current
-	local -a kill_args
-
-	if [[ "$1" == '-t' && -n "$2" ]]
-	then
-		target=$2
-		kill_args=( "$@" )
-	elif [[ -n "$1" && "${1:0:1}" != '-' ]]
-	then
-		target=$1
-		kill_args=( -t "$target" )
-	else
-		target="$( command tmux display-message -p '#{session_name}' 2> /dev/null )"
-		kill_args=( "$@" )
-	fi
-
-	if [[ -n "$TMUX" && -n "$target" ]]
-	then
-		current="$( command tmux display-message -p '#{session_name}' 2> /dev/null )"
-		if [[ "$target" == "$current" ]]
-		then
-			command tmux switch-client -l 2> /dev/null
-		fi
-	fi
-
-	command tmux kill-session "${kill_args[@]}"
-}
-
-_tmux_switch_on_last_shell_exit() {
-	local session_windows window_panes
-
-	[[ -z "$TMUX" ]] && return
-	session_windows="$( command tmux display-message -p '#{session_windows}' 2> /dev/null )" || return
-	window_panes="$( command tmux display-message -p '#{window_panes}' 2> /dev/null )" || return
-
-	[[ "$session_windows" == 1 && "$window_panes" == 1 ]] || return
-	command tmux switch-client -l 2> /dev/null
-}
-
-zshexit() {
-	_tmux_switch_on_last_shell_exit
-}
 
 # Outside tmux, reflect the prompt directory or the command currently running
 # in the terminal title. tmux owns the outer title for its own clients.
