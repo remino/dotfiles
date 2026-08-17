@@ -10,7 +10,7 @@
 	ap = add -p
 	b = branch
 	c = commit
-	ctc = commit -t .git/COMMIT_MSG
+	cfm = commit -F .git/COMMIT_EDITMSG
 	cn = commit --no-verify
 	co = checkout
 	cop = checkout -p
