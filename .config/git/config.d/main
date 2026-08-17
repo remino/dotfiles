@@ -6,6 +6,7 @@
 	verbose = true
 [alias]
 	a = add
+	aa = add .
 	ap = add -p
 	b = branch
 	c = commit
