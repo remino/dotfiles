@@ -10,8 +10,8 @@
 	ap = add -p
 	b = branch
 	c = commit
-	cefm = commit -F .git/COMMIT_EDITMSG
-	cfm = commit -e -F .git/COMMIT_EDITMSG
+	cefm = commit -e -F .git/COMMIT_EDITMSG
+	cfm = commit -F .git/COMMIT_EDITMSG
 	cn = commit --no-verify
 	co = checkout
 	cop = checkout -p
