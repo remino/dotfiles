@@ -865,20 +865,35 @@ fi
 MESSAGE_FONT=( termino )
 
 _message_figlet() {
-	local termino_dir font
+	local termino_dir font font_dir
+	local -a font_dirs
+
+	font_dirs=(
+		"$HOME/.local/share/figlet"
+		/usr/local/share/figlet
+	)
 
 	for font in "${MESSAGE_FONT[@]}"
 	do
-		if figlet -f "$font" < /dev/null > /dev/null 2>&1
+		if figlet -f "$font" " " > /dev/null 2>&1
 		then
 			figlet -f "$font"
 			return
 		fi
 
+		for font_dir in "${font_dirs[@]}"
+		do
+			if [ -f "$font_dir/$font.flf" ]
+			then
+				figlet -d "$font_dir" -f "$font"
+				return
+			fi
+		done
+
 		if [ "$font" = termino ] && _exists brew
 		then
 			termino_dir="$( brew --prefix termino 2> /dev/null )/share/figlet"
-			if figlet -d "$termino_dir" -f "$font" < /dev/null > /dev/null 2>&1
+			if printf "font-probe\\n" | figlet -d "$termino_dir" -f "$font" > /dev/null 2>&1
 			then
 				figlet -d "$termino_dir" -f "$font"
 				return
