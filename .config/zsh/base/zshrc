@@ -622,9 +622,9 @@ ZSH_TMUX_UNICODE=true
 
 if [ "$USER" = "root" ]
 then
-	ZSH_TMUX_AUTOSTART_ONCE=false
+	ZSH_TMUX_AUTOSTART=false
 else
-	ZSH_TMUX_AUTOSTART_ONCE=true
+	ZSH_TMUX_AUTOSTART=true
 fi
 
 if _exists tmux
