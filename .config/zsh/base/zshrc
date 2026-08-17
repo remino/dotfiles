@@ -408,6 +408,7 @@ git-extras
 git-lfs
 gpg-agent
 imgmod
+mkprj cdmp
 mycli mycli-alias
 mysql mysql-alias
 node
@@ -723,19 +724,6 @@ then
 	alias prettyjs='prettier --stdin-filepath script.js'
 fi
 
-# ##     ## ##    ## ########  ########        ##
-# ###   ### ##   ##  ##     ## ##     ##       ##
-# #### #### ##  ##   ##     ## ##     ##       ##
-# ## ### ## #####    ########  ########        ##
-# ##     ## ##  ##   ##        ##   ##   ##    ##
-# ##     ## ##   ##  ##        ##    ##  ##    ##
-# ##     ## ##    ## ##        ##     ##  ######
-
-if _exists mkprj
-then
-	_add_plugin_if_exists cdmp
-fi
-
 # ######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
 # ##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
 # ##       ##     ## ####  ## ##          ##     ##  ##     ## ####  ## ##
@@ -1008,11 +996,6 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Path to your oh-my-zsh installation.
 [ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
-
-if (( $+aliases[cdmp] ))
-then
-	alias mp=cdmp
-fi
 
 # Outside tmux, reflect the prompt directory or the command currently running
 # in the terminal title. tmux owns the outer title for its own clients.
