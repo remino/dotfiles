@@ -11,6 +11,8 @@
 #
 theme = "Cyberwave"
 
+background-blur = 100
+background-opacity = 0.92
 clipboard-paste-bracketed-safe = true
 clipboard-paste-protection = true
 clipboard-read = allow
