@@ -874,21 +874,49 @@ fi
 # ##     ## ##       ##    ## ##    ## ##     ## ##    ##  ##
 # ##     ## ########  ######   ######  ##     ##  ######   ########
 
-MESSAGE_FONT=banner
+MESSAGE_FONT=( termino )
+
+_message_figlet() {
+	local figlet_dir termino_dir font
+
+	figlet_dir="$( figlet -I2 2> /dev/null )"
+	for font in "${MESSAGE_FONT[@]}"
+	do
+		if [ -f "$figlet_dir/$font.flf" ]
+		then
+			figlet -f "$font"
+			return
+		fi
+
+		if [ "$font" = termino ] && _exists brew
+		then
+			termino_dir="$( brew --prefix termino 2> /dev/null )/share/figlet"
+			if [ -f "$termino_dir/termino.flf" ]
+			then
+				figlet -d "$termino_dir" -f "$font"
+				return
+			fi
+		fi
+	done
+
+	figlet -f banner
+}
 
 idbanner() {
 	_exists figlet || return
 
-	local ident="$( whoami )@$( hostname )"
+	local user="$( whoami )"
+	local host="@$( hostname )"
+	local ident="$user$host"
 
 	if _exists lolcat
 	then
 		local seed="$( printf "%d" "$( printf "0x%s" "$( printf "%s" "$ident" | md5sum | cut -c1-4 )" )" | awk '{print $1 % 10000}' )"
-		echo "$ident" | figlet -f $MESSAGE_FONT | lolcat -S "$seed"
+		printf "%s\\n%s\\n" "$user" "$host" | _message_figlet | lolcat -S "$seed"
 		return
 	fi
 
-	echo "$ident" | figlet -f $MESSAGE_FONT
+	printf "%s\\n%s\\n" "$user" "$host" | _message_figlet
 }
 
 if _is_demo
