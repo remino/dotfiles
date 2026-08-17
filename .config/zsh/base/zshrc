@@ -865,12 +865,11 @@ fi
 MESSAGE_FONT=( termino )
 
 _message_figlet() {
-	local figlet_dir termino_dir font
+	local termino_dir font
 
-	figlet_dir="$( figlet -I2 2> /dev/null )"
 	for font in "${MESSAGE_FONT[@]}"
 	do
-		if [ -f "$figlet_dir/$font.flf" ]
+		if figlet -f "$font" < /dev/null > /dev/null 2>&1
 		then
 			figlet -f "$font"
 			return
@@ -879,7 +878,7 @@ _message_figlet() {
 		if [ "$font" = termino ] && _exists brew
 		then
 			termino_dir="$( brew --prefix termino 2> /dev/null )/share/figlet"
-			if [ -f "$termino_dir/termino.flf" ]
+			if figlet -d "$termino_dir" -f "$font" < /dev/null > /dev/null 2>&1
 			then
 				figlet -d "$termino_dir" -f "$font"
 				return
