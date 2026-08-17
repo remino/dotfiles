@@ -675,6 +675,7 @@ then
 	cat <<ALIASES | while read -r alias cmd
 
 a
+ap
 c
 co
 lo
