@@ -13,6 +13,14 @@
 
 ################################################################################
 
+# Show the cached Powerlevel10k prompt immediately while the rest of the
+# configuration loads. Keep this before any code that may produce output.
+if [[ -z "$DEMO" || "$DEMO" = "0" ]] \
+	&& [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+	# shellcheck source=/dev/null
+	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # ######## ##     ## ####  ######  ########  ######
 # ##        ##   ##   ##  ##    ##    ##    ##    ##
 # ##         ## ##    ##  ##          ##    ##
@@ -895,14 +903,23 @@ idbanner() {
 
 if _is_demo
 then
-	repeat $(( LINES / 2 )) echo
+	# Instant prompt is already visible by this point. Defer the banner until
+	# the first precmd hook so it is printed cleanly before the real prompt.
+	autoload -Uz add-zsh-hook
+	_idbanner_once() {
+		add-zsh-hook -d precmd _idbanner_once
+		repeat $(( LINES / 2 )) echo
 
-	if type _private_msg > /dev/null 2>&1
-	then
-		_private_msg
-	else
-		idbanner
-	fi
+		if type _private_msg > /dev/null 2>&1
+		then
+			_private_msg
+		else
+			idbanner
+		fi
+
+		unset -f _idbanner_once
+	}
+	add-zsh-hook precmd _idbanner_once
 fi
 
 #  ######  ##    ##    ###    ########
