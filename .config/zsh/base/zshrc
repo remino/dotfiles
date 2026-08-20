@@ -1090,7 +1090,6 @@ _exists atuin && eval "$(atuin init zsh)"
 # ##     ## ##    ##
 # ##     ##  ######
 
-export MC_SKIN=gotar
 [ -f "${XDG_DATA_HOME:-"$HOME/.local/share"}/mc/skins/cyberwave.ini" ] && export MC_SKIN=cyberwave
 
 if _exists mc
