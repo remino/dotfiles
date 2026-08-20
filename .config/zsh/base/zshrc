@@ -1092,7 +1092,7 @@ _exists atuin && eval "$(atuin init zsh)"
 
 if _exists mc
 then
-	alias mc='mc --nosubshell -S gotar'
+	alias mc='mc --nosubshell'
 fi
 
 # ######## ########
