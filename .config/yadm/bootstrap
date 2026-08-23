@@ -8,7 +8,11 @@ bootstrap_main() {
 	fi
 
 	[ ! -d "$HOME/.gnupg" ] && mkdir -p "$HOME/.gnupg"
-	touch "$HOME/.gnupg/gpg.local.conf"
+	[ ! -f "$HOME/.gnupg/gpg.local.conf" ] && touch "$HOME/.gnupg/gpg.local.conf"
+
+	local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+	[ ! -d "$config_dir/yt-dlp" ] && mkdir -p "$config_dir/yt-dlp"
+	[ ! -f "$config_dir/yt-dlp/config.local" ] && touch "$config_dir/yt-dlp/config.local"
 }
 
 _run_if_exists() {
