@@ -6,6 +6,9 @@ bootstrap_main() {
 	if [ ! -d "$HOME/.config/nvim" ]; then
 		git clone git@github.com:remino/nvim.git "$HOME/.config/nvim"
 	fi
+
+	[ ! -d "$HOME/.gnupg" ] && mkdir -p "$HOME/.gnupg"
+	touch "$HOME/.gnupg/gpg.local.conf"
 }
 
 _run_if_exists() {
