@@ -15,6 +15,7 @@
 	cn = commit --no-verify
 	co = checkout
 	cop = checkout -p
+	d = diff
 	dft = difftool
 	l = pull
 	lo = log --oneline --decorate
