@@ -427,6 +427,7 @@ wp wp-cli
 yt-dlp
 
 brew
+yadm yadm-aliases
 LIST
 do
 	[ -z "$cmd" ] && continue
