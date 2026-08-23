@@ -1,3 +1,0 @@
-# Download using axel
-# --downloader axel
-# --downloader-args axel:"-n 15 -a -k"
