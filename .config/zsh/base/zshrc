@@ -899,18 +899,29 @@ idbanner() {
 	printf "%s\\n%s\\n" "$user" "$host" | _message_figlet
 }
 
-if _is_demo
-then
-	repeat $(( LINES / 2 )) echo
-
+intro() {
 	if type _private_msg > /dev/null 2>&1
 	then
 		_private_msg
 	else
 		idbanner
 	fi
+	echo
 
 	compactfetch
+	echo
+
+	if _exists fortune
+	then
+		fortune -e -s
+		echo
+	fi
+}
+
+if _is_demo
+then
+	repeat $(( LINES / 2 )) echo
+	intro
 fi
 
 #  ######  ##    ##    ###    ########
