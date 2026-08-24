@@ -741,6 +741,11 @@ minifetch() {
 	_exists fortune && fortune -s
 }
 
+compactfetch() {
+	_exists fastfetch || return
+	fastfetch --config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/compact.jsonc"
+}
+
 unifetch() {
 	for msgsrc in fastfetch neofetch pfetch minifetch
 	do
@@ -904,6 +909,8 @@ then
 	else
 		idbanner
 	fi
+
+	compactfetch
 fi
 
 #  ######  ##    ##    ###    ########
