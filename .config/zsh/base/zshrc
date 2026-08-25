@@ -343,7 +343,9 @@ touchp() {
 if _exists zoxide; then
 	[ -z "$ZSH_ZOXIDE_PRELOAD" ] && ZSH_ZOXIDE_PRELOAD=0
 
-	ZOXIDE_CMD_OVERRIDE=cd
+	alias cd=z
+	alias cdi=zi
+
 	_add_plugin_if_exists zoxide
 fi
 
