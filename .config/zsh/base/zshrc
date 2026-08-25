@@ -467,8 +467,6 @@ fi
 # ##       ######## ##
 
 if _exists fzf; then
-	FZF_DEFAULT_OPTS="--ansi --cycle --exact --height 40% --layout reverse"
-
 	# Let fzf provide its own integration instead of using Oh My Zsh's legacy
 	# fzf plugin. The latter guesses installation directories and mistakes the
 	# pkgsrc prefix (/usr/pkg on NetBSD) for fzf's source directory.
