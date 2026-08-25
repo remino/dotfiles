@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+pre_pull_main() {
+	[ ! -d "$HOME/.gnupg" ] && mkdir -p "$HOME/.gnupg"
+	[ ! -f "$HOME/.gnupg/gpg.local.conf" ] && touch "$HOME/.gnupg/gpg.local.conf"
+
+	case "$system_type" in
+		Darwin | Linux) ;;
+		*) touch "$HOME/.gnupg/gpg-agent.$system_type.conf" ;;
+	esac
+
+	local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+	[ ! -d "$config_dir/yt-dlp" ] && mkdir -p "$config_dir/yt-dlp"
+	[ ! -f "$config_dir/yt-dlp/config.local" ] && touch "$config_dir/yt-dlp/config.local"
+}
+
+pre_pull_main
