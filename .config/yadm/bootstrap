@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 bootstrap_main() {
-	system_type=$(uname -s)
+	set -euo pipefail
 
 	_run_if_exists "$( dirname "${BASH_SOURCE[0]}" )/install_zshrc"
 
