@@ -3,11 +3,22 @@ set -euo pipefail
 
 list_actions() {
   tmux list-keys -N -T prefix | awk '
-    /^C-a[[:space:]]/ {
-      key = $2
-      $1 = ""; $2 = ""
-      sub(/^[[:space:]]+/, "")
-      print key "\t" $0
+    NF >= 2 {
+      line[++count] = $0
+      first[count] = $1
+      occurrences[$1]++
+    }
+    END {
+      # tmux versions differ here: some repeat the prefix before every key,
+      # while others start directly with the key when -T is specified.
+      legacy_prefix = count > 1 && occurrences[first[1]] > count / 2
+      for (i = 1; i <= count; i++) {
+        $0 = line[i]
+        key = legacy_prefix ? $2 : $1
+        if (legacy_prefix) { $1 = ""; $2 = "" } else { $1 = "" }
+        sub(/^[[:space:]]+/, "")
+        print key "\t" $0
+      }
     }'
 }
 
