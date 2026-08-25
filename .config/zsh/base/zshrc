@@ -902,19 +902,16 @@ idbanner() {
 intro() {
 	if type _private_msg > /dev/null 2>&1
 	then
-		_private_msg
+		_private_msg && echo
 	else
-		idbanner
+		idbanner && echo
 	fi
-	echo
 
-	compactfetch
-	echo
+	compactfetch && echo
 
 	if _exists fortune
 	then
-		fortune -e -s
-		echo
+		fortune -e -s && echo
 	fi
 }
 
