@@ -1,0 +1,180 @@
+#!/usr/bin/env bash
+# portable
+
+VERSION='0.1.0'
+
+portable_shell_main() {
+	set -euo pipefail
+
+	DEFAULT_REPOSITORY='https://github.com/remino/dotfiles.git'
+	DEFAULT_REF='master'
+	DEFAULT_YADM_URL='https://raw.githubusercontent.com/yadm-dev/yadm/3.5.0/yadm'
+	DEFAULT_YADM_SHA256='d8c2d661725b98e9910e4a59b58beed5cfb01f5196a825a08668ff0887f7441d'
+	DEFAULT_NVIM_REPOSITORY='https://github.com/remino/nvim.git'
+
+	REF="$DEFAULT_REF"
+	USE_WORKTREE=0
+	while [ "$#" -gt 0 ]; do
+		case "$1" in
+			-h | --help)
+				_usage
+				return
+				;;
+			-v | --version)
+				printf '%s %s\n' "$(basename "$0")" "$VERSION"
+				return
+				;;
+			--worktree)
+				USE_WORKTREE=1
+				shift
+				;;
+			--ref)
+				[ "$#" -ge 2 ] || _fatal 'Option requires an argument: --ref'
+				REF="$2"
+				shift 2
+				;;
+			-*) _fatal "Unknown option: $1" ;;
+			*) _fatal "Unexpected argument: $1" ;;
+		esac
+	done
+
+	_require bash curl git zsh
+
+	REPOSITORY="${DOTFILES_REPOSITORY:-$DEFAULT_REPOSITORY}"
+	YADM_URL="${DOTFILES_YADM_URL:-$DEFAULT_YADM_URL}"
+	YADM_SHA256="${DOTFILES_YADM_SHA256:-$DEFAULT_YADM_SHA256}"
+	NVIM_REPOSITORY="${DOTFILES_NVIM_REPOSITORY:-$DEFAULT_NVIM_REPOSITORY}"
+	SESSION_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/dotfiles.XXXXXX")" || _fatal 'Could not create a temporary directory.'
+	SESSION_HOME="$SESSION_ROOT/home"
+	trap _cleanup EXIT INT TERM
+
+	mkdir -p "$SESSION_HOME" "$SESSION_ROOT/bin"
+	YADM="$SESSION_ROOT/bin/yadm"
+	# A checked-out revision may activate mise during shell startup. Keep it from
+	# consulting the host's trusted-project database in this disposable session.
+	printf '%s\n' '#!/bin/sh' 'exit 0' > "$SESSION_ROOT/bin/mise"
+	chmod 700 "$SESSION_ROOT/bin/mise"
+	curl -fsSL "$YADM_URL" -o "$YADM" || _fatal 'Could not download yadm.'
+	[ "$(_sha256 "$YADM")" = "$YADM_SHA256" ] || _fatal 'yadm checksum verification failed.'
+	chmod 700 "$YADM"
+
+	export HOME="$SESSION_HOME"
+	export XDG_CONFIG_HOME="$HOME/.config"
+	export XDG_DATA_HOME="$HOME/.local/share"
+	export XDG_CACHE_HOME="$HOME/.cache"
+	export XDG_STATE_HOME="$HOME/.local/state"
+	export DOTFILES_PORTABLE=1
+	export MISE_GLOBAL_CONFIG_FILE=/dev/null
+	export PATH="$SESSION_ROOT/bin:$PATH"
+
+	# These local inputs are required by yadm templates during the first checkout.
+	mkdir -p "$HOME/.gnupg" "$XDG_CONFIG_HOME/yt-dlp"
+	: > "$HOME/.gnupg/gpg.local.conf"
+	: > "$XDG_CONFIG_HOME/yt-dlp/config.local"
+
+	if [ "$USE_WORKTREE" -eq 1 ]; then
+		REPOSITORY="$(_snapshot_worktree)"
+	fi
+
+	"$YADM" clone --no-bootstrap "$REPOSITORY"
+
+	if [ "$REF" != "$DEFAULT_REF" ]; then
+		"$YADM" fetch origin "$REF"
+		"$YADM" checkout --detach FETCH_HEAD
+		"$YADM" alt
+	fi
+
+	if [ -n "$NVIM_REPOSITORY" ] && ! git clone --depth 1 "$NVIM_REPOSITORY" "$XDG_CONFIG_HOME/nvim"; then
+		printf 'WARNING: could not clone Neovim configuration.\n' >&2
+	fi
+
+	"$XDG_CONFIG_HOME/yadm/install_zshrc"
+	unset ZDOTDIR ZSH
+	# Avoid discovering a host-local mise.toml from the caller's working
+	# directory during shell startup.
+	cd "$HOME"
+	_start_shell
+}
+
+_usage() {
+	cat << USAGE
+Usage: portable [-hv] [--ref <git-ref>] [--worktree]
+
+Start an isolated, disposable Zsh session with dotfiles.
+
+Options:
+  -h, --help              Show this help.
+  -v, --version           Show version.
+      --ref <git-ref>     Check out a Git branch, tag, or commit. Default: master.
+      --worktree          Snapshot the local Git worktree containing this script.
+USAGE
+}
+
+_cleanup() {
+	[ -n "${SESSION_ROOT:-}" ] && [ -d "$SESSION_ROOT" ] && rm -rf "$SESSION_ROOT"
+}
+
+_fatal() {
+	printf 'FATAL: %s\n' "$*" >&2
+	exit 1
+}
+
+_require() {
+	local missing=0
+	local bin
+
+	for bin in "$@"; do
+		if ! command -v "$bin" > /dev/null 2>&1; then
+			printf 'Required: %s\n' "$bin" >&2
+			missing=1
+		fi
+	done
+
+	[ "$missing" -eq 0 ] || _fatal 'One or more required executables are missing.'
+}
+
+_sha256() {
+	if command -v shasum > /dev/null 2>&1; then
+		shasum -a 256 "$1" | awk '{print $1}'
+	elif command -v sha256sum > /dev/null 2>&1; then
+		sha256sum "$1" | awk '{print $1}'
+	else
+		_fatal 'Required: shasum or sha256sum.'
+	fi
+}
+
+_start_shell() {
+	# curl | bash gives this script a pipe for stdin. An interactive shell must
+	# instead read from the invoking terminal so prompts remain answerable.
+	if [ -t 1 ] && [ -r /dev/tty ]; then
+		zsh -i < /dev/tty
+	else
+		zsh -i
+	fi
+}
+
+_snapshot_worktree() {
+	local script_dir
+	local source
+	local snapshot
+	local file
+
+	script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+	source="$(git -C "$script_dir" rev-parse --show-toplevel)" \
+		|| _fatal '--worktree requires this script to be inside a Git worktree.'
+	snapshot="$SESSION_ROOT/worktree"
+
+	git clone --no-hardlinks "$source" "$snapshot" > /dev/null
+	git -C "$source" diff --binary HEAD | git -C "$snapshot" apply
+	while IFS= read -r -d '' file; do
+		mkdir -p "$snapshot/$(dirname -- "$file")"
+		cp -pP "$source/$file" "$snapshot/$file"
+	done < <(git -C "$source" ls-files --others --exclude-standard -z)
+	git -C "$snapshot" add --all
+	git -C "$snapshot" -c user.name='Portable worktree' -c user.email='portable@example.invalid' \
+		commit -m 'Portable worktree snapshot' > /dev/null
+
+	printf 'file://%s\n' "$snapshot"
+}
+
+portable_shell_main "$@"

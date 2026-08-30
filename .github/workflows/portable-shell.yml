@@ -1,0 +1,18 @@
+name: Portable
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --file .config/dotfiles/tests/Dockerfile.portable .
+      - if: github.event_name == 'push'
+        run: >-
+          docker build
+          --build-arg INSTALLER_URL=https://raw.githubusercontent.com/remino/dotfiles/${{ github.sha }}/.config/dotfiles/bin/portable
+          --file .config/dotfiles/tests/Dockerfile.portable .

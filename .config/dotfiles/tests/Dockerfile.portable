@@ -1,0 +1,10 @@
+FROM debian:bookworm-slim
+
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends ca-certificates curl git python3 yadm zsh \
+	&& rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+COPY . .
+ARG INSTALLER_URL=
+RUN INSTALLER_URL="$INSTALLER_URL" ./.config/dotfiles/tests/portable.sh

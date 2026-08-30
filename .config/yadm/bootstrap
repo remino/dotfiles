@@ -5,7 +5,9 @@ bootstrap_main() {
 
 	_run_if_exists "$( dirname "${BASH_SOURCE[0]}" )/install_zshrc"
 
-	if [ ! -d "$HOME/.config/nvim" ]; then
+	# A portable session deliberately has no side effects beyond its temporary
+	# home. In particular, it must not need the caller's GitHub SSH credentials.
+	if [ "${DOTFILES_PORTABLE:-}" != "1" ] && [ ! -d "$HOME/.config/nvim" ]; then
 		git clone git@github.com:remino/nvim.git "$HOME/.config/nvim"
 	fi
 }

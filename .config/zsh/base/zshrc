@@ -52,6 +52,33 @@ _is_demo() {
 	[ -z "$DEMO" ] || [ "$DEMO" = "0" ]
 }
 
+_has_p10k_theme() {
+	[ -f "$ZSH/custom/themes/powerlevel10k/powerlevel10k.zsh-theme" ] \
+		|| [ -f "$ZSH/themes/powerlevel10k/powerlevel10k.zsh-theme" ]
+}
+
+_fallback_prompt() {
+	autoload -Uz add-zsh-hook
+	add-zsh-hook -d precmd _fallback_prompt_precmd
+	add-zsh-hook precmd _fallback_prompt_precmd
+	PS1='%F{green}❯%f '
+	RPROMPT=''
+}
+
+_fallback_prompt_precmd() {
+	local directory="${(%):-%~}"
+	local time="$(date +%H:%M:%S)"
+	local columns="${COLUMNS:-80}"
+	local padding
+
+	padding=$((columns - ${#directory} - ${#time}))
+
+	(( padding < 1 )) && padding=1
+	print -rn -- $'\e[34m'"$directory"$'\e[0m'
+	printf '%*s' "$padding" ''
+	print -r -- $'\e[36m'"$time"$'\e[0m'
+}
+
 # ########  ######## ########  ##     ##  ######
 # ##     ## ##       ##     ## ##     ## ##    ##
 # ##     ## ##       ##     ## ##     ## ##
@@ -144,10 +171,6 @@ then
 else
 	PS1="❯ "
 fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# shellcheck source=/dev/null
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ########     ###    ######## ##     ##
 # ##     ##   ## ##      ##    ##     ##
@@ -343,10 +366,12 @@ touchp() {
 if _exists zoxide; then
 	[ -z "$ZSH_ZOXIDE_PRELOAD" ] && ZSH_ZOXIDE_PRELOAD=0
 
-	alias cd=z
-	alias cdi=zi
+	if _plugin_exists zoxide; then
+		alias cd=z
+		alias cdi=zi
 
-	_add_plugin_if_exists zoxide
+		_add_plugin zoxide
+	fi
 fi
 
 # ##    ##    ###    ######## ####
@@ -452,7 +477,7 @@ done
 
 # Use mise shims instead of its dynamic shell hook. This keeps mise-managed
 # tool selection while avoiding generated eval/unset code during shell startup.
-if _exists mise
+if _exists mise && [ "${DOTFILES_PORTABLE:-}" != "1" ]
 then
 	# shellcheck source=/dev/null
 	source <(command mise activate zsh --shims)
@@ -998,7 +1023,27 @@ HIST_STAMPS="yyyy-mm-dd"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Path to your oh-my-zsh installation.
-[ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
+if [ -n "$ZSH" ] && [ -f "$ZSH/oh-my-zsh.sh" ]
+then
+	if [ "$ZSH_THEME" = "powerlevel10k/powerlevel10k" ] && ! _has_p10k_theme
+	then
+		ZSH_THEME="bira"
+	fi
+	source "$ZSH/oh-my-zsh.sh"
+	# To customize a working Powerlevel10k installation, edit ~/.p10k.zsh.
+	if [ "$ZSH_THEME" = "powerlevel10k/powerlevel10k" ] && [[ -f ~/.p10k.zsh ]]
+	then
+		# shellcheck source=/dev/null
+		source ~/.p10k.zsh
+	fi
+else
+	_fallback_prompt
+fi
+
+if [ -z "$ZSH" ]
+then
+	_fallback_prompt
+fi
 
 # Outside tmux, reflect the prompt directory or the command currently running
 # in the terminal title. tmux owns the outer title for its own clients.
@@ -1187,6 +1232,8 @@ fi
 unset -f \
 	_add_plugin \
 	_add_plugin_if_exists \
+	_fallback_prompt \
+	_has_p10k_theme \
 	_which_exists \
 	_is_demo \
 	_plugin_exists \

@@ -50,6 +50,41 @@ few small helper scripts.
 
 ## Installation
 
+### Portable shell
+
+On a machine where you only want a temporary shell, run:
+
+```sh
+curl -fsSL https://remino.net/run/shell | bash
+```
+
+It requires `bash`, `curl`, `git`, and `zsh` (plus a standard SHA-256 utility),
+creates an isolated temporary home, clones the public Neovim configuration, and
+deletes everything when the shell exits. It neither installs packages nor
+changes the machine's real home directory. To use a particular commit or release tag,
+pass `--ref` through the pipe:
+
+```sh
+curl -fsSL https://remino.net/run/shell | bash -s -- --ref master
+```
+
+To test uncommitted changes from a local checkout, run the executable directly
+with `--worktree`. It snapshots that checkout inside the disposable session and
+does not modify it:
+
+```sh
+.config/dotfiles/bin/portable --worktree
+```
+
+As with any `curl | sh` command, inspect it first when you do not already
+trust the source:
+
+```sh
+curl -fsSLO https://raw.githubusercontent.com/remino/dotfiles/master/.config/dotfiles/bin/portable
+less portable
+bash portable
+```
+
 Install [yadm](https://yadm.io/) first, then clone the repository:
 
 ```sh
