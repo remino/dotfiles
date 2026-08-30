@@ -281,6 +281,12 @@ alias -g S='| sort'
 alias -g U='| uniq'
 alias -g X='| xargs'
 
+# Lynx reads this before its compiled-in stylesheet. Keeping the file check
+# lets this config work on machines where the Cyberwave theme is unavailable.
+if [[ -f "$XDG_CONFIG_HOME/lynx/cyberwave.lss" ]]; then
+	export LYNX_LSS="$XDG_CONFIG_HOME/lynx/cyberwave.lss"
+fi
+
 if _exists code
 then
 	alias codea='code -a'
