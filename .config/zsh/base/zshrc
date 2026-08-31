@@ -231,7 +231,7 @@ alias e='echo'
 alias edit='eval "$EDITOR"'
 alias expal='omz plugin load globalias'
 alias f='printf'
-alias findreadme="find . -iname 'readme\.*' -maxdepth 1"
+alias findreadme="find . -iname 'readme\.*' -maxdepth 2"
 alias lns='ln -s'
 alias imgo='image_optim'
 alias j='jeksite'
@@ -252,7 +252,6 @@ alias pg='pgrep'
 alias pk='pkill'
 alias pp='ps -auxwwf'
 alias ppt='pstree -pn'
-alias readme='cat $( findreadme )'
 alias reload='. "$HOME/.zshrc"'
 alias s='ssh'
 alias showanchor='echo $anchor'
@@ -742,6 +741,19 @@ mdcd() {
 	[ $# -lt 1 ] && "Usage: mdcd <dir>"
 	mkdir -p "$1"
 	cd "$1"
+}
+
+readme() {
+	local readmefile="$( findreadme | head -n1 )"
+
+	[ -z "$readmefile" ] && echo "No readme file found" >&2 && return 1
+
+	if _exists glow; then
+		glow -p "$readmefile"
+		return
+	fi
+
+	less "$readmefile"
 }
 
 minifetch() {
