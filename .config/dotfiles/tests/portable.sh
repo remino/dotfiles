@@ -22,8 +22,11 @@ command -v yadm >/dev/null 2>&1
 # makes the test exercise an uncommitted launcher change just as CI will test
 # the checked-out commit.
 git clone --no-hardlinks "$root" "$work/checkout" >/dev/null
-git -C "$root" diff --binary HEAD | git -C "$work/checkout" apply
-git -C "$work/checkout" -c user.name='Portable shell test' -c user.email='test@example.invalid' commit -am 'Test working tree' >/dev/null
+if ! git -C "$root" diff --quiet HEAD
+then
+	git -C "$root" diff --binary HEAD | git -C "$work/checkout" apply
+	git -C "$work/checkout" -c user.name='Portable shell test' -c user.email='test@example.invalid' commit -am 'Test working tree' >/dev/null
+fi
 git -C "$work/checkout" tag portable-test
 git clone --bare "$work/checkout" "$work/dotfiles.git" >/dev/null
 git -C "$work/dotfiles.git" fetch "$work/checkout" 'refs/tags/portable-test:refs/tags/portable-test' >/dev/null

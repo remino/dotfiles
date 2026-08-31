@@ -165,14 +165,20 @@ _snapshot_worktree() {
 	snapshot="$SESSION_ROOT/worktree"
 
 	git clone --no-hardlinks "$source" "$snapshot" > /dev/null
-	git -C "$source" diff --binary HEAD | git -C "$snapshot" apply
+	if ! git -C "$source" diff --quiet HEAD
+	then
+		git -C "$source" diff --binary HEAD | git -C "$snapshot" apply
+	fi
 	while IFS= read -r -d '' file; do
 		mkdir -p "$snapshot/$(dirname -- "$file")"
 		cp -pP "$source/$file" "$snapshot/$file"
 	done < <(git -C "$source" ls-files --others --exclude-standard -z)
 	git -C "$snapshot" add --all
-	git -C "$snapshot" -c user.name='Portable worktree' -c user.email='portable@example.invalid' \
-		commit -m 'Portable worktree snapshot' > /dev/null
+	if ! git -C "$snapshot" diff --cached --quiet
+	then
+		git -C "$snapshot" -c user.name='Portable worktree' -c user.email='portable@example.invalid' \
+			commit -m 'Portable worktree snapshot' > /dev/null
+	fi
 
 	printf 'file://%s\n' "$snapshot"
 }
