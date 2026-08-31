@@ -853,25 +853,35 @@ then
 	alias 52p=osc52paste
 fi
 
-# #       #  #######   ######    ######       #        #####   #######
-# ##     ##  #        #         #            # #      #     #  #
-# # #   # #  ######    ######    ######     #   #    #         ######
-# #  # #  #  #               #         #   #     #   #   ####  #
-# #   #   #  #        #      #  #      #  #########   #     #  #
-# #       #  #######   ######    ######   #       #    #####   #######
+# #  ##     #  #######  #######     #####
+# #  # #    #     #     #      #   #     #
+# #  #  #   #     #     #      #  #       #
+# #  #   #  #     #     #######   #       #
+# #  #    # #     #     #     #    #     #
+# #  #     ##     #     #      #    #####
 
-MESSAGE_FONT=( termino )
+# Local overrides are loaded above this section. Keep these defaults conditional
+# so a local zshrc can configure the intro without modifying the base file.
+(( ${+INTRO_LOLCAT} )) || INTRO_LOLCAT=1
+(( ${+INTRO_FIGLET} )) || INTRO_FIGLET=1
+(( ${+INTRO_FONT} )) || INTRO_FONT=( termino )
 
-_message_figlet() {
+_intro_figlet() {
 	local termino_dir font font_dir
 	local -a font_dirs
+
+	if [ "$INTRO_FIGLET" != 1 ] || ! _exists figlet
+	then
+		command cat
+		return
+	fi
 
 	font_dirs=(
 		"$HOME/.local/share/figlet"
 		/usr/local/share/figlet
 	)
 
-	for font in "${MESSAGE_FONT[@]}"
+	for font in "${INTRO_FONT[@]}"
 	do
 		if figlet -f "$font" " " > /dev/null 2>&1
 		then
@@ -899,28 +909,54 @@ _message_figlet() {
 		fi
 	done
 
-	figlet -f banner
+	command cat
+}
+
+_intro_content() {
+	local output
+
+	if [ -n "${INTRO_COMMAND:-}" ]
+	then
+		if output="$( eval "$INTRO_COMMAND" 2> /dev/null )" && [ -n "$output" ]
+		then
+			printf '%s\n' "$output"
+			return
+		fi
+	fi
+
+	if [ -n "${INTRO_TEXT:-}" ]
+	then
+		printf '%s\n' "$INTRO_TEXT"
+		return
+	fi
+
+	printf '%s\n%s\n' "$( whoami )" "@$( hostname )"
+}
+
+_intro_has_custom_content() {
+	[ -n "${INTRO_COMMAND:-}" ] || [ -n "${INTRO_TEXT:-}" ]
 }
 
 idbanner() {
-	_exists figlet || return
-
 	local user="$( whoami )"
 	local host="@$( hostname )"
 	local ident="$user$host"
 
-	if _exists lolcat
+	if [ "$INTRO_LOLCAT" = 1 ] && _exists lolcat
 	then
 		local seed="${IDBANNER_SEED:-$( printf "%d" "$( printf "0x%s" "$( printf "%s" "$ident" | md5sum | cut -c1-4 )" )" | awk '{print $1 % 10000}' )}"
-		printf "%s\\n%s\\n" "$user" "$host" | _message_figlet | lolcat -S "$seed"
+		_intro_content | _intro_figlet | lolcat -S "$seed"
 		return
 	fi
 
-	printf "%s\\n%s\\n" "$user" "$host" | _message_figlet
+	_intro_content | _intro_figlet
 }
 
 intro() {
-	if type _private_msg > /dev/null 2>&1
+	if _intro_has_custom_content
+	then
+		idbanner && echo
+	elif type _private_msg > /dev/null 2>&1
 	then
 		_private_msg && echo
 	else

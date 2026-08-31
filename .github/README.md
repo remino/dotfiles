@@ -114,6 +114,26 @@ changing that base configuration. To reinstall those loaders:
 ~/.config/yadm/install_zshrc
 ```
 
+#### Intro banner
+
+Set these values in `~/.zshrc.local` or
+`~/.config/zsh/local/zshrc` to customize the `intro` banner without modifying
+the base configuration:
+
+```zsh
+INTRO_LOLCAT=0
+INTRO_FIGLET=1
+INTRO_FONT=( termino standard )
+INTRO_TEXT='Hello, world'
+# Or generate the text when intro runs:
+INTRO_COMMAND='git -C "$HOME/src/project" branch --show-current'
+```
+
+`INTRO_COMMAND` takes precedence over `INTRO_TEXT`; if it fails or produces no
+output, `intro` falls back to the normal user-and-host banner. `INTRO_FONT` is
+an ordered list: if none of its fonts are installed, the text is printed
+unchanged. Set either rendering flag to `0` to disable it.
+
 ### Vim (lite)
 
 The managed [`~/.vimrc`](../.vimrc) is a lightweight fallback for machines that

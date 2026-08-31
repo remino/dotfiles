@@ -7,4 +7,5 @@ RUN apt-get update \
 WORKDIR /src
 COPY . .
 ARG INSTALLER_URL=
+RUN zsh ./.config/dotfiles/tests/zsh_intro.zsh
 RUN INSTALLER_URL="$INSTALLER_URL" ./.config/dotfiles/tests/portable.sh
