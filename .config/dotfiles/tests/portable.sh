@@ -68,6 +68,7 @@ assert_output() {
 assert_output -F "anchor='anchor=\$PWD'"
 assert_output -F 'template-rendered'
 assert_output -F 'fallback-prompt'
+assert_output -F 'curl -fsSL https://remino.net/run/shell | bash'
 [ "$(cat "$fake_home/sentinel")" = keep ]
 [ ! -e "$fake_home/.zshrc" ]
 [ -z "$(find "$work/tmp" -maxdepth 1 -name 'remino-dotfiles.*' -print -quit)" ]

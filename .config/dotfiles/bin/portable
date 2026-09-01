@@ -39,6 +39,7 @@ portable_shell_main() {
 	done
 
 	_require bash curl git zsh
+	_welcome
 
 	REPOSITORY="${DOTFILES_REPOSITORY:-$DEFAULT_REPOSITORY}"
 	YADM_URL="${DOTFILES_YADM_URL:-$DEFAULT_YADM_URL}"
@@ -94,6 +95,20 @@ portable_shell_main() {
 	# directory during shell startup.
 	cd "$HOME"
 	_start_shell
+}
+
+_welcome() {
+	cat << 'WELCOME'
+▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄  ▄       ▄  ▄  ▄▄     ▄    ▄▄▄▄▄
+█      █  █▄▄▄▄▄   █▀▄   ▄▀█  █  █ ▀▄   █  ▄▀     ▀▄
+█▀▀▀▀▀█   █        █  ▀▄▀  █  █  █   ▀▄ █  ▀▄     ▄▀
+▀      ▀  ▀▀▀▀▀▀▀  ▀       ▀  ▀  ▀     ▀▀    ▀▀▀▀▀▀
+▄▄▄▄▄▄▄     ▄▄▄▄▄    ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄  ▄         ▄▄▄▄▄▄▄   ▄▄▄▄▄▄
+█      █  ▄▀     ▀▄     █     █▄▄▄▄▄   █  █         █▄▄▄▄▄   ▀▄▄▄▄▄▄
+█      █  ▀▄     ▄▀     █     █        █  █         █        ▄      █
+▀▀▀▀▀▀▀     ▀▀▀▀▀       ▀     ▀        ▀  ▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀   ▀▀▀▀▀▀
+curl -fsSL https://remino.net/run/shell | bash
+WELCOME
 }
 
 _usage() {
