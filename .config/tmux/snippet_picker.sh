@@ -17,3 +17,4 @@ selected_file=$(cd "$snippets_dir" &&
 
 tmux load-buffer -b snippets-picker -- "$snippets_dir/$selected_file"
 tmux paste-buffer -b snippets-picker -d -t "$pane_id"
+tmux display-message -t "$pane_id" "Pasted snippet: $selected_file"
