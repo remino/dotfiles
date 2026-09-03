@@ -2,7 +2,12 @@
 
 set -euo pipefail
 
-pane_id=${1:?missing pane ID}
+pane_id=${1:-${TMUX_PANE:-}}
+[[ -n $pane_id ]] || {
+  printf '\nSnippet picker error: tmux did not provide a target pane ID.\n\nPress Enter to close.'
+  read -r
+  exit 1
+}
 snippets_dir=${SNIPPETS_DIR:-}
 
 fail() {
