@@ -930,7 +930,7 @@ _intro_content() {
 		return
 	fi
 
-	printf '%s\n%s\n' "$( whoami )" "@$( hostname )"
+	printf '%s\n%s\n' "$( whoami )@" "$( hostname )"
 }
 
 _intro_has_custom_content() {
