@@ -63,7 +63,7 @@ assert_equal "$(idbanner)" 'command-text'
 
 INTRO_COMMAND=false
 INTRO_TEXT=''
-assert_equal "$(idbanner)" $'test-user\n@test-host'
+assert_equal "$(idbanner)" $'test-user@\ntest-host'
 
 INTRO_TEST_HAS_FIGLET=1
 INTRO_FIGLET=1
