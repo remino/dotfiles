@@ -203,7 +203,10 @@ share_ssh_agent
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
 zstyle :omz:plugins:ssh-agent quiet yes
 
-_add_plugin_if_exists ssh-agent
+if _exists ssh-agent
+then
+	_add_plugin_if_exists ssh-agent
+fi
 
 #     #      #         #      #       ######   #######   ######
 #    # #     #         #     # #     #         #        #
