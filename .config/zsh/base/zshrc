@@ -231,7 +231,14 @@ alias e='echo'
 alias edit='eval "$EDITOR"'
 alias expal='omz plugin load globalias'
 alias f='printf'
-alias findreadme="find . -iname 'readme\.*' -maxdepth 2"
+findreadme() {
+	local -a find_args
+	find_args=( -type f \( -iname 'readme' -o -iname 'readme.*' \) )
+
+	# Prefer this directory's README, then list immediate child directories.
+	find . -maxdepth 1 "${find_args[@]}" -print | sort -f
+	find . -mindepth 2 -maxdepth 2 "${find_args[@]}" -print | sort -f
+}
 alias lns='ln -s'
 alias imgo='image_optim'
 alias j='jeksite'
