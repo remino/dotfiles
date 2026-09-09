@@ -360,6 +360,8 @@ if _exists zoxide; then
 	if _plugin_exists zoxide; then
 		alias cd=z
 		alias cdi=zi
+		alias cdd=cdi
+		alias zz=zi
 
 		_add_plugin zoxide
 	fi
