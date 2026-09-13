@@ -11,11 +11,11 @@ state_dir="$state_root/tmux"
 state_file="$state_dir/autolock"
 
 saved_state() {
-	state=enabled
+	state=disabled
 	if [ -r "$state_file" ]; then
 		IFS= read -r state < "$state_file" || true
 	fi
-	[ "$state" = disabled ] && printf '%s\n' disabled || printf '%s\n' enabled
+	[ "$state" = enabled ] && printf '%s\n' enabled || printf '%s\n' disabled
 }
 
 apply_state() {
