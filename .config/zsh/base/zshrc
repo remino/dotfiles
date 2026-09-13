@@ -296,6 +296,7 @@ fi
 
 if _exists ssh
 then
+	alias sshc='ssh -F /dev/null'
 	alias sshp="ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no"
 fi
 
