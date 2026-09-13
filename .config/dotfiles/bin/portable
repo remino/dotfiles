@@ -160,9 +160,11 @@ _sha256() {
 
 _start_shell() {
 	# curl | bash gives this script a pipe for stdin. An interactive shell must
-	# instead read from the invoking terminal so prompts remain answerable.
-	if [ -t 1 ] && [ -r /dev/tty ]; then
-		zsh -i < /dev/tty
+	# instead read from the invoking terminal so prompts remain answerable. Use
+	# stdout to discover that terminal: /dev/tty is not present everywhere.
+	local terminal
+	if [ -t 1 ] && terminal="$(tty <&1 2>/dev/null)" && [ -r "$terminal" ]; then
+		zsh -i < "$terminal"
 	else
 		zsh -i
 	fi
