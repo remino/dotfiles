@@ -229,8 +229,6 @@ fi
 alias anchor='anchor=$PWD'
 alias c='cat'
 alias copa='clipcopy; clippaste'
-alias dateiso='date +%F'
-alias datetimeiso='date "+%Y-%m-%dT%H:%M:%S%z"'
 alias d='edit'
 alias e='echo'
 alias edit='eval "$EDITOR"'
@@ -403,6 +401,22 @@ if [[ -f "$XDG_CONFIG_HOME/lynx/cyberwave.lss" ]]; then
 	export LYNX_LSS="$XDG_CONFIG_HOME/lynx/cyberwave.lss"
 fi
 
+# #######       #      #######  #######
+# #      #     # #        #     #
+# #      #    #   #       #     ######
+# #      #   #     #      #     #
+# #      #  #########     #     #
+# #######   #       #     #     #######
+
+if _exists date
+then
+	alias dateiso='date +%F'
+	alias datetimec='date "+%Y%m%dT%H%M%S%z"'
+	alias datetimeiso='date "+%Y-%m-%dT%H:%M:%S%z"'
+
+	_add_plugin_if_exists isodate
+fi
+
 # #######   #         #       #    #####   #  ##     #   ######
 # #      #  #         #       #   #     #  #  # #    #  #
 # #      #  #         #       #  #         #  #  #   #   ######
@@ -434,7 +448,6 @@ base64 encode64
 bundle bundler
 chroma colorize
 code vscode
-date isodate
 deno
 fd
 fd fdfind
