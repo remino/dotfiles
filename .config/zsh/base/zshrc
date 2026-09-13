@@ -229,6 +229,8 @@ fi
 alias anchor='anchor=$PWD'
 alias c='cat'
 alias copa='clipcopy; clippaste'
+alias dateiso='date +&F'
+alias datetimeiso='date "+%Y-%m-%dT%H:%M:%S%z"'
 alias d='edit'
 alias e='echo'
 alias edit='eval "$EDITOR"'
