@@ -18,12 +18,26 @@ saved_state() {
 	[ "$state" = enabled ] && printf '%s\n' enabled || printf '%s\n' disabled
 }
 
+set_timeout() {
+	timeout=$1
+	target_session=${2:-}
+	if [ -n "$target_session" ]; then
+		tmux -S "$socket" set-option -t "$target_session" lock-after-time "$timeout"
+	else
+		tmux -S "$socket" set-option -g lock-after-time "$timeout"
+	fi
+}
+
 apply_state() {
 	if [ "$1" = disabled ]; then
-		tmux -S "$socket" set-option -g lock-after-time 0
+		timeout=0
 	else
-		tmux -S "$socket" set-option -g lock-after-time "$enabled_after"
+		timeout=$enabled_after
 	fi
+	set_timeout "$timeout"
+	tmux -S "$socket" list-sessions -F '#{session_id}' | while IFS= read -r target_session; do
+		set_timeout "$timeout" "$target_session"
+	done
 }
 
 case "$mode" in
@@ -31,7 +45,8 @@ case "$mode" in
 		apply_state "$(saved_state)"
 		;;
 	toggle)
-		if [ "$(tmux -S "$socket" show-options -gv lock-after-time)" -eq 0 ]; then
+		current_after="$(tmux -S "$socket" show-options -g -v lock-after-time)"
+		if [ "$current_after" -eq 0 ]; then
 			state=enabled
 			message="Automatic lock enabled (5 minutes)"
 		else
