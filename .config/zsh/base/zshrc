@@ -257,10 +257,13 @@ alias lns='ln -s'
 alias imgo='image_optim'
 alias j='jeksite'
 alias js='jekyll'
+alias l='ls -la'
+alias ll='ls -l'
 alias m='mansite'
 alias mb='mansite build'
 alias mbd='mansite -b deploy'
 alias mbdp='mansite -b deploy && git push origin'
+alias md='mkdir -p'
 alias mdp='mansite deploy && git push origin'
 alias mm='middleman'
 alias extip4='curl -4Ls "$EXT_IP_URL" | xargs echo'
@@ -709,32 +712,26 @@ then
 	alias rm='trash -F'
 fi
 
-# #     #      #      #######   #       #
-#  #   #      # #     #      #  ##     ##
-#   # #      #   #    #      #  # #   # #
-#    #      #     #   #      #  #  # #  #
-#    #     #########  #      #  #   #   #
-#    #     #       #  #######   #       #
+#   #####   #  #######   ####    #     #      #      #######   #       #
+#  #     #  #     #     #    #    #   #      # #     #      #  ##     ##
+# #         #     #      ##        # #      #   #    #      #  # #   # #
+# #   ####  #     #     #  ## #     #      #     #   #      #  #  # #  #
+#  #     #  #     #     #    #      #     #########  #      #  #   #   #
+#   #####   #     #      #### #     #     #       #  #######   #       #
 
-if _exists yadm
-then
-	cat <<ALIASES | while read -r alias cmd
+for cmd in git yadm
+do
+	if _exists "$cmd"
+	then
+		alias "${cmd:0:1}"="$cmd"
 
-a
-ap
-c
-co
-lo
-pl
-po
-st
-ALIASES
-	do
-		[ -z "$cmd" ] && cmd="$alias"
-		# shellcheck disable=SC2139
-		alias "y$alias"="yadm $cmd"
-	done
-fi
+		for alias in a ap c co lo pl po st
+		do
+			# shellcheck disable=SC2139
+			alias "${cmd:0:1}$alias"="$cmd $alias"
+		done
+	fi
+done
 
 # #######   ##     #  #######   #       #
 # #      #  # #    #  #      #  ##     ##
@@ -1126,41 +1123,6 @@ if [[ -z "$TMUX" ]]; then
 	autoload -Uz add-zsh-hook
 	add-zsh-hook precmd _terminal_title_precmd
 	add-zsh-hook preexec _terminal_title_preexec
-fi
-
-# #######     #     #        #        #######      #       #####  #      #
-# #          # #    #        #        #      #    # #     #     # #    ##
-# ######    #   #   #        #        #######    #   #   #        #  ##
-# #        #     #  #        #        #      #  #     #  #        ###  #
-# #       ######### #        #        #      # #########  #     # #     #
-# #       #       # ######## ######## #######  #       #   #####  #      #
-
-# Fallback aliases when Oh My Zsh is not loaded
-
-if [ -z "$ZSH" ]
-then
-	alias l='ls -la'
-	alias ll='ls -l'
-	alias md='mkdir -p'
-
-	for prg in git yadm
-	do
-		cat <<ALIASES | while read -r alias cmd
-a add
-c commit
-co checkout
-d diff
-lo log --oneline --decorate
-lg log --stat
-pl pull
-po push origin
-st status
-ALIASES
-		do
-			alias "${prg:0:1}"="$prg"
-			alias "${prg:0:1}$alias"="$prg $cmd"
-		done
-	done
 fi
 
 #   #####    #######   #######  #    #####    ##     #   ######
