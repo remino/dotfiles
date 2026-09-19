@@ -197,7 +197,7 @@ then
 	do
 		[ ! -d "$ZSH" ] && continue
 		export ZSH
-		[ ! -f "$ZSH/oh-my-zsh.sh" ] && unset ZSH && continue
+		[ ! -f "$ZSH/oh-my-zsh.sh" ] && unset ZSH && export ZSH && continue
 		break
 	done
 fi
