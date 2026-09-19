@@ -1128,6 +1128,41 @@ if [[ -z "$TMUX" ]]; then
 	add-zsh-hook preexec _terminal_title_preexec
 fi
 
+# #######     #     #        #        #######      #       #####  #      #
+# #          # #    #        #        #      #    # #     #     # #    ##
+# ######    #   #   #        #        #######    #   #   #        #  ##
+# #        #     #  #        #        #      #  #     #  #        ###  #
+# #       ######### #        #        #      # #########  #     # #     #
+# #       #       # ######## ######## #######  #       #   #####  #      #
+
+# Fallback aliases when Oh My Zsh is not loaded
+
+if [ -z "$ZSH" ]
+then
+	alias l='ls -la'
+	alias ll='ls -l'
+	alias md='mkdir -p'
+
+	for prg in git yadm
+	do
+		cat <<ALIASES | while read -r alias cmd
+a add
+c commit
+co checkout
+d diff
+lo log --oneline --decorate
+lg log --stat
+pl pull
+po push origin
+st status
+ALIASES
+		do
+			alias "${prg:0:1}"="$prg"
+			alias "${prg:0:1}$alias"="$prg $cmd"
+		done
+	done
+fi
+
 #   #####    #######   #######  #    #####    ##     #   ######
 #  #     #   #      #     #     #   #     #   # #    #  #
 # #       #  #      #     #     #  #       #  #  #   #   ######
