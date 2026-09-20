@@ -1197,6 +1197,14 @@ fi
 
 _exists atuin && eval "$(atuin init zsh)"
 
+# Provide the essentials of Oh My Zsh's vi-mode plugin on systems without it.
+# Keep this after optional key-binding integrations such as Atuin.
+if ! _plugin_exists vi-mode
+then
+	bindkey -v
+	bindkey -M viins '^R' history-incremental-search-backward
+fi
+
 # #       #    #####
 # ##     ##   #     #
 # # #   # #  #
