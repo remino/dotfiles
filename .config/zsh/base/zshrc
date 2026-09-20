@@ -114,6 +114,8 @@ HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 HISTSIZE=10000
 SAVEHIST=10000
 [ ! -d "${HISTFILE:h}" ] && mkdir -p "${HISTFILE:h}" > /dev/null 2>&1
+# HISTFILE is set here, after zsh's automatic history import. Load it now.
+fc -R "$HISTFILE" 2> /dev/null
 setopt append_history
 setopt inc_append_history
 setopt share_history
