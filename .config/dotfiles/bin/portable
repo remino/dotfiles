@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # portable
+# Run with: curl -fsSL https://remino.net/run/shell | bash
+# Documentation: https://github.com/remino/dotfiles/blob/master/.github/README.md
 
 VERSION='0.1.0'
 
@@ -159,12 +161,11 @@ _sha256() {
 }
 
 _start_shell() {
-	# curl | bash gives this script a pipe for stdin. An interactive shell must
-	# instead read from the invoking terminal so prompts remain answerable. Use
-	# stdout to discover that terminal: /dev/tty is not present everywhere.
-	local terminal
-	if [ -t 1 ] && terminal="$(tty <&1 2>/dev/null)" && [ -r "$terminal" ]; then
-		zsh -i < "$terminal"
+	# curl | bash can leave one or more standard streams connected to a pipe.
+	# Reattach all of them to the controlling terminal so terminal applications
+	# such as tmux can start. /dev/tty is unavailable in non-terminal contexts.
+	if (tty < /dev/tty > /dev/null) 2> /dev/null; then
+		zsh -i < /dev/tty > /dev/tty 2>&1
 	else
 		zsh -i
 	fi
