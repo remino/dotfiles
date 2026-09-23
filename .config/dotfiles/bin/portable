@@ -165,12 +165,24 @@ _start_shell() {
 	# Reattach only stdin to the concrete controlling-terminal device. Leave
 	# stdout and stderr alone: they are how the caller sees the shell and tmux.
 	local terminal tty_name
+	local launch_shell
+
+	launch_shell() {
+		# On Linux, a shell launched from a pipeline can still lack the terminal
+		# process semantics tmux needs, even after stdin is reattached. script(1)
+		# gives the disposable shell a real pty while preserving its visible output.
+		if [ ! -t 0 ] && [ "$(uname -s)" = 'Linux' ] && command -v script > /dev/null 2>&1; then
+			script -qefc 'exec zsh -i' /dev/null < "$1"
+		else
+			zsh -i < "$1"
+		fi
+	}
 
 	# Command substitution changes stdout into a pipe, but stderr remains the
 	# caller's terminal in a normal curl | bash invocation.
 	terminal="$(tty <&2 2> /dev/null || true)"
 	if [ "$terminal" != '/dev/tty' ] && [ -n "$terminal" ] && [ -r "$terminal" ]; then
-		zsh -i < "$terminal"
+		launch_shell "$terminal"
 		return
 	fi
 
@@ -182,7 +194,7 @@ _start_shell() {
 		*)
 			terminal="/dev/$tty_name"
 			if [ "$terminal" != '/dev/tty' ] && [ -r "$terminal" ]; then
-				zsh -i < "$terminal"
+				launch_shell "$terminal"
 				return
 			fi
 			;;
@@ -194,7 +206,7 @@ _start_shell() {
 		tty_name="$(cat /sys/class/tty/tty0/active 2> /dev/null || true)"
 		terminal="/dev/$tty_name"
 		if [ -n "$tty_name" ] && [ -r "$terminal" ]; then
-			zsh -i < "$terminal"
+			launch_shell "$terminal"
 			return
 		fi
 	fi
