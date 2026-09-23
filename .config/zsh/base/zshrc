@@ -73,7 +73,7 @@ _fallback_prompt_precmd() {
 
 	(( padding < 1 )) && padding=1
 	printf -v spacing '%*s' "$padding" ''
-	PROMPT="%F{blue}${directory//\%/%%}%f${spacing}%F{cyan}${time}%f\n%F{green}❯%f "
+	PROMPT="%F{blue}${directory//\%/%%}%f${spacing}%F{cyan}${time}%f"$'\n'"%F{green}❯%f "
 	RPROMPT=''
 }
 
