@@ -188,6 +188,17 @@ _start_shell() {
 			;;
 	esac
 
+	# Linux virtual consoles expose the active, concrete tty here. This covers
+	# rescue environments where both tty and ps report only the /dev/tty alias.
+	if [ -r /sys/class/tty/tty0/active ]; then
+		tty_name="$(cat /sys/class/tty/tty0/active 2> /dev/null || true)"
+		terminal="/dev/$tty_name"
+		if [ -n "$tty_name" ] && [ -r "$terminal" ]; then
+			zsh -i < "$terminal"
+			return
+		fi
+	fi
+
 	zsh -i
 }
 
