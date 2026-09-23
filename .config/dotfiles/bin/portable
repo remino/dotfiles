@@ -41,6 +41,9 @@ portable_shell_main() {
 	done
 
 	_require bash curl git zsh
+	# tmux uses SHELL for new panes when no configuration has set default-shell
+	# yet. Keep its panes consistent with the portable Zsh session.
+	export SHELL="$(command -v zsh)"
 	_welcome
 
 	REPOSITORY="${DOTFILES_REPOSITORY:-$DEFAULT_REPOSITORY}"
