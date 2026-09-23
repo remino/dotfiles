@@ -4,14 +4,14 @@
 # This catches regressions where the disposable Zsh session has a pipe for
 # stdin or routes tmux's display to the wrong output stream.
 set timeout 60
-set env(TERM) linux
+set env(TERM) xterm-256color
 
 spawn sh -c {printf '\n' | bash "$PORTABLE_PATH" --ref portable-test}
 expect -re {❯}
 
-send -- "tmux -L portable-tty-test new-session -s portable-tty-test\r"
+send -- "tmux -L portable-tty-test -f /dev/null new-session -s portable-tty-test\r"
 after 500
-send -- "\001d"
+send -- "\002d"
 expect "detached (from session portable-tty-test)"
 expect -re {❯}
 

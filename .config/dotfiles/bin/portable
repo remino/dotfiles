@@ -41,7 +41,6 @@ portable_shell_main() {
 	done
 
 	_require bash curl git zsh
-	TMUX_BIN="$(command -v tmux 2> /dev/null || true)"
 	_welcome
 
 	REPOSITORY="${DOTFILES_REPOSITORY:-$DEFAULT_REPOSITORY}"
@@ -58,19 +57,6 @@ portable_shell_main() {
 	# consulting the host's trusted-project database in this disposable session.
 	printf '%s\n' '#!/bin/sh' 'exit 0' > "$SESSION_ROOT/bin/mise"
 	chmod 700 "$SESSION_ROOT/bin/mise"
-	if [ "${TERM:-}" = 'linux' ] && [ -n "$TMUX_BIN" ]; then
-		# A Linux virtual console is intentionally basic. Avoid the full graphical
-		# tmux setup there; it has been unreliable in rescue environments.
-		printf '%s\n' \
-			'set -g default-terminal "screen-256color"' \
-			'set -g status off' \
-			'set -g mouse off' \
-			'unbind C-b' \
-			'set -g prefix C-a' > "$SESSION_ROOT/tmux.conf"
-		printf '%s\n' '#!/bin/sh' "exec '$TMUX_BIN' -f '$SESSION_ROOT/tmux.conf' \"\$@\"" \
-			> "$SESSION_ROOT/bin/tmux"
-		chmod 700 "$SESSION_ROOT/bin/tmux"
-	fi
 	curl -fsSL "$YADM_URL" -o "$YADM" || _fatal 'Could not download yadm.'
 	[ "$(_sha256 "$YADM")" = "$YADM_SHA256" ] || _fatal 'yadm checksum verification failed.'
 	chmod 700 "$YADM"
