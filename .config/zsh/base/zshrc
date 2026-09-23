@@ -59,8 +59,7 @@ _fallback_prompt() {
 	autoload -Uz add-zsh-hook
 	add-zsh-hook -d precmd _fallback_prompt_precmd
 	add-zsh-hook precmd _fallback_prompt_precmd
-	PS1='%F{green}❯%f '
-	RPROMPT=''
+	_fallback_prompt_precmd
 }
 
 _fallback_prompt_precmd() {
@@ -68,13 +67,14 @@ _fallback_prompt_precmd() {
 	local time="$(date +%H:%M:%S)"
 	local columns="${COLUMNS:-80}"
 	local padding
+	local spacing
 
 	padding=$((columns - ${#directory} - ${#time}))
 
 	(( padding < 1 )) && padding=1
-	print -rn -- $'\e[34m'"$directory"$'\e[0m'
-	printf '%*s' "$padding" ''
-	print -r -- $'\e[36m'"$time"$'\e[0m'
+	printf -v spacing '%*s' "$padding" ''
+	PROMPT="%F{blue}${directory//\%/%%}%f${spacing}%F{cyan}${time}%f\n%F{green}❯%f "
+	RPROMPT=''
 }
 
 # #######   #######  #######   #       #    #####
