@@ -17,6 +17,8 @@ trap cleanup EXIT HUP INT TERM
 command -v git >/dev/null 2>&1
 command -v python3 >/dev/null 2>&1
 command -v yadm >/dev/null 2>&1
+command -v expect >/dev/null 2>&1
+command -v tmux >/dev/null 2>&1
 
 # Build a throwaway remote including the working tree's tracked edits. This
 # makes the test exercise an uncommitted launcher change just as CI will test
@@ -72,6 +74,14 @@ assert_output -F 'curl -fsSL https://remino.net/run/shell | bash'
 [ "$(cat "$fake_home/sentinel")" = keep ]
 [ ! -e "$fake_home/.zshrc" ]
 [ -z "$(find "$work/tmp" -maxdepth 1 -name 'remino-dotfiles.*' -print -quit)" ]
+
+PORTABLE_PATH="$work/portable" \
+HOME="$work/tty-real-home" TMPDIR="$work/tmp" \
+DOTFILES_REPOSITORY="file://$work/dotfiles.git" \
+DOTFILES_NVIM_REPOSITORY="file://$work/dotfiles.git" \
+DOTFILES_YADM_URL="file://$work/yadm" \
+DOTFILES_YADM_SHA256="$yadm_sha256" \
+expect "$root/.config/dotfiles/tests/portable_tty.exp"
 
 # shellcheck disable=SC2016 # $XDG_CONFIG_HOME must expand inside the launched Zsh.
 worktree_output="$(printf 'test -f "$XDG_CONFIG_HOME/nvim/.git/config" && print worktree-snapshot\nexit\n' | \

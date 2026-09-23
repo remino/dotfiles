@@ -1,7 +1,7 @@
 FROM debian:bookworm-slim
 
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends ca-certificates curl git python3 yadm zsh \
+	&& apt-get install -y --no-install-recommends ca-certificates curl expect git python3 tmux yadm zsh \
 	&& rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src

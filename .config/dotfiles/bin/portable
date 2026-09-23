@@ -162,19 +162,17 @@ _sha256() {
 
 _start_shell() {
 	# curl | bash can leave one or more standard streams connected to a pipe.
-	# Reattach all of them to the concrete controlling-terminal device (such as
-	# /dev/pts/0). tmux cannot use the /dev/tty alias as its client terminal.
-	local fd terminal tty_name
+	# Reattach only stdin to the concrete controlling-terminal device. Leave
+	# stdout and stderr alone: they are how the caller sees the shell and tmux.
+	local terminal tty_name
 
-	for fd in 0 1 2; do
-		[ -t "$fd" ] || continue
-		terminal="$(tty <&"$fd" 2> /dev/null || true)"
-		[ "$terminal" = '/dev/tty' ] && continue
-		if [ -n "$terminal" ] && [ -r "$terminal" ] && [ -w "$terminal" ]; then
-			zsh -i < "$terminal" > "$terminal" 2>&1
-			return
-		fi
-	done
+	# Command substitution changes stdout into a pipe, but stderr remains the
+	# caller's terminal in a normal curl | bash invocation.
+	terminal="$(tty <&2 2> /dev/null || true)"
+	if [ "$terminal" != '/dev/tty' ] && [ -n "$terminal" ] && [ -r "$terminal" ]; then
+		zsh -i < "$terminal"
+		return
+	fi
 
 	# /dev/tty hides the concrete path. ps exposes the controlling terminal on
 	# both macOS and Linux, including SystemRescue.
@@ -183,8 +181,8 @@ _start_shell() {
 		'' | '?'* | '-') ;;
 		*)
 			terminal="/dev/$tty_name"
-			if [ -r "$terminal" ] && [ -w "$terminal" ]; then
-				zsh -i < "$terminal" > "$terminal" 2>&1
+			if [ "$terminal" != '/dev/tty' ] && [ -r "$terminal" ]; then
+				zsh -i < "$terminal"
 				return
 			fi
 			;;
