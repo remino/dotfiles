@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Install the dotfiles with yadm while preparing required local template files.
+set -euo pipefail
+
+default_repository='https://github.com/remino/dotfiles.git'
+repository="${DOTFILES_REPOSITORY:-$default_repository}"
+
+if [ "$#" -gt 1 ]; then
+	printf 'Usage: %s [repository]\n' "${0##*/}" >&2
+	exit 2
+fi
+[ "$#" -eq 0 ] || repository="$1"
+
+command -v yadm > /dev/null 2>&1 || {
+	printf '%s\n' 'Required: yadm' >&2
+	exit 1
+}
+
+# yadm checks out templates before its bootstrap runs. Clone only the bare
+# repository first, execute the matching revision's setup script, then check
+# out and render the files.
+yadm clone --no-checkout --no-bootstrap "$repository"
+yadm show HEAD:.config/dotfiles/bin/create-local-files | bash
+yadm checkout
+yadm bootstrap
