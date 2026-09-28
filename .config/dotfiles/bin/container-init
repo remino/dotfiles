@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# Install with the same staged yadm flow used on a real new machine. Retain a
+# shell even if installation fails, so the resulting state can be inspected.
+set -u
+
+work="$(mktemp -d "${TMPDIR:-/tmp}/remino-dotfiles-container.XXXXXX")"
+home="$work/home"
+
+cleanup() {
+	rm -rf "$work"
+}
+trap cleanup EXIT HUP INT TERM
+
+export HOME="$home"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+mkdir -p "$HOME"
+
+printf '%s\n' '==> Installing dotfiles with yadm into a fresh home'
+if DOTFILES_LOCAL_SETUP_SCRIPT=/src/.config/dotfiles/bin/create-local-files \
+	/src/.config/dotfiles/bin/install file:///src; then
+	printf '%s\n' '==> yadm installation completed successfully'
+else
+	status=$?
+	printf '%s\n' "==> yadm installation failed (exit $status); the environment is retained for debugging" >&2
+fi
+
+cat << EOF
+
+Container environment
+  HOME=$HOME
+  source checkout=/src
+
+Useful commands:
+  yadm status
+  yadm alt
+  yadm bootstrap
+  find "\$HOME" -maxdepth 3 -print | sort
+EOF
+
+if [ "$#" -gt 0 ]; then
+	exec "$@"
+fi
+exec bash --noprofile --norc -i

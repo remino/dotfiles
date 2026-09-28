@@ -6,4 +6,4 @@ RUN apt-get update \
 
 WORKDIR /src
 COPY . .
-ENTRYPOINT ["/src/.config/dotfiles/bin/shell-init"]
+ENTRYPOINT ["/src/.config/dotfiles/bin/container-init"]

@@ -90,16 +90,15 @@ It runs `yadm clone --bootstrap` in Docker, validates templates, alternates,
 the bootstrap-installed Zsh loaders, and an interactive Zsh startup. It does
 not modify the host home directory.
 
-For an interactive, raw first-clone environment—useful for seeing and
-debugging clone-time errors—run:
+For an interactive, disposable container environment with a real yadm
+installation—useful for seeing and debugging clone-time errors—run:
 
 ```sh
-.config/dotfiles/bin/shell
+.config/dotfiles/bin/container
 ```
 
-It leaves you at a disposable Bash prompt whether `yadm clone --bootstrap`
-succeeds or fails. The container intentionally does not pre-create local files
-referenced by templates, so it exposes fresh-install problems faithfully.
+It leaves you at a disposable Bash prompt whether installation succeeds or
+fails. The container uses the same staged installer as a fresh machine.
 
 ### As portable shell
 

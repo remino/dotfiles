@@ -21,6 +21,10 @@ command -v yadm > /dev/null 2>&1 || {
 # repository first, execute the matching revision's setup script, then check
 # out and render the files.
 yadm clone --no-checkout --no-bootstrap "$repository"
-yadm show HEAD:.config/dotfiles/bin/create-local-files | bash
-yadm checkout
+if [ -n "${DOTFILES_LOCAL_SETUP_SCRIPT:-}" ]; then
+	bash "$DOTFILES_LOCAL_SETUP_SCRIPT"
+else
+	yadm show HEAD:.config/dotfiles/bin/create-local-files | bash
+fi
+yadm checkout -- .
 yadm bootstrap

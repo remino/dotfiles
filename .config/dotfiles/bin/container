@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Start a disposable Docker environment with the dotfiles installed by yadm.
+set -eu
+
+root="$(git -C "$(dirname -- "$0")" rev-parse --show-toplevel)"
+image="remino-dotfiles-container"
+
+docker build --progress=plain --tag "$image" --file "$root/.config/dotfiles/bin/container.Dockerfile" "$root"
+exec docker run --rm -it "$image" "$@"
