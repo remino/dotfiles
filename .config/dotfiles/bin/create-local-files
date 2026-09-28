@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Create empty, machine-local template fragments without overwriting values.
+set -euo pipefail
+
+create_local_files_main() {
+	local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+	local system_type
+
+	mkdir -p "$HOME/.gnupg" "$config_dir/yt-dlp"
+	touch "$HOME/.gnupg/gpg.local.conf" "$config_dir/yt-dlp/config.local"
+
+	system_type="$(uname -s)"
+	case "$system_type" in
+	Darwin | Linux) ;;
+	*) touch "$HOME/.gnupg/gpg-agent.$system_type.conf" ;;
+	esac
+}
+
+create_local_files_main

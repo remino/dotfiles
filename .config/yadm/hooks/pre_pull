@@ -1,21 +1,5 @@
 #!/usr/bin/env bash
 
-pre_pull_main() {
-	set -euo pipefail
+set -euo pipefail
 
-	local system_type="$(uname -s)"
-
-	if [ ! -d "$HOME/.gnupg" ]; then mkdir -p "$HOME/.gnupg"; fi
-	if [ ! -f "$HOME/.gnupg/gpg.local.conf" ]; then touch "$HOME/.gnupg/gpg.local.conf"; fi
-
-	case "$system_type" in
-		Darwin | Linux) ;;
-		*) touch "$HOME/.gnupg/gpg-agent.$system_type.conf" ;;
-	esac
-
-	local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
-	if [ ! -d "$config_dir/yt-dlp" ]; then mkdir -p "$config_dir/yt-dlp"; fi
-	if [ ! -f "$config_dir/yt-dlp/config.local" ]; then touch "$config_dir/yt-dlp/config.local"; fi
-}
-
-pre_pull_main
+"$(dirname "${BASH_SOURCE[0]}")/../../dotfiles/bin/create-local-files"
