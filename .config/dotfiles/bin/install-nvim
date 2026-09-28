@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Clone the optional Neovim configuration without making yadm bootstrap depend
+# on GitHub SSH access.
+set -euo pipefail
+
+repository="${DOTFILES_NVIM_REPOSITORY:-git@github.com:remino/nvim.git}"
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+target="$config_dir/nvim"
+
+if [ -e "$target" ]; then
+	printf 'Neovim configuration already exists: %s\n' "$target"
+	exit 0
+fi
+
+mkdir -p "$config_dir"
+git clone "$repository" "$target"
