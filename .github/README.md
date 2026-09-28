@@ -46,11 +46,15 @@ few small helper scripts.
 
 ### As local dotfiles
 
-Install [yadm](https://yadm.io/) first, then clone the repository:
+Install [yadm](https://yadm.io/) first, then use the installer:
 
 ```sh
-yadm clone https://github.com/remino/dotfiles
+curl -fsSL https://raw.githubusercontent.com/remino/dotfiles/master/.config/dotfiles/bin/install | bash
 ```
+
+The installer creates the empty local files required by templates before yadm
+checks out and renders them. To use a fork or local repository, download the
+installer and pass that repository's URL or local path as its sole argument.
 
 After cloning, review the files yadm manages:
 
@@ -58,16 +62,44 @@ After cloning, review the files yadm manages:
 yadm diff
 ```
 
-The yadm bootstrap script installs the base Zsh loader when necessary and, when
-`~/.config/nvim` does not already exist, clones
-[`remino/nvim`](https://github.com/remino/nvim) there. The Neovim clone uses an
-SSH Git URL, so ensure your GitHub SSH access is configured before running it.
+The yadm bootstrap script installs the base Zsh loader when necessary. It does
+not install optional tooling or access the network.
 
 To rerun the bootstrap step manually:
 
 ```sh
 ~/.config/yadm/bootstrap
 ```
+
+To install the optional [Neovim configuration](https://github.com/remino/nvim),
+run this separately. Its default SSH repository requires GitHub SSH access;
+set `DOTFILES_NVIM_REPOSITORY` to use another URL.
+
+```sh
+~/.config/dotfiles/bin/install-nvim
+```
+
+To test the complete yadm installation flow in a disposable Linux home, with
+the current checkout as its source, run:
+
+```sh
+.config/dotfiles/tests/docker-yadm.sh
+```
+
+It runs `yadm clone --bootstrap` in Docker, validates templates, alternates,
+the bootstrap-installed Zsh loaders, and an interactive Zsh startup. It does
+not modify the host home directory.
+
+For an interactive, raw first-clone environment—useful for seeing and
+debugging clone-time errors—run:
+
+```sh
+.config/dotfiles/bin/shell
+```
+
+It leaves you at a disposable Bash prompt whether `yadm clone --bootstrap`
+succeeds or fails. The container intentionally does not pre-create local files
+referenced by templates, so it exposes fresh-install problems faithfully.
 
 ### As portable shell
 
