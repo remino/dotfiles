@@ -49,7 +49,7 @@ few small helper scripts.
 Install [yadm](https://yadm.io/) first, then use the installer:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/remino/dotfiles/master/.config/dotfiles/bin/install | bash
+curl -fsSL https://remino.net/run/dotfiles | bash
 ```
 
 The installer creates the empty local files required by templates before yadm
