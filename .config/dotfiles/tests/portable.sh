@@ -55,7 +55,7 @@ curl -fsS "$installer_url" -o "$work/portable"
 # shellcheck disable=SC2016 # $HOME must expand inside the launched Zsh.
 output="$(printf 'alias anchor\ntest -f "$HOME/.gnupg/gpg.conf" && print template-rendered\n(( $+functions[_fallback_prompt_precmd] )) && [[ " ${precmd_functions[*]} " == *" _fallback_prompt_precmd "* ]] && [[ "$PS1" == *"❯"* ]] && print fallback-prompt || true\nexit\n' | \
 	HOME="$fake_home" TMPDIR="$work/tmp" \
-	DOTFILES_REPOSITORY="file://$work/dotfiles.git" \
+	DOTFILES_REPO="file://$work/dotfiles.git" \
 	DOTFILES_NVIM_REPOSITORY="file://$work/dotfiles.git" \
 	DOTFILES_YADM_URL="file://$work/yadm" \
 	DOTFILES_YADM_SHA256="$yadm_sha256" \
@@ -77,7 +77,7 @@ assert_output -F 'curl -fsSL https://remino.net/run/shell | bash'
 
 PORTABLE_PATH="$work/portable" \
 HOME="$work/tty-real-home" TMPDIR="$work/tmp" \
-DOTFILES_REPOSITORY="file://$work/dotfiles.git" \
+DOTFILES_REPO="file://$work/dotfiles.git" \
 DOTFILES_NVIM_REPOSITORY="file://$work/dotfiles.git" \
 DOTFILES_YADM_URL="file://$work/yadm" \
 DOTFILES_YADM_SHA256="$yadm_sha256" \

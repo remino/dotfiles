@@ -46,14 +46,15 @@ few small helper scripts.
 
 ### As local dotfiles
 
-Install [yadm](https://yadm.io/) first, then use the installer:
+With `git` and `curl` available, use the installer:
 
 ```sh
 curl -fsSL https://remino.net/run/dotfiles | bash
 ```
 
 The installer creates the empty local files required by templates before yadm
-checks out and renders them. To use a fork or local repository, download the
+checks out and renders them. If yadm is missing, it installs a checksum-verified
+copy in `~/.local/bin`. To use a fork or local repository, download the
 installer and pass that repository's URL or local path as its sole argument.
 
 After cloning, review the files yadm manages:

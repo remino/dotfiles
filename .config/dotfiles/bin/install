@@ -4,27 +4,67 @@
 set -euo pipefail
 
 default_repository='https://github.com/remino/dotfiles.git'
-repository="${DOTFILES_REPOSITORY:-$default_repository}"
+default_yadm_url='https://raw.githubusercontent.com/yadm-dev/yadm/3.5.0/yadm'
+default_yadm_sha256='d8c2d661725b98e9910e4a59b58beed5cfb01f5196a825a08668ff0887f7441d'
+dotfiles_repo="${DOTFILES_REPO:-$default_repository}"
+yadm_url="${DOTFILES_YADM_URL:-$default_yadm_url}"
+yadm_sha256="${DOTFILES_YADM_SHA256:-$default_yadm_sha256}"
 
 if [ "$#" -gt 1 ]; then
 	printf 'Usage: %s [repository]\n' "${0##*/}" >&2
 	exit 2
 fi
-[ "$#" -eq 0 ] || repository="$1"
+[ "$#" -eq 0 ] || dotfiles_repo="$1"
 
-command -v yadm > /dev/null 2>&1 || {
-	printf '%s\n' 'Required: yadm' >&2
+command -v git > /dev/null 2>&1 || {
+	printf '%s\n' 'Required: git' >&2
 	exit 1
 }
+
+sha256() {
+	if command -v shasum > /dev/null 2>&1; then
+		shasum -a 256 "$1" | awk '{print $1}'
+	elif command -v sha256sum > /dev/null 2>&1; then
+		sha256sum "$1" | awk '{print $1}'
+	else
+		printf '%s\n' 'Required: shasum or sha256sum' >&2
+		exit 1
+	fi
+}
+
+if command -v yadm > /dev/null 2>&1; then
+	yadm="$(command -v yadm)"
+else
+	command -v curl > /dev/null 2>&1 || {
+		printf '%s\n' 'Required: curl (to install yadm)' >&2
+		exit 1
+	}
+
+	bin_dir="$HOME/.local/bin"
+	yadm="$bin_dir/yadm"
+	mkdir -p "$bin_dir"
+	temporary_yadm="$(mktemp "$bin_dir/yadm.XXXXXX")"
+	trap 'rm -f "${temporary_yadm:-}"' EXIT
+
+	printf 'Installing yadm in %s\n' "$yadm"
+	curl -fsSL "$yadm_url" -o "$temporary_yadm"
+	[ "$(sha256 "$temporary_yadm")" = "$yadm_sha256" ] || {
+		printf '%s\n' 'yadm checksum verification failed' >&2
+		exit 1
+	}
+	chmod 755 "$temporary_yadm"
+	mv "$temporary_yadm" "$yadm"
+	unset temporary_yadm
+fi
 
 # yadm checks out templates before its bootstrap runs. Clone only the bare
 # repository first, execute the matching revision's setup script, then check
 # out and render the files.
-yadm clone --no-checkout --no-bootstrap "$repository"
+"$yadm" clone --no-checkout --no-bootstrap "$dotfiles_repo"
 if [ -n "${DOTFILES_LOCAL_SETUP_SCRIPT:-}" ]; then
 	bash "$DOTFILES_LOCAL_SETUP_SCRIPT"
 else
-	yadm show HEAD:.config/dotfiles/bin/create-local-files | bash
+	"$yadm" show HEAD:.config/dotfiles/bin/create-local-files | bash
 fi
-yadm checkout -- .
-yadm bootstrap
+"$yadm" checkout -- .
+"$yadm" bootstrap
