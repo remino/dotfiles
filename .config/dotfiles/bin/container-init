@@ -44,4 +44,4 @@ EOF
 if [ "$#" -gt 0 ]; then
 	exec "$@"
 fi
-exec bash --noprofile --norc -i
+exec zsh -l

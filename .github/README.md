@@ -97,7 +97,7 @@ installation—useful for seeing and debugging clone-time errors—run:
 .config/dotfiles/bin/container
 ```
 
-It leaves you at a disposable Bash prompt whether installation succeeds or
+It leaves you at a disposable Zsh prompt whether installation succeeds or
 fails. The container uses the same staged installer as a fresh machine.
 
 ### As portable shell
